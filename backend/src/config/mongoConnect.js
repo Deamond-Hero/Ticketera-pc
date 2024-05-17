@@ -1,12 +1,15 @@
+import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
+
+configDotenv();
 
 const connectMongoose = async () => {
   await mongoose.connect(process.env.MONGO_URL, {
-    dbName: "",// queda elegir 
+    dbName: "", // queda elegir
   });
 };
 
-export async function connectDb () {
+export async function connectDb() {
   try {
     await connectMongoose();
     console.log("Database connection established");

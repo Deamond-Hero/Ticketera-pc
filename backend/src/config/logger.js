@@ -1,8 +1,8 @@
+import { configDotenv } from "dotenv";
 import { format, createLogger, transports, addColors } from "winston";
-import dotenv from "dotenv";
 
+configDotenv();
 const { combine, printf } = format;
-dotenv.config();
 export let logger;
 
 const myCustomLevels = {
