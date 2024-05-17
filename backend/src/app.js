@@ -31,7 +31,7 @@ app.use(
     credentials: true, // Credentials are true to allow sending cookies with requests
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 app.set("trust proxy", 1);
@@ -56,6 +56,7 @@ app.use((err, req, res, next) => {
 app.use((err, req, res, next) => {
   logger.error(err.stack);
   resFail(res, 500, "Internal server error");
+  next();
 });
 
 // Configuración de rutas

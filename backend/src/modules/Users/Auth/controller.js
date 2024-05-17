@@ -4,12 +4,12 @@ import { logger } from "../../config/logger.js";
 
 export const login = async (req, res) => {
   
-}
+};
 
 export const register = async (req, res) => {
   
-}
+};
 
 export const logout = async (req, res) => {
   
-}
+};

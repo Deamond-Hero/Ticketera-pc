@@ -4,16 +4,16 @@ import { logger } from "../../config/logger.js";
 
 export const createService = async (req, res) => {
   
-}
+};
 
 export const getService = async (req, res) => {
   
-}
+};
 
 export const updateService = async (req, res) => {
   
-}
+};
 
 export const deleteService = async (req, res) => {
   
-}
+};

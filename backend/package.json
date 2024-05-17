@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --watch src/app.js",
-    "lint": "npx eslint -c eslint.config.js --report-unused-disable-directives --max-warnings 0"
+    "lint": "npx eslint -c eslint.config.js --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "npx eslint -c eslint.config.js --fix --report-unused-disable-directives --max-warnings 0"
   },
   "keywords": [],
   "author": "",
