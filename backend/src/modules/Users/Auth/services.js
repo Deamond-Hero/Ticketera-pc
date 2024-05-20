@@ -1,6 +1,7 @@
 import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
+import { isValidPassword } from "../../../config/utils/hash.js";
 
 export const createUserService = async ({ email, password }) => {
     try {
@@ -22,7 +23,6 @@ export const createUserService = async ({ email, password }) => {
         throw error;
     }
 };
-import { isValidPassword } from "../../../config/utils/hash.js";
 
 export const loginService = async (email, password) => {
     try {
