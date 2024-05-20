@@ -1,10 +1,12 @@
 import express from "express";
+import { createUser, getUser, updateUser, deleteUser } from "./controller.js";
 
 const router = express.Router();
 
-router.post("/");
-router.get("/");
-router.put("/");
-router.delete("/");
+// Rutas para los diferentes endpoints
+router.post("/", createUser);
+router.get("/:id", getUser);
+router.put("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 export default router;
