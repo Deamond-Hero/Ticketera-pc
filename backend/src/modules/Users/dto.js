@@ -1,4 +1,4 @@
-import { createHash } from "../../utils/hash.js";
+import { createHash } from "../../config/utils/hash.js";
 
 // DTO para usuario
 export class UserDTO {
