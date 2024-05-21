@@ -1,7 +1,7 @@
-import  { redisClient } from "../config/redisClient.js";
+import client from "../config/redisClient.js";
 
 export const isTokenBlacklisted = (token, callback) => {
-  redisClient.get(token, (err, result) => {
+  client.get(token, (err, result) => {
     if (err) {
       callback(err, null);
     } else {

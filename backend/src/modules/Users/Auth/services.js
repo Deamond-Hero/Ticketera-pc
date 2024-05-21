@@ -4,7 +4,7 @@ import { UserDTO } from "../dto.js";
 import { isValidPassword } from "../../../config/utils/hash.js";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
-import { redisClient } from "../../../config/redisClient.js";
+import client from "../../../config/redisClient.js";
 
 configDotenv();
 
@@ -55,7 +55,7 @@ export const logoutService = (token) => {
   const decoded = jwt.verify(token, secretKey);
   const expirationTime = decoded.exp - Math.floor(Date.now() / 1000);
 
-  redisClient.setex(token, expirationTime, "blacklisted", (err) => {
+  client.setEx(token, expirationTime, "blacklisted", (err) => {
     if (err) {
       throw new Error("Failed to blacklist token");
     }

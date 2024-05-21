@@ -1,5 +1,5 @@
 import { resSuccess, resFail } from "../../../config/utils/response.js";
-import { createUserService, loginService, logoutService, isTokenBlacklisted } from "./services.js";
+import { createUserService, loginService, logoutService } from "./services.js";
 import { logger } from "../../../config/logger.js";
 
 export const login = async (req, res) => {
