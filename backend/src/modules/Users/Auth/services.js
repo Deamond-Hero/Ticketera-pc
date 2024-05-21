@@ -8,6 +8,8 @@ import client from "../../../config/redisClient.js";
 
 configDotenv();
 
+const SECRET_KEY = process.env.JWT_SECRET;
+
 export const createUserService = async ({ email, password }) => {
   try {
     if (!email || !password) {
@@ -40,8 +42,7 @@ export const loginService = async ({ email, password }) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
+      { id: user._id, email: user.email, role: user.role }, SECRET_KEY,
     );
 
     return { user, token };
@@ -52,7 +53,7 @@ export const loginService = async ({ email, password }) => {
 };
 
 export const logoutService = (token) => {
-  const decoded = jwt.verify(token, secretKey);
+  const decoded = jwt.verify(token, SECRET_KEY);
   const expirationTime = decoded.exp - Math.floor(Date.now() / 1000);
 
   client.setEx(token, expirationTime, "blacklisted", (err) => {
