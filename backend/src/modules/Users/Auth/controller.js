@@ -1,5 +1,5 @@
 import { resSuccess, resFail } from "../../../config/utils/response.js";
-import { createUserService, loginService, logoutService } from "./services.js";
+import { createUserService, loginService, logoutService, isTokenBlacklisted } from "./services.js";
 import { logger } from "../../../config/logger.js";
 
 export const login = async (req, res) => {
@@ -27,8 +27,8 @@ export const register = async (req, res) => {
 export const logout = async (req, res) => {
     const token = req.header("Authorization").replace("Bearer ", "");
     try {
-        const result = await logoutService(token);
-        resSuccess(res, 200, "Logout exitoso", result);
+        logoutService(token);
+        resSuccess(res, 200, "Logout exitoso");
     } catch (error) {
         logger.error(error);
         resFail(res, 400, "Logout fallido" , error);
