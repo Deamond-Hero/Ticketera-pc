@@ -11,21 +11,21 @@ export const isTokenBlacklisted = (token, callback) => {
 };
 
 export const verifyToken = (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '');
+  const token = req.header("Authorization").replace("Bearer ", "");
 
   isTokenBlacklisted(token, (err, blacklisted) => {
       if (err) {
-          return res.status(500).json({ message: 'Internal server error' });
+          return res.status(500).json({ message: "Internal server error" });
       }
       if (blacklisted) {
-          return res.status(401).json({ message: 'Token has been logged out' });
+          return res.status(401).json({ message: "Token has been logged out" });
       }
       try {
           const decoded = jwt.verify(token, secretKey);
           req.user = decoded;
           next();
       } catch (error) {
-          res.status(401).json({ message: 'Invalid token' });
+          res.status(401).json({ message: "Invalid token" });
       }
   });
 };
