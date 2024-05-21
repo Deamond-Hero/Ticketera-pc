@@ -1,7 +1,7 @@
 import { configDotenv } from "dotenv";
 import express from "express";
 import { connectDb } from "./config/mongoConnect.js";
-import { addLogger, logger } from "./Config/logger.js";
+import { addLogger, logger } from "./config/logger.js";
 import cors from "cors";
 import { resFail } from "./config/utils/response.js";
 import usersRouter from "./modules/Users/router.js";
