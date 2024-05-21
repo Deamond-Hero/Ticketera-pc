@@ -2,6 +2,10 @@ import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
 import { isValidPassword } from "../../../config/utils/hash.js";
+import jwt from "jsonwebtoken";
+import { configDotenv } from "dotenv";
+
+configDotenv();
 
 export const createUserService = async ({ email, password }) => {
     try {
@@ -24,7 +28,7 @@ export const createUserService = async ({ email, password }) => {
     }
 };
 
-export const loginService = async (email, password) => {
+export const loginService = async ({ email, password }) => {
     try {
         const user = await User.findOne({ email });
         if (!user) {
@@ -33,9 +37,20 @@ export const loginService = async (email, password) => {
         if (!isValidPassword(user, password)) {
             throw new Error("Contraseña incorrecta");
         }
-        return user;
+
+        const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, process.env.JWT_SECRET);
+
+        return { user, token };
     } catch (error) {
         logger.error("Error al iniciar sesión: " + error);
         throw error;
+    }
+};
+
+export const logoutService = async () => {
+    try {
+        // TODO): Implement logout service blacklist
+    } catch (error) {
+        
     }
 };

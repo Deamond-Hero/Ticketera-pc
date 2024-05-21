@@ -9,6 +9,7 @@ import authRouter from "./modules/Users/Auth/router.js";
 import ticketsRouter from "./modules/Tickets/router.js";
 import servicesRouter from "./modules/Services/router.js";
 import schedulesRouter from "./modules/Schedules/router.js";
+import bodyParser from "body-parser";
 
 configDotenv();
 
@@ -41,6 +42,7 @@ app.use(express.static("public"));
 app.use(addLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Middleware para manejar JSON inválido
 app.use((err, req, res, next) => {
