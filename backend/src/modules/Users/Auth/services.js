@@ -2,13 +2,8 @@ import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
 import { isValidPassword } from "../../../config/utils/hash.js";
-import jwt from "jsonwebtoken";
-import { configDotenv } from "dotenv";
+import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
 import client from "../../../config/redisClient.js";
-
-configDotenv();
-
-const SECRET_KEY = process.env.JWT_SECRET;
 
 export const createUserService = async ({ email, password }) => {
   try {
@@ -24,7 +19,12 @@ export const createUserService = async ({ email, password }) => {
 
     const newUser = await User.create(new UserDTO({ email, password }));
 
-    return { status: "Success", mensaje: "Usuario creado con éxito", newUser };
+    if (!newUser) {
+      throw new Error("Error al crear el usuario");
+    }
+
+    logger.info(`Usuario creado ${newUser.email}`);
+    return newUser;
   } catch (error) {
     logger.error(`Error al crear el usuario: ${error.message}`);
     throw error;
@@ -33,27 +33,27 @@ export const createUserService = async ({ email, password }) => {
 
 export const loginService = async ({ email, password }) => {
   try {
+    logger.info(`Intentando iniciar sesión para el correo: ${email}`);
     const user = await User.findOne({ email });
     if (!user) {
       throw new Error("Usuario no encontrado");
     }
     if (!isValidPassword(user, password)) {
-      throw new Error("Contraseña incorrecta");
+      throw new Error("Contraseña incorrecta");
     }
 
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role }, SECRET_KEY,
-    );
+    const token = generateToken({ id: user._id, email: user.email, role: user.role });
 
+    logger.info(`Inicio de sesión exitoso para el usuario: ${user.email}`);
     return { user, token };
   } catch (error) {
-    logger.error("Error al iniciar sesión: " + error);
+    logger.error(`Error al iniciar sesión: ${error.message}`);
     throw error;
   }
 };
 
 export const logoutService = (token) => {
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = verifyToken(token);
   const expirationTime = decoded.exp - Math.floor(Date.now() / 1000);
 
   client.setEx(token, expirationTime, "blacklisted", (err) => {
