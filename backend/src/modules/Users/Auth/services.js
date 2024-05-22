@@ -24,7 +24,12 @@ export const createUserService = async ({ email, password }) => {
 
     const newUser = await User.create(new UserDTO({ email, password }));
 
-    return { status: "Success", mensaje: "Usuario creado con éxito", newUser };
+    if (!newUser) {
+      throw new Error("Error al crear el usuario");
+    }
+
+    logger.info(`Usuario creado ${newUser.email}`);
+    return newUser;
   } catch (error) {
     logger.error(`Error al crear el usuario: ${error.message}`);
     throw error;
@@ -33,6 +38,7 @@ export const createUserService = async ({ email, password }) => {
 
 export const loginService = async ({ email, password }) => {
   try {
+    logger.info(`Intentando iniciar sesión para el correo: ${email}`);
     const user = await User.findOne({ email });
     if (!user) {
       throw new Error("Usuario no encontrado");
@@ -45,9 +51,10 @@ export const loginService = async ({ email, password }) => {
       { id: user._id, email: user.email, role: user.role }, SECRET_KEY,
     );
 
+    logger.info(`Inicio de sesión exitoso para el usuario: ${user.email}`);
     return { user, token };
   } catch (error) {
-    logger.error("Error al iniciar sesión: " + error);
+    logger.error(`Error al iniciar sesión: ${error.message}`);
     throw error;
   }
 };

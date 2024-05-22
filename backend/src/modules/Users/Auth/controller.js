@@ -4,8 +4,9 @@ import { logger } from "../../../config/logger.js";
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
+    logger.info(`Datos recibidos: email=${email}, password=${password}`);
     try {
-        const { user, token } = await loginService(email, password);
+        const { user, token } = await loginService({ email, password });
         resSuccess(res, 200, "Inicio de sesion exitoso", { user, token });
     } catch (error) {
         logger.error(error);
@@ -17,7 +18,7 @@ export const register = async (req, res) => {
     try {
         const { email, password } = req.body;
         const result = await createUserService({ email, password });
-        resSuccess(res, 200, "User created successfully", result);
+        resSuccess(res, 200, "Usuario creado con exito", result);
     } catch (error) {
         logger.error(error);
         resFail(res, 400, error.message, error);
