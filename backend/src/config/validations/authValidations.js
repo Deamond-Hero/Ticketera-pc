@@ -1,5 +1,5 @@
 import { check, validationResult } from "express-validator";
-import { resFail } from "../utils/response";
+import { resFail } from "../utils/response.js";
 
 export const registerValidation = [
   check("email").isEmail().withMessage("Debe ser un correo válido"),
