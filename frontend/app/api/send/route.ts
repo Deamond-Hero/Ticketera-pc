@@ -3,11 +3,9 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// export const config = {
-//   runtime: "edge", // Configuración para usar la API en el entorno Edge
-// };
-
-export const runtime = "edge";
+export const config = {
+  runtime: "edge", // Configuración para usar la API en el entorno Edge
+};
 
 export async function POST(request: NextRequest) {
   const { emailUser, message } = await request.json();
