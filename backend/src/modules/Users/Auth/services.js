@@ -2,13 +2,8 @@ import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
 import { isValidPassword } from "../../../config/utils/hash.js";
-import jwt from "jsonwebtoken";
-import { configDotenv } from "dotenv";
+import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
 import client from "../../../config/redisClient.js";
-
-configDotenv();
-
-const SECRET_KEY = process.env.JWT_SECRET;
 
 export const createUserService = async ({ email, password }) => {
   try {
@@ -44,12 +39,10 @@ export const loginService = async ({ email, password }) => {
       throw new Error("Usuario no encontrado");
     }
     if (!isValidPassword(user, password)) {
-      throw new Error("Contraseña incorrecta");
+      throw new Error("Contraseña incorrecta");
     }
 
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role }, SECRET_KEY,
-    );
+    const token = generateToken({ id: user._id, email: user.email, role: user.role });
 
     logger.info(`Inicio de sesión exitoso para el usuario: ${user.email}`);
     return { user, token };
@@ -60,7 +53,7 @@ export const loginService = async ({ email, password }) => {
 };
 
 export const logoutService = (token) => {
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = verifyToken(token);
   const expirationTime = decoded.exp - Math.floor(Date.now() / 1000);
 
   client.setEx(token, expirationTime, "blacklisted", (err) => {
