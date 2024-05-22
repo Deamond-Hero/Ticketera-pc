@@ -22,6 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
     - name: Change Directory to Frontend
       run: cd frontend
     - name: Install Dependencies
