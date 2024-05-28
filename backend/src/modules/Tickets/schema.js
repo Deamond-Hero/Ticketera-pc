@@ -2,7 +2,7 @@ import mongoose, { model } from "mongoose";
 const { Schema } = mongoose;
 
 const ticketSchema = new Schema({
-  title: { type: String, required: true },
+  subject: { type: String, required: true },
   description: String,
   status: { type: String, enum: ["En cola", "En proceso", "Finalizado", "Cancelado", "Retirado"], default: "En cola" },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
