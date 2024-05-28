@@ -8,7 +8,6 @@ import usersRouter from "./modules/Users/router.js";
 import authRouter from "./modules/Users/Auth/router.js";
 import ticketsRouter from "./modules/Tickets/router.js";
 import servicesRouter from "./modules/Services/router.js";
-import schedulesRouter from "./modules/Schedules/router.js";
 import bodyParser from "body-parser";
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -67,7 +66,6 @@ app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/tickets", ticketsRouter);
 app.use("/api/services", servicesRouter);
-app.use("/api/schedules", schedulesRouter);
 
 // Configuración de Swagger
 const swaggerOptions = {
