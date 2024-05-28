@@ -9,13 +9,6 @@ const ticketSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   phone: { type: String, required: true },
-  address: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    country: { type: String, required: true, default: "Argentina" },
-    zipCode: { type: String, required: true },
-  },
   agent: { type: Schema.Types.ObjectId, ref: "User" },
   service: { type: Schema.Types.ObjectId, ref: "Service", required: true },
   createdAt: { type: Date, default: Date.now },
