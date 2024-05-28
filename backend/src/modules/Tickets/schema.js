@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const ticketSchema = new Schema({
   title: { type: String, required: true },
   description: String,
-  status: { type: String, enum: ["En cola", "En proceso", "Terminado"], default: "En cola" },
+  status: { type: String, enum: ["En cola", "En proceso", "Finalizado", "Cancelado", "Retirado"], default: "En cola" },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -18,8 +18,6 @@ const ticketSchema = new Schema({
   },
   agent: { type: Schema.Types.ObjectId, ref: "User" },
   service: { type: Schema.Types.ObjectId, ref: "Service", required: true },
-  schedule: { type: Schema.Types.ObjectId, ref: "Schedule", required: true },
-  price: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
