@@ -1,0 +1,13 @@
+import mongoose, { model } from "mongoose";
+const { Schema } = mongoose;
+
+const commentSchema = new Schema({
+  text: { type: String, required: true },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+});
+
+const Comment = model("Comment", commentSchema);
+
+export default Comment;

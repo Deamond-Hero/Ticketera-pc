@@ -11,6 +11,7 @@ const ticketSchema = new Schema({
   phone: { type: String, required: true },
   agent: { type: Schema.Types.ObjectId, ref: "User" },
   service: { type: Schema.Types.ObjectId, ref: "Service", required: true },
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
