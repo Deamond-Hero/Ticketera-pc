@@ -1,18 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const templateSlice = createSlice({
+export const authReducer = createSlice({
     name: 'auth',
     initialState: {
-        token: "",
-        email: "",
-        name: "",
-        id: ""
+        userData:"",
+        userMesaggeError:""
     },
     reducers: {
-        increment: (state = action) => {
-            state.counter += 1;
+        setUserData: (state, action) => {
+            state.userData = action.payload
+        },
+        setUserMessage: (state, action) => {
+            state.userMesaggeError = action.payload
         },
     },
 });
 
-export const { increment } = auth.actions;
+export const { setUserData, setUserMessage } = authReducer.actions;
+
+export default authReducer.reducer;

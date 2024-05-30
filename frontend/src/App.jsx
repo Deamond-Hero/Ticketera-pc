@@ -6,6 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Login from './pages/LoginPage';
+import RegisterPage from './components/Register';
 import './App.css'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <main>
       <Routes >
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<RegisterPage />} />
       </Routes >
     </main>
   )
