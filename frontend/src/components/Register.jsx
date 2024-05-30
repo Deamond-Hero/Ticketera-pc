@@ -49,9 +49,9 @@ const RegisterPage = () => {
   const handleSubmit = async(event) => {
     event.preventDefault();
 
-    // const dat = import.meta.env.NEXT_PUBLIC_BACKEND_URL
-
-    // axios.post(`${dat}/auth/register`, formState)
+    // const { email, password } = formState;
+    // console.log(email, password);
+    // axios.post(`https://s15-09-ft-node-react-hr1e.onrender.com/api/auth/register`, {email, password})
     // .then(response => {
     //     console.log(response.data);
     // })
@@ -70,10 +70,26 @@ const RegisterPage = () => {
       });
     } else {
       try {
+        // const response = await fetch('https://s15-09-ft-node-react-hr1e.onrender.com/api/auth/register', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(formState)
+        //     });
+        //     console.log(response)
 
-        const response = await api.post('/auth/register', { email: formState.email, password : formState.password});
-        console.log(response)
-        console.log('Formulario enviado', response.data);
+        const response = await axios.post('https://s15-09-ft-node-react-hr1e.onrender.com/api/auth/register', formState, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        // const { email, password } = formState;
+        // console.log({email, password});
+        // const response = await api.post('api/auth/register', formState);
+        // console.log(response)
+        // console.log('Formulario enviado', response.data);
 
         if (response.error) {
           console.log(response.error);
@@ -94,6 +110,7 @@ const RegisterPage = () => {
         });
       } catch (error) {
         console.log(error);
+        console.log(error.message);
       }
     }
   };
@@ -114,7 +131,7 @@ const RegisterPage = () => {
         </label>
 
        {
-         formState.errors && formState.errors.email && <p className="error">{formState.errors.email}</p>
+        //  formState.errors && formState.errors.email && <p className="error">{formState.errors.email}</p>
        }
        <label>Password
             <input
@@ -127,7 +144,7 @@ const RegisterPage = () => {
             />
        </label>
         {
-          formState.errors.password && <p className="error">{formState.errors.password}</p>
+          // formState.errors.password && <p className="error">{formState.errors.password}</p>
         }
 
         <label>Password2
@@ -142,7 +159,7 @@ const RegisterPage = () => {
         </label>
 
         {
-          formState.errors.password2 && <p className="error">{formState.errors.password2}</p>
+          // formState.errors.password2 && <p className="error">{formState.errors.password2}</p>
         }
 
         <button type="submit">Registrarse</button>
