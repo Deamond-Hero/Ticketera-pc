@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,6 +5,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Login from './pages/LoginPage';
+import Register from './pages/RegisterPage';
 import './App.css'
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
     <main>
       <Routes >
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes >
     </main>
   )

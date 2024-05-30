@@ -1,9 +1,12 @@
 // archivo para peticiones
 
 import axios from 'axios';
+import { getEnvVar } from '../helper/getEnvVar';
+
+const { NEXT_PUBLIC_BACKEND_URL } = getEnvVar();
 
 const api = axios.create({
-    baseURL: VITE_API_URL
+    baseURL: NEXT_PUBLIC_BACKEND_URL
 })
 
 //INTERCEPTORES
