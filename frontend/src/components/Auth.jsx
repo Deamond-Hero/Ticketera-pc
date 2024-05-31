@@ -1,12 +1,21 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LoginService } from "../redux/actionsUser";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import api from "../utils/Api";
 
 const Auth = () => {
 
     const dispatch = useDispatch()
+    const dataUser = useSelector(state => state.dataUser)
+    const navigate = useNavigate()
+    useEffect(() => {
+
+        console.log(dataUser)
+
+    }, [dataUser])
 
     const [form, setForm] = useState({
         email: '',
@@ -45,7 +54,6 @@ const Auth = () => {
 
 
 
-
     const valueChange = (e) => {
         const { name, value } = e.target;
         setForm(prevForm => ({
@@ -62,13 +70,15 @@ const Auth = () => {
         if (!validationErrors.email && !validationErrors.password) {
 
             dispatch(LoginService(form))
+            navigate("/dashboard")
+            console.log(dataUser)
 
 
             console.log("Formulario enviado", form);
         } else {
             // Hay errores, no se envía el formulario
             console.log("Errores en el formulario", validationErrors);
-            
+
         }
     };
 
