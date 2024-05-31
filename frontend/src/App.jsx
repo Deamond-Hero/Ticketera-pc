@@ -11,7 +11,7 @@ import Login from './pages/LoginPage';
 import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard';
 import RegisterPage from './components/Register';
-import './App.css'
+import Navbar from "./components/Navbar";
 
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
 
   return (
     <main>
+      <Navbar/>
       <Routes >
         <Route path='/' element={<LandingPage />} />
         {!isLoged ? (<Route path='/login' element={<Login />} />) : (<Route path='/login' element={<Dashboard />} />)}
