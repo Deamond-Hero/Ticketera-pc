@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import api from "../utils/Api";
-import axios from "axios";
 
  
 const RegisterPage = () => {
@@ -49,18 +48,6 @@ const RegisterPage = () => {
   const handleSubmit = async(event) => {
     event.preventDefault();
 
-    // const { email, password } = formState;
-    // console.log(email, password);
-    // axios.post(`https://s15-09-ft-node-react-hr1e.onrender.com/api/auth/register`, {email, password})
-    // .then(response => {
-    //     console.log(response.data);
-    // })
-    // .catch(error => {
-    //     console.log('Error en la solicitud POST:', error);
-    // });
-
-
-
     const errors = validateForm();
 
     if (Object.keys(errors).length > 0) {
@@ -71,17 +58,10 @@ const RegisterPage = () => {
     } else {
       try {
 
-        const {email , password} = formState;
+        const { email, password } = formState;
         console.log({email, password});
-        const response = await fetch(`${import.meta.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formState.email, formState.password)
-      });
+        const response = await api.post('/api/auth/register', formState);
         console.log(response)
-        console.log(import.meta.env.NEXT_PUBLIC_BACKEND_URL)
         console.log('Formulario enviado', response.data);
 
         if (response.error) {
