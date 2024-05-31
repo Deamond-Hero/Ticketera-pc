@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { logger } from "../../config/logger.js";
 import Service from "./schema.js";
-import User from "../Users/schema.js"
+import User from "../Users/schema.js";
 
 export const getAllServices = async () => {
     try {
@@ -21,7 +21,7 @@ export const getIdService = async (id) => {
             logger.info(`ID inválido: ${id}`);
             return null;
         }
-        const service = await Service.findById(id).populate('agent').lean();
+        const service = await Service.findById(id);
         if (!service) {
             logger.info(`No se ha encontrado el servicio con el ID: ${id}`);
             return null;
@@ -37,8 +37,8 @@ export const getIdService = async (id) => {
 export const addNewService = async ({ name, description, price, agent }) => {
     try {
         if (!name || !description || !price || !agent) {
-            logger.info(`Campos faltantes parar crear un Servicio`)
-            return null
+            logger.info("Campos faltantes parar crear un Servicio");
+            return null;
         }
 
         if (!mongoose.Types.ObjectId.isValid(agent)) {
@@ -52,15 +52,15 @@ export const addNewService = async ({ name, description, price, agent }) => {
             return null;
         }
 
-        const newService = await Service.create({ name, description, price, agent })
+        const newService = await Service.create({ name, description, price, agent });
 
-        logger.info(`Servicio creado con éxito`)
-        return newService
+        logger.info("Servicio creado con éxito");
+        return newService;
     } catch (error) {
-        logger.error(`Error al crear un nuevo servicio: ${error.message}`)
-        throw error
+        logger.error(`Error al crear un nuevo servicio: ${error.message}`);
+        throw error;
     }
-}
+};
 
 export const editService = async (id, service) => {
     try {
@@ -69,9 +69,15 @@ export const editService = async (id, service) => {
             return null;
         }
 
+        const serviceExits = await Service.findById(id);
+        if (!serviceExits) {
+            logger.info(`El servicio con ID: ${id} no existe`);
+            return null;
+        }
+
         if (!id || !service.name || !service.description || !service.price || !service.agent) {
-            logger.info(`Campos faltantes para editar un Servicio`)
-            return null
+            logger.info("Campos faltantes para editar un Servicio");
+            return null;
         }
 
         const agentExists = await User.findById(service.agent);
@@ -83,16 +89,16 @@ export const editService = async (id, service) => {
         const serviceUpdate = await Service.findByIdAndUpdate(
             id,
             { $set: service },
-            { new: true }
+            { new: true },
         );
 
-        logger.info(`Servicio editado con éxito`)
-        return serviceUpdate
+        logger.info("Servicio editado con éxito");
+        return serviceUpdate;
     } catch (error) {
-        logger.error(`Error al editar un servicio: ${error.message}`)
-        throw error
+        logger.error(`Error al editar un servicio: ${error.message}`);
+        throw error;
     }
-}
+};
 
 export const deleteServices = async (id) => {
     try {
@@ -100,6 +106,13 @@ export const deleteServices = async (id) => {
             logger.info(`ID inválido: ${id}`);
             return null;
         }
+
+        const serviceExits = await Service.findById(id);
+        if (!serviceExits) {
+            logger.info(`El servicio con ID: ${id} no existe`);
+            return null;
+        }
+
         const service = await Service.findByIdAndDelete(id);
 
         logger.info(`Se ha eliminado el servicio con el ID: ${id}`);
