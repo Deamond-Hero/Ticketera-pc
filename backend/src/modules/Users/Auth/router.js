@@ -1,5 +1,5 @@
 import express from "express";
-import { register, login, logout } from "./controller.js";
+import { register, login, logout, passwordChangeRequest ,changePassword} from "./controller.js";
 import {
   registerValidation,
   loginValidation,
@@ -145,5 +145,8 @@ router.post("/login", loginValidation, validate, login);
  *         description: Internal server error
  */
 router.post("/logout", logout);
+
+router.post("/passwordChangeRequest",passwordChangeRequest);
+router.post("/changePassword",changePassword);
 
 export default router;

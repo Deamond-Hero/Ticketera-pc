@@ -6,6 +6,7 @@ const userSchema = new Schema({
   password: { type: String, required: true, unique: true },
   role: { type: String, required: true, enum: ["Cliente", "Tecnico", "Administrador"], default: "Cliente" },
   tickets: [{ type: Schema.Types.ObjectId, ref: "Ticket", default: [], required: true }],
+  token: { type: String},
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
