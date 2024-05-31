@@ -7,11 +7,13 @@ import {
 import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import './App.css'
+import Navbar from "./components/Navbar";
 
 function App() {
 
   return (
     <main>
+      <Navbar/>
       <Routes >
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />

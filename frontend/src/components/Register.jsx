@@ -49,9 +49,9 @@ const RegisterPage = () => {
   const handleSubmit = async(event) => {
     event.preventDefault();
 
-    // const dat = import.meta.env.NEXT_PUBLIC_BACKEND_URL
-
-    // axios.post(`${dat}/auth/register`, formState)
+    // const { email, password } = formState;
+    // console.log(email, password);
+    // axios.post(`https://s15-09-ft-node-react-hr1e.onrender.com/api/auth/register`, {email, password})
     // .then(response => {
     //     console.log(response.data);
     // })
@@ -70,10 +70,26 @@ const RegisterPage = () => {
       });
     } else {
       try {
+        // const response = await fetch('https://s15-09-ft-node-react-hr1e.onrender.com/api/auth/register', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(formState)
+        //     });
+        //     console.log(response)
 
-        const response = await api.post('/auth/register', { email: formState.email, password : formState.password});
-        console.log(response)
-        console.log('Formulario enviado', response.data);
+        const response = await axios.post('https://s15-09-ft-node-react-hr1e.onrender.com/api/auth/register', formState, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        // const { email, password } = formState;
+        // console.log({email, password});
+        // const response = await api.post('api/auth/register', formState);
+        // console.log(response)
+        // console.log('Formulario enviado', response.data);
 
         if (response.error) {
           console.log(response.error);
@@ -94,15 +110,16 @@ const RegisterPage = () => {
         });
       } catch (error) {
         console.log(error);
+        console.log(error.message);
       }
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h2>Register</h2>
-        <label>Email
+    <div className="bg-[#FFFFFF] text-text-dark w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-12">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <h2 className="font-semibold text-5xl tracking-wide mb-6">Register</h2>
+        <label className="flex flex-col">Email
             <input
             type="email"
             required
@@ -110,13 +127,14 @@ const RegisterPage = () => {
             value={formState.email}
             onChange={onInputChange}
             placeholder="Ingrese su Email"
+            className="rounded-lg bg-[#FBFBFB] h-12 w-96 border border-text-dark text-text-dark px-2  focus:shadow-input-focus focus:outline-none focus:border-none"
             />
         </label>
 
        {
          formState.errors && formState.errors.email && <p className="error">{formState.errors.email}</p>
        }
-       <label>Password
+       <label className="flex flex-col">Password
             <input
             type="password"
             required
@@ -124,13 +142,14 @@ const RegisterPage = () => {
             value={formState.password}
             onChange={onInputChange}
             placeholder="Ingrese su Contraseña"
+            className="rounded-lg bg-[#FBFBFB] h-12 w-96 border border-text-dark text-text-dark px-2  focus:shadow-input-focus focus:outline-none focus:border-none"
             />
        </label>
         {
           formState.errors.password && <p className="error">{formState.errors.password}</p>
         }
 
-        <label>Password2
+        <label className="flex flex-col">Password2
             <input
             type="password"
             required
@@ -138,6 +157,7 @@ const RegisterPage = () => {
             value={formState.password2}
             onChange={onInputChange}
             placeholder="Confirme su Contraseña"
+            className="rounded-lg bg-[#FBFBFB] h-12 w-96 border border-text-dark text-text-dark px-2  focus:shadow-input-focus focus:outline-none focus:border-none"
             />
         </label>
 
@@ -145,9 +165,9 @@ const RegisterPage = () => {
           formState.errors.password2 && <p className="error">{formState.errors.password2}</p>
         }
 
-        <button type="submit">Registrarse</button>
+        <button type="submit" className="h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide bg-default-btn">Registrarse</button>
       </form>
-      <Link to={'/Login'} > <span >¿Ya tienes una cuenta?</span> </Link>
+      <Link to={'/login'} > <span className="text-xl underline tracking-wide">¿Ya tienes una cuenta?</span> </Link>
     </div>
   );
 };
