@@ -9,8 +9,8 @@ import authRouter from "./modules/Users/Auth/router.js";
 import ticketsRouter from "./modules/Tickets/router.js";
 import servicesRouter from "./modules/Services/router.js";
 import bodyParser from "body-parser";
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 configDotenv();
 
@@ -32,7 +32,7 @@ app.use(
     credentials: true, // Credentials are true to allow sending cookies with requests
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 app.set("trust proxy", 1);
@@ -70,18 +70,18 @@ app.use("/api/services", servicesRouter);
 // Configuración de Swagger
 const swaggerOptions = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 's15-09-ft-node-react API',
-      version: '1.0.0',
-      description: 'API del grupo s15-09-ft-node-react de No Country',
+      title: "s15-09-ft-node-react API",
+      version: "1.0.0",
+      description: "API del grupo s15-09-ft-node-react de No Country",
     },
   },
-  apis: ['./src/modules/**/**/*.js'], 
+  apis: ["./src/modules/**/**/*.js"], 
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Configuración de servidor
 logger.info("Starting server");
