@@ -1,53 +1,56 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { LoginService } from "../redux/actionsUser";
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import api from "../utils/Api";
 
 const Auth = () => {
+
+    const dispatch = useDispatch()
+    const dataUser = useSelector(state => state.dataUser)
+    const navigate = useNavigate()
+    useEffect(() => {
+
+        console.log(dataUser)
+
+    }, [dataUser])
 
     const [form, setForm] = useState({
         email: '',
         password: '',
-        confirmPassword: ''
     });
 
     const [errors, setErrors] = useState({
         email: '',
         password: '',
-        confirmPassword: ''
     });
 
     const validate = () => {
-        const errors = { email: '', password: '', confirmPassword: '' };
-    
+        const errors = { email: '', password: '' };
+
         if (!form.email) {
             errors.email = "El email es obligatorio";
         } else if (!/\S+@\S+\.\S+/.test(form.email)) {
             errors.email = "El email no es válido";
         }
-    
+
         if (!form.password) {
             errors.password = "La contraseña es obligatoria";
         } else if (form.password.length < 6) {
             errors.password = "La contraseña debe tener al menos 6 caracteres";
-        } else if (!/[A-Z]/.test(form.password)) {
-            errors.password = "La contraseña debe tener al menos una letra mayúscula";
+
         } else if (!/[a-z]/.test(form.password)) {
             errors.password = "La contraseña debe tener al menos una letra minúscula";
         } else if (!/[0-9]/.test(form.password)) {
             errors.password = "La contraseña debe tener al menos un número";
-        } else if (!/[^A-Za-z0-9]/.test(form.password)) {
-            errors.password = "La contraseña debe tener al menos un carácter especial";
+
         }
-    
-        if (!form.confirmPassword) {
-            errors.confirmPassword = "Debe confirmar la contraseña";
-        } else if (form.password !== form.confirmPassword) {
-            errors.confirmPassword = "Las contraseñas no coinciden";
-        }
-    
+
+
         return errors;
     };
-    
 
 
 
@@ -59,17 +62,23 @@ const Auth = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         setErrors(validationErrors);
 
-        if (!validationErrors.email && !validationErrors.password && !validationErrors.confirmPassword) {
-            // No hay errores, se puede proceder con el envío del formulario
+        if (!validationErrors.email && !validationErrors.password) {
+
+            dispatch(LoginService(form))
+            navigate("/dashboard")
+            console.log(dataUser)
+
+
             console.log("Formulario enviado", form);
         } else {
             // Hay errores, no se envía el formulario
             console.log("Errores en el formulario", validationErrors);
+
         }
     };
 
