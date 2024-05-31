@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { logger } from "../../config/logger.js";
 import Service from "./schema.js";
+import User from "../Users/schema.js"
 
 export const getAllServices = async () => {
     try {
@@ -20,7 +21,7 @@ export const getIdService = async (id) => {
             logger.info(`ID inválido: ${id}`);
             return null;
         }
-        const service = await Service.findById(id);
+        const service = await Service.findById(id).populate('agent').lean();
         if (!service) {
             logger.info(`No se ha encontrado el servicio con el ID: ${id}`);
             return null;
@@ -33,13 +34,25 @@ export const getIdService = async (id) => {
     }
 };
 
-export const addNewService = async ({ name, description, price }) => {
+export const addNewService = async ({ name, description, price, agent }) => {
     try {
-        if (!name || !description || !price) {
+        if (!name || !description || !price || !agent) {
             logger.info(`Campos faltantes parar crear un Servicio`)
             return null
         }
-        const newService = await Service.create({ name, description, price })
+
+        if (!mongoose.Types.ObjectId.isValid(agent)) {
+            logger.info(`Técnico inválido: ${agent}`);
+            return null;
+        }
+
+        const agentExists = await User.findById(agent);
+        if (!agentExists) {
+            logger.info(`El agente con ID: ${agent} no existe`);
+            return null;
+        }
+
+        const newService = await Service.create({ name, description, price, agent })
 
         logger.info(`Servicio creado con éxito`)
         return newService
@@ -56,10 +69,17 @@ export const editService = async (id, service) => {
             return null;
         }
 
-        if (!id || !service.name || !service.description || !service.price) {
+        if (!id || !service.name || !service.description || !service.price || !service.agent) {
             logger.info(`Campos faltantes para editar un Servicio`)
             return null
         }
+
+        const agentExists = await User.findById(service.agent);
+        if (!agentExists) {
+            logger.info(`El agente con ID: ${service.agent} no existe`);
+            return null;
+        }
+
         const serviceUpdate = await Service.findByIdAndUpdate(
             id,
             { $set: service },

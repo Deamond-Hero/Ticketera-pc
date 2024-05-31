@@ -4,8 +4,8 @@ import { getAllServices, getIdService, addNewService, editService, deleteService
 
 export const createService = async (req, res) => {
     try {
-        const { name, description, price } = req.body
-        const service = await addNewService({ name, description, price })
+        const { name, description, price, agent } = req.body
+        const service = await addNewService({ name, description, price, agent })
 
         if (service) {
             resSuccess(res, 200, "El Servicio fue creado con éxito", service);
