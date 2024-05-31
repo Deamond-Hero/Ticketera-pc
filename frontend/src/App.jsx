@@ -11,7 +11,6 @@ import Login from './pages/LoginPage';
 import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard';
 import RegisterPage from './components/Register';
-import './App.css'
 import Navbar from "./components/Navbar";
 
 
