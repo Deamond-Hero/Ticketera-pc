@@ -4,54 +4,45 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LoginService } from "../redux/actionsUser";
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
-import api from "../utils/Api";
+import { validateLogin } from "../utils/validationLogin";
 
 const Auth = () => {
 
     const dispatch = useDispatch()
-    const dataUser = useSelector(state => state.dataUser)
+    const dataUser = useSelector(state => state.auth.userData)
+    const errorRequest = useSelector(state => state.auth.userMesaggeError)
     const navigate = useNavigate()
-    useEffect(() => {
-
-        console.log(dataUser)
-
-    }, [dataUser])
-
+    const [flag, setFlag] = useState(false)
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
-
     const [errors, setErrors] = useState({
         email: '',
         password: '',
     });
 
-    const validate = () => {
-        const errors = { email: '', password: '' };
 
-        if (!form.email) {
-            errors.email = "El email es obligatorio";
-        } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-            errors.email = "El email no es válido";
+    useEffect(() => {
+        if (errorRequest) {
+            setFlag(true)
+            setTimeout(() => {
+                setFlag(false)
+            }, 3000);
+            setFlag(false)
         }
+    }, [errorRequest])
 
-        if (!form.password) {
-            errors.password = "La contraseña es obligatoria";
-        } else if (form.password.length < 6) {
-            errors.password = "La contraseña debe tener al menos 6 caracteres";
-
-        } else if (!/[a-z]/.test(form.password)) {
-            errors.password = "La contraseña debe tener al menos una letra minúscula";
-        } else if (!/[0-9]/.test(form.password)) {
-            errors.password = "La contraseña debe tener al menos un número";
-
+    useEffect(() => {
+        if (errors.email || errors.password) {
+          setFlag(true);
+          const timer = setTimeout(() => {
+            setFlag(false);
+          }, 3000);
+    
+          return () => clearTimeout(timer);
         }
-
-
-        return errors;
-    };
-
+      }, [errors]);
 
 
     const valueChange = (e) => {
@@ -64,7 +55,7 @@ const Auth = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const validationErrors = validate();
+        const validationErrors = validateLogin();
         setErrors(validationErrors);
 
         if (!validationErrors.email && !validationErrors.password) {
@@ -76,7 +67,7 @@ const Auth = () => {
 
             console.log("Formulario enviado", form);
         } else {
-            // Hay errores, no se envía el formulario
+
             console.log("Errores en el formulario", validationErrors);
 
         }
@@ -94,8 +85,10 @@ const Auth = () => {
                         name="email"
                         onChange={valueChange}
                     />
-                    {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
                 </div>
+
+                {flag && errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
+
                 <div>
                     <label>Contraseña</label>
                     <input
@@ -104,8 +97,10 @@ const Auth = () => {
                         name="password"
                         onChange={valueChange}
                     />
-                    {errors.password && <span style={{ color: "red" }}>{errors.password}</span>}
                 </div>
+
+                {flag && errors.password && <span style={{ color: "red" }}>{errors.password}</span>}
+
                 <div>
                     <button type="submit">Ingresar</button>
                 </div>

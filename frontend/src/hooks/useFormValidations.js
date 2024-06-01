@@ -11,51 +11,39 @@ export const useFormValidations = (formState) => {
     });
 
     const isFormValid = () => {
-        if(!formState.email){
-            setErrorsState({
-                ...errorsState,
-                error: {
-                    ...errorsState.error,
-                    email: "El email es obligatorio"
-                }
-            })
+
+        let isValid = true;
+        let newErrors = {
+            email: "",
+            password: ""
+        };
+
+
+        if (!formState.email) {
+            newErrors.email = "El email es obligatorio";
+            isValid = false;
         } else if (!/\S+@\S+\.\S+/.test(formState.email)) {
-            setErrorsState({
-                ...errorsState,
-                error: {
-                    ...errorsState.error,
-                    email: "El email no es válido"
-                }
-            })
+            newErrors.email = "El email no es válido";
+            isValid = false;
         }
     
-        if(!formState.password){
-            setErrorsState({
-                ...errorsState,
-                error: {
-                    ...errorsState.error,
-                    password: "La contraseña es obligatoria"
-                }
-            })
+        if (!formState.password) {
+            newErrors.password = "La contraseña es obligatoria";
+            isValid = false;
         } else if (formState.password.length < 6) {
-            setErrorsState({
-                ...errorsState,
-                error: {
-                    ...errorsState.error,
-                    password: "La contraseña debe tener al menos 6 caracteres"
-                }
-            })
-        } 
-    
-        if(formState.password !== formState.password2){
-            setErrorsState({
-                ...errorsState,
-                error: {
-                    ...errorsState.error,
-                    password: "Las contraseñas no coinciden"
-                }
-            })
+            newErrors.password = "La contraseña debe tener al menos 6 caracteres";
+            isValid = false;
         }
+    
+        if (formState.password !== formState.password2) {
+            newErrors.password = "Las contraseñas no coinciden";
+            isValid = false;
+        }
+
+        setErrorsState((prevErrors) => ({
+            ...prevErrors,
+            error: newErrors
+        }));
     }
 
     const setApiErrors = (apiErrors) => {
