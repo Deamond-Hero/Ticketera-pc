@@ -1,5 +1,5 @@
 import { logger } from "../../config/logger.js";
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv";
 import User from "../Users/schema.js";
 import Ticket from "../Tickets/schema.js";
@@ -12,9 +12,9 @@ const transporter = nodemailer.createTransport({
     secure: true,
     auth: {
       user: process.env.MAIL_USERNAME,
-      pass: process.env.MAIL_PASSWORD
-    }
-  })
+      pass: process.env.MAIL_PASSWORD,
+    },
+  });
 
 export const sendMail = async (to, subject, htmlContent) => {
   const mailOptions = {
@@ -40,35 +40,35 @@ export const statusEmailService = async (id, role ) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       logger.info(`ID inválido: ${id}`);
-      throw new Error('ID inválido');
+      throw new Error("ID inválido");
     }
 
     const ticket = await Ticket.findById(id)
-        .select('agent user status')
-        .populate('agent')
-        .populate('user');
+        .select("agent user status")
+        .populate("agent")
+        .populate("user");
 
     if (!ticket) {
-      logger.error('Ticket no encontrado');
-      throw new Error('Ticket no encontrado');
+      logger.error("Ticket no encontrado");
+      throw new Error("Ticket no encontrado");
     }
 
-    let email = '';
-    if (role === 'Cliente') {
+    let email = "";
+    if (role === "Cliente") {
       email = ticket.agent.email;
-    } else if (role === 'Tecnico') {
+    } else if (role === "Tecnico") {
       email = ticket.user.email;
     } else {
-      throw new Error('Rol no válido');
+      throw new Error("Rol no válido");
     }
 
     const status = ticket.status;
     await sendMail(
       email,
       `Cambio de estado del ticket: ${id}`,
-      /*html*/`<p>El estado del ticket: ${id} fue actualizado a ${status}</p>`
+      /*html*/`<p>El estado del ticket: ${id} fue actualizado a ${status}</p>`,
     );
-    logger.info(`Correo electrónico enviado correctamente.`);
+    logger.info("Correo electrónico enviado correctamente.");
     return ;
   } catch (error) {
     console.error(`Error al enviar el correo electrónico error: ${error.message}`, error);
@@ -82,34 +82,34 @@ export const commentsEmailService = async (id, role ) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       logger.info(`ID inválido: ${id}`);
-      throw new Error('ID inválido');
+      throw new Error("ID inválido");
     }
 
     const ticket = await Ticket.findById(id)
-        .select('agent user status')
-        .populate('agent')
-        .populate('user');
+        .select("agent user status")
+        .populate("agent")
+        .populate("user");
 
     if (!ticket) {
-      logger.error('Ticket no encontrado');
-      throw new Error('Ticket no encontrado');
+      logger.error("Ticket no encontrado");
+      throw new Error("Ticket no encontrado");
     }
 
-    let email = '';
-    if (role === 'Cliente') {
+    let email = "";
+    if (role === "Cliente") {
       email = ticket.agent.email;
-    } else if (role === 'Tecnico') {
+    } else if (role === "Tecnico") {
       email = ticket.user.email;
     } else {
-      throw new Error('Rol no válido');
+      throw new Error("Rol no válido");
     }
 
     await sendMail(
       email,
       `Nuevo comentario en el ticket: ${id}`,
-      /*html*/`<p>Se a agegado un nuevo comentario en el ticket: ${id}</p>`
+      /*html*/`<p>Se a agegado un nuevo comentario en el ticket: ${id}</p>`,
     );
-    logger.info(`Correo electrónico enviado correctamente.`);
+    logger.info("Correo electrónico enviado correctamente.");
     return ;
   } catch (error) {
     console.error(`Error al enviar el correo electrónico error: ${error.message}`, error);

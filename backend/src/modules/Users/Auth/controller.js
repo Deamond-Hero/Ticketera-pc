@@ -40,7 +40,7 @@ export const logout = async (req, res) => {
 export const changePassword = async (req, res) => {
     try {
         const { token, email } = req.query;
-        const { newPassword } = req.body
+        const { newPassword } = req.body;
 
         changePasswordService({token, newPassword, email});
         resSuccess(res, 200, "Cambio de contraseña exitoso");
@@ -59,7 +59,7 @@ export const passwordChangeRequest = async (req, res) => {
         logger.info(magicLink);
         await sendMail(
             email,
-            'Restablecimiento de Contraseña',
+            "Restablecimiento de Contraseña",
 /*html*/    `<p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en [Nombre del Sitio o Aplicación]. Si no realizaste esta solicitud, por favor ignora este correo electrónico. De lo contrario, puedes cambiar tu contraseña utilizando el siguiente enlace:</p>
             <p>Para verificar tu dirección de correo electrónico, por favor haz clic en el siguiente 
             <a href="${magicLink}">enlace</a>.</p>
@@ -67,7 +67,7 @@ export const passwordChangeRequest = async (req, res) => {
             <p>Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en contactarnos en [Correo de soporte] o visitar nuestro [Sitio web de soporte].</p>
             <p>Gracias por utilizar [Nombre del Sitio o Aplicación].</p>
             <p>Saludos cordiales,
-            El equipo de [Nombre del Sitio o Aplicación]</p>`
+            El equipo de [Nombre del Sitio o Aplicación]</p>`,
         );
         resSuccess(res, 200, "Solicitud de cambio de contraseña exitoso");
     } catch (error) {

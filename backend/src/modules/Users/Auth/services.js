@@ -5,7 +5,7 @@ import { isValidPassword } from "../../../config/utils/hash.js";
 import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
 import client from "../../../config/redisClient.js";
 import { configDotenv } from "dotenv";
-import crypto from 'crypto';
+import crypto from "crypto";
 import { encode, decode } from "base64-url";
 import { createHash } from "../../../config/utils/hash.js";
 
@@ -70,7 +70,7 @@ export const logoutService = (token) => {
 };
 
 const generateEmailToken = () => {
-  return crypto.randomBytes(32).toString('hex');
+  return crypto.randomBytes(32).toString("hex");
 };
 
 export const passwordChangeRequestService = async ({ email,password}) => {
@@ -110,7 +110,7 @@ export const changePasswordService = async ({ token, newPassword, email }) => {
   try {
     decodedEmail = decode(email);
   } catch (error) {
-    throw new Error("Error al decodificar el email");
+    throw new Error("Error al decodificar el email", error);
   }
 
   const user = await User.findOne({ email: decodedEmail, token });
