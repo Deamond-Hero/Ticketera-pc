@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import api from "../utils/Api";
+import { useFormValidations } from "../hooks/useFormValidations";
 
  
 const RegisterPage = () => {
@@ -9,12 +10,9 @@ const RegisterPage = () => {
     email: '',
     password: '',
     password2: '',
-    errors: {}
   });
 
-  const [apiError, setApiError] = useState({
-    errorApi: '',
-  })
+  const { isFormValid, setApiErrors, errorsState  } = useFormValidations(formState);
 
 
   const onInputChange = (event) => {
@@ -26,72 +24,34 @@ const RegisterPage = () => {
     });
   };
 
-  const validateForm = ()  => {
-
-    const errors = {};
-
-    if (!formState.email.includes('@') || formState.email === '') {
-      errors.email = 'El email no es válido';
-    }
-
-    if (formState.password.length < 6 || formState.password === '') {
-      errors.password = 'La contraseña debe tener al menos 6 caracteres, una letra minúscula y una mayúscula';
-    }
-
-  if (formState.password !== formState.password2) {
-      errors.password = 'Las contraseñas no coinciden';
-    }
-
-    return errors;
-  };
 
   const handleSubmit = async(event) => {
     event.preventDefault();
 
-    const errors = validateForm();
-
-    if (Object.keys(errors).length > 0) {
-      setFormState({
-        ...formState,
-        errors
-      });
-    } else {
+    if (isFormValid()) {
       try {
+          // Aquí puedes hacer tu llamada a la API
+          const response = await api.post('/api/auth/register', formState);
 
-        const { email, password } = formState;
-        console.log({email, password});
-        const response = await api.post('/api/auth/register', formState);
-        console.log(response)
-        console.log('Formulario enviado', response.data);
-
-        if (response.error) {
-          console.log(response.error);
-          setFormState({
-            ...formState,
-            errors: response.error
-          })
-
-        setFormState({
-            ...formState,
-            errors: { apiError: response.error }
-          });
-        }
-
-        setFormState({
-          ...formState,
-          errors: undefined
-        });
+          if (!response.ok) {
+              setApiErrors(data.errors || {});
+          }
       } catch (error) {
-        console.log(error);
-        console.log(error.message);
+          setApiErrors({ apiError: error.message });
       }
-    }
+  }
+
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <h2>Register</h2>
+
+        {
+          errorsState.apiError.general && <p>{errorsState.apiError.general}</p>
+        }
+
         <label>Email
             <input
             type="email"
@@ -104,8 +64,9 @@ const RegisterPage = () => {
         </label>
 
        {
-        //  formState.errors && formState.errors.email && <p className="error">{formState.errors.email}</p>
+        errorsState.error.email && <p>{errorsState.error.email}</p>
        }
+
        <label>Password
             <input
             type="password"
@@ -116,8 +77,9 @@ const RegisterPage = () => {
             placeholder="Ingrese su Contraseña"
             />
        </label>
+
         {
-          // formState.errors.password && <p className="error">{formState.errors.password}</p>
+          errorsState.error.password && <p>{errorsState.error.password}</p>
         }
 
         <label>Password2
@@ -132,7 +94,7 @@ const RegisterPage = () => {
         </label>
 
         {
-          // formState.errors.password2 && <p className="error">{formState.errors.password2}</p>
+          errorsState.error.password && <p>{errorsState.error.password}</p>
         }
 
         <button type="submit">Registrarse</button>
