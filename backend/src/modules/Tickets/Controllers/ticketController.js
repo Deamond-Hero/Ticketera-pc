@@ -5,15 +5,14 @@ export const getTicket = async (req, res) => {
     try {
         const { id } = req.query;
         let result;
-        if(id){        
-            result = await getTicketById(id);        
+        if(id){      
+            result = await getTicketById(id);       
             resSuccess(res, 200, `Ticket con id: ${id}`, result);
         }else{
             result = await getTicketAll(); 
             resSuccess(res, 200, `Lista total de tickets:`, result);
         }    
                 
-        resFail(res, 400, "El comentario no existe. Verifique el id.", "Id incorrecto");
     } catch (error) {
         resFail(res, 400, "El ticket no existe. Verifique el id.", error);
     }

@@ -1,64 +1,60 @@
-import Ticket from "./schema.js";
+import Comments from "../Schemas/commentSchema.js";
 
-export const getTicketAll = async () => {
+export const getCommentsTicketAll = async (id) => {
     try {
-      const Ticket = await Ticket.find();
+      const query = {"ticket": id}
+      const Comment = await Comments.findOne(query);
   
-      if (!Ticket) {
+      if (!Comment) {
         throw new Error("Error al buscar el ticket.");
       }
   
-      return Ticket;
+      return Comment;
     } catch (error) {
       throw error;
     }
   };
 
-export const getTicketById = async (id) => {
+export const getCommentsTicketById = async (id) => {
   try {
     const query = { _id: id };
-    const Ticket = await Ticket.findOne(query);
+    const Comment = await Comments.findById(query);
 
-    if (!Ticket) {
+    if (!Comment) {
       throw new Error("Error al buscar el ticket.");
     }
 
-    return Ticket;
+    return Comment;
   } catch (error) {
     throw error;
   }
 };
 
-export const createTicket = async (dataTicket) => {
+export const createCommentsTicket = async (data) => {
   try {
-    if (!dataTicket) {
+    const dataCommentTicket = data
+    if (!dataCommentTicket) {
       throw new Error("Falta informacion.");
     }
 
-    const newData = new Ticket({
-        subject: dataTicket.subject,
-        description: dataTicket.description,
-        status: dataTicket.status || "En curso",
-        user: dataTicket.user,
-        firsName: dataTicket.firsName || "",
-        lastName: dataTicket.lastName || "",
-        phone: dataTicket.phone || "",
-        agent: dataTicket.agent,
-        service: dataTicket.service,
+    const newData = new Comments({
+        ticket: dataCommentTicket.idticket,
+        text: dataCommentTicket.text,
+        user: dataCommentTicket.iduser
     });
-    const newTicket = await Ticket.save(newData);
+    const newComment = await Comments.create(newData);
 
-    if (!newTicket) {
-      throw new Error("Error al crear el tiecket.");
+    if (!newComment) {
+      throw new Error("Error al crear el comentario.");
     }
 
-    return newTicket;
+    return newComment;
   } catch (error) {
     throw error;
   }
 };
 
-export const updateTicket = async (dataTicket) => {
+export const updateCommentsTicket = async (dataTicket) => {
   try {
     const query = { _id: dataTicket.id };
     const update = {
@@ -85,7 +81,7 @@ export const updateTicket = async (dataTicket) => {
   }
 };
 
-export const deleteTicket = async (id) => {
+export const deleteCommentsTicket = async (id) => {
   try {
     const query = { _id: id };
     const deletedTicket = await Ticket.deleteOne(query);

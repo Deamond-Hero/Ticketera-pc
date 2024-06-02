@@ -1,8 +1,8 @@
-import Ticket from "../Schemas/ticketSchema.js";
+import Tickets from "../Schemas/ticketSchema.js";
 
 export const getTicketAll = async () => {
     try {
-      const Ticket = await Ticket.find();
+      const Ticket = await Tickets.find();
   
       if (!Ticket) {
         throw new Error("Error al buscar el ticket.");
@@ -16,8 +16,7 @@ export const getTicketAll = async () => {
 
 export const getTicketById = async (id) => {
   try {
-    const query = { _id: id };
-    const Ticket = await Ticket.findOne(query);
+    const Ticket = await Tickets.findById(id);
 
     if (!Ticket) {
       throw new Error("Error al buscar el ticket.");
@@ -35,7 +34,7 @@ export const createTickets = async (dataTicket) => {
       throw new Error("Falta informacion.");
     }
 
-    const newData = new Ticket({
+    const newData = new Tickets({
         subject: dataTicket.subject,
         description: dataTicket.description,
         status: dataTicket.status || "En curso",
@@ -46,7 +45,7 @@ export const createTickets = async (dataTicket) => {
         agent: dataTicket.agent,
         service: dataTicket.service,
     });
-    const newTicket = await Ticket.save(newData);
+    const newTicket = await Tickets.create(newData);
 
     if (!newTicket) {
       throw new Error("Error al crear el tiecket.");
@@ -74,7 +73,7 @@ export const updateTickets = async (dataTicket) => {
         service: dataTicket.service,
       },
     };
-    const ticket = await Ticket.updateOne(query, update);
+    const ticket = await Tickets.updateOne(query, update);
     if (!ticket) {
       throw new Error("Ticket no actualizado.");
     }
@@ -88,7 +87,7 @@ export const updateTickets = async (dataTicket) => {
 export const deleteTickets = async (id) => {
   try {
     const query = { _id: id };
-    const deletedTicket = await Ticket.deleteOne(query);
+    const deletedTicket = await Tickets.deleteOne(query);
     if (!deletedTicket) {
       throw new Error("Ticket no se pudo eliminar.");
     }
