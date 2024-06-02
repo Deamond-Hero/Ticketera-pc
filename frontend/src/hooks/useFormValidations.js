@@ -4,8 +4,8 @@ export const useFormValidations = (formState) => {
 
     const [errorsState, setErrorsState] = useState({
         error: {
-            email,
-            password
+            email: '',
+            password: ''
         },
         apiError: {}
     });
@@ -44,6 +44,8 @@ export const useFormValidations = (formState) => {
             ...prevErrors,
             error: newErrors
         }));
+
+        return isValid;
     }
 
     const setApiErrors = (apiErrors) => {
@@ -52,10 +54,21 @@ export const useFormValidations = (formState) => {
             apiError: apiErrors
         });
     };
+
+    const clearErrors = () => {
+        setErrorsState({
+            error: {
+                email: '',
+                password: ''
+            },
+            apiError: {}
+        });
+    };
    
     return {
         isFormValid,
         setApiErrors,
+        clearErrors,
         errorsState
     }
 
