@@ -8,6 +8,7 @@ import {
   updateTickets,
   deleteTickets,
 } from "../Services/ticketServices.js";
+import { statusEmail } from "../../Mailer/controller.js";
 
 export const getTicket = async (req, res) => {
   try {
@@ -43,8 +44,9 @@ export const createTicket = async (req, res) => {
 
 export const updateTicket = async (req, res) => {
   try {
-    const updateTicket = req.body;
+    const {updateTicket, role} = req.body;
     const result = await updateTickets(updateTicket);
+    await statusEmail(result.id,role);
     resSuccess(res, 200, "Ticket actualizado con éxito", result);
   } catch (error) {
     resFail(res, 400, error.message, error);
