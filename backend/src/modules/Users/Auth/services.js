@@ -2,8 +2,14 @@ import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
 import { isValidPassword } from "../../../config/utils/hash.js";
-import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
+import { generateToken, verifyToken } from "../../../middlewares/auth.js";
 import client from "../../../config/redisClient.js";
+import { configDotenv } from "dotenv";
+import crypto from "crypto";
+import { encode, decode } from "base64-url";
+import { createHash } from "../../../config/utils/hash.js";
+
+configDotenv();
 
 export const createUserService = async ({ email, password }) => {
   try {
@@ -44,6 +50,11 @@ export const loginService = async ({ email, password }) => {
 
     const token = generateToken({ id: user._id, email: user.email, role: user.role });
 
+    if (!token) {
+      throw new Error("Error al generar el token");
+    }
+
+    logger.info(`Token generado ${token}`);
     logger.info(`Inicio de sesión exitoso para el usuario: ${user.email}`);
     return { user, token };
   } catch (error) {
@@ -61,4 +72,61 @@ export const logoutService = (token) => {
       throw new Error("Failed to blacklist token");
     }
   });
+};
+
+const generateEmailToken = () => {
+  return crypto.randomBytes(32).toString("hex");
+};
+
+export const passwordChangeRequestService = async ({ email,password}) => {
+  //logger.info(`Buscando usuario asociado al correo: ${email}`);
+  const user = await User.findOne({ email });
+
+  if (!user) {
+   // logger.error(`Usuario no encontrado`);
+    throw new Error("Usuario no encontrado");
+  }
+  
+  if (!isValidPassword(user, password)) {
+    //logger.error(`Contraseña incorrecta`);
+    throw new Error("Contraseña incorrecta");
+  }
+
+  //logger.info(`Usuario encontrado`);
+  const token = generateEmailToken();
+  
+  //logger.info(`Token generado ${token}`);
+  user.token =token;
+  await user.save();
+
+  //logger.info(`Token guardado`);
+
+  const encodedEmail = encode(email);
+
+  //logger.info(`Sifrado`);
+
+  const magicLink = `https://tu-dominio.com/reset-password?token=${token}&email=${encodedEmail}`;
+  return magicLink;
+};
+
+export const changePasswordService = async ({ token, newPassword, email }) => {
+
+  let decodedEmail;
+  try {
+    decodedEmail = decode(email);
+  } catch (error) {
+    throw new Error("Error al decodificar el email", error);
+  }
+
+  const user = await User.findOne({ email: decodedEmail, token });
+
+  if (!user) {
+    throw new Error("Usuario no encontrado o token inválido");
+  }
+
+  user.password = createHash(newPassword);
+  user.token = "";
+  await user.save();
+  logger.info(user);
+  return;
 };

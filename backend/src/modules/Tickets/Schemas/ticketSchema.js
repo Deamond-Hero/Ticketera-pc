@@ -7,22 +7,29 @@ const ticketSchema = new Schema(
     description: { type: String, required: true },
     status: {
       type: String,
+      enum: [
+        "Pendiente",
+        "Presupuestado",
+        "En cola",
+        "En proceso",
+        "Finalizado",
+        "Cancelado",
+        "Retirado",
+      ],
+      default: "Pendiente",
       required: true,
-      enum: ["En cola", "En proceso", "Finalizado", "Cancelado", "Retirado"],
-      default: "En cola",
     },
-    user: [{ type: Schema.Types.ObjectId, ref: "Users", default: [] }],
-    firstName: { type: String },
-    lastName: { type: String },
-    phone: { type: String },
-    agent: [{ type: Schema.Types.ObjectId, ref: "Users", default: [] }],
-    service: [{ type: Schema.Types.ObjectId, ref: "Services", default: [] }],
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    phone: { type: String, required: true },
+    agent: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
+    service: [{ type: Schema.Types.ObjectId, ref: "Service", required: true }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment", default: [], required: true }],
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true }
 );
 
-const Ticket = model("Tickets", ticketSchema);
+const Ticket = model("Ticket", ticketSchema);
 
 export default Ticket;
