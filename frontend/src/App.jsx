@@ -26,10 +26,15 @@ function App() {
       <Navbar/>
       <Routes >
         <Route path='/' element={<LandingPage />} />
-        {!isLoged ? (<Route path='/login' element={<Login />} />) : (<Route path='/login' element={<Dashboard />} />)}
+        {/* {!isLoged ? (<Route path='/login' element={<Login />} />) : (<Route path='/login' element={<Dashboard />} />)}
         {!isLoged ? (<Route path='/dashboard' element={<Login />} />) : (<Route path='/dashboard' element={<Dashboard />} />)}
         {!isLoged ? (<Route path='/register' element={<RegisterPage />} />) : (<Route path='/register' element={<LandingPage />} />)}
-        {!isLoged ? (<Route path='/home' element={<Landing />} />) : (<Route path='/home' element={<Landing />} />)}
+        {!isLoged ? (<Route path='/home' element={<Landing />} />) : (<Route path='/home' element={<Landing />} />)} */}
+
+        <Route path='/login' element={<Login />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/home' element={<Landing />} />
       </Routes >
     </main>
   )

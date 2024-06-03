@@ -1,3 +1,4 @@
+import { DataTable } from "../components/DataTable"
 import { Logout } from "../components/Logout"
 
 const Dashboard = () => {
@@ -5,6 +6,7 @@ const Dashboard = () => {
         <div>
             <h1>Dashboard</h1>
             <Logout/>
+            <DataTable />
         </div>
     )
 }
