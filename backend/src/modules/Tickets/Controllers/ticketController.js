@@ -1,5 +1,5 @@
 import { resSuccess, resFail } from "../../../config/utils/response.js";
-import { getTicketById, getTicketAll, createTickets, updateTickets, deleteTickets  } from "../Services/ticketServices.js";
+import { getTicketById, getTicketAllByUser, getTicketAllByAgent, getTicketAll, createTickets, updateTickets, deleteTickets  } from "../Services/ticketServices.js";
 
 export const getTicket = async (req, res) => {
     try {
@@ -46,7 +46,8 @@ export const updateTicket = async (req, res) => {
 
 export const deleteTicket = async (req, res) => {    
     try {
-        const { id } = req.query;    
+        const { id } = req.body;
+        console.log(req.body)  
         const result = await deleteTickets(id);        
         resSuccess(res, 200, `Ticket con id: ${id} fue eliminado exitosamente.`, result);
     } catch (error) {
