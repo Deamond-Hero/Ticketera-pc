@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom"
 
 
 export const Logout = () => {
-    const isLoged = useSelector((state) => state.auth.isLoged)
+    const isLogged = window.localStorage.getItem("token")
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleLogout = async() => {
-        dispatch(LogoutService(isLoged));
+        dispatch(LogoutService(isLogged));
         navigate("/");
     }
 
