@@ -10,7 +10,7 @@ export const getTicket = async (req, res) => {
             resSuccess(res, 200, `Ticket con id: ${id}`, result);
         }else{
             result = await getTicketAll(); 
-            resSuccess(res, 200, `Lista total de tickets:`, result);
+            resSuccess(res, 200, "Lista total de tickets:", result);
         }    
                 
     } catch (error) {
@@ -21,7 +21,7 @@ export const getTicket = async (req, res) => {
 export const createTicket = async (req, res) => {
     try {
         // const token = req.header("Authorization").replace("Bearer ", "");
-        const newTicket = req.body        
+        const newTicket = req.body;        
         const result = await createTickets(newTicket);
         resSuccess(res, 200, "Ticket creado con éxito", result);
     } catch (error) {
@@ -35,7 +35,7 @@ export const updateTicket = async (req, res) => {
         if(!token){
             resFail(res, 400, "Logout fallido", error);
         }*/
-        const updateTicket = req.body
+        const updateTicket = req.body;
             const result = await updateTickets(updateTicket);
             resSuccess(res, 200, "Ticket actualizado con éxito", result);
     } catch (error) {

@@ -17,6 +17,7 @@ export const getCommentsTicketAll = async (id) => {
 
 export const getCommentsTicketById = async (id) => {
   try {
+    // Eliminar console.log antes de entregar
     console.log(id);
     const Comment = await Comments.findById(id);
 
@@ -36,7 +37,7 @@ export const createCommentsTicket = async (data) => {
     if (!dataCommentTicket) {
       throw new Error("Falta informacion.");
     }
-
+    // Revisar codigo, creo que la informacion asignada a newData es incorrecta, chequear con un console.log
     const newData = new Comments({
       ticket: dataCommentTicket.idticket,
       text: dataCommentTicket.text,
@@ -56,14 +57,15 @@ export const createCommentsTicket = async (data) => {
 
 export const updateCommentsTicket = async (data) => {
   try {
-    console.log(data)
-    const query = { _id: data.id };
+    // Eliminar console.log antes de entregar
+    console.log(data);
+    const query = { _id: data._id };
     const update = {
       $set: {
         ticket: data.ticket,
         text: data.text,
         user: data.user,
-      }
+      },
     };
     const Comment = await Comments.updateOne(query, update);
     console.log(Comment);

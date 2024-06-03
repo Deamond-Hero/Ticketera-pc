@@ -10,11 +10,12 @@ import {
 export const getCommentTicket = async (req, res) => {
   try {
     let result;
+    // Eliminar console.log antes de entregar
     console.log(req.query);
     const { idComment, idTicket } = req.query;
     if (idComment) {
       result = await getCommentsTicketById(idComment); // id del comentario
-      resSuccess(res, 200, `Comentario con id: ${id} :`, result);
+      resSuccess(res, 200, `Comentario con id: ${idComment} :`, result);
     } else {
       result = await getCommentsTicketAll(idTicket); // id del ticket
       resSuccess(res, 200, `Lista total de Comentarios del ticket: ${idTicket}`, result);
