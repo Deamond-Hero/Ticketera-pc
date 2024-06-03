@@ -1,5 +1,5 @@
 import { resSuccess, resFail } from "../../../config/utils/response.js";
-import { getTicketById, getTicketAll, createTickets, updateTickets, deleteTickets, getTicketAllByAgent, getTicketAllByUser  } from "../Services/ticketServices.js";
+import { getTicketById, getTicketAll, createTickets, updateTickets, deleteTickets  } from "../Services/ticketServices.js";
 
 export const getTicket = async (req, res) => {
     try {

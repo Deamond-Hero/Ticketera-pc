@@ -1,100 +1,100 @@
 import Tickets from "../Schemas/ticketSchema.js";
 
 export const getTicketAll = async () => {
-    const Ticket = await Tickets.find();
+  const Ticket = await Tickets.find();
 
-    if (!Ticket) {
-      throw new Error("Error al buscar el ticket.");
-    }
+  if (!Ticket) {
+    throw new Error("Error al buscar el ticket.");
+  }
 
-    return Ticket;
+  return Ticket;
 };
 
 export const getTicketAllByAgent = async (id) => {
-    const query = { agent: id };
-    const Ticket = await Tickets.find(query);
+  const query = { agent: id };
+  const Ticket = await Tickets.find(query);
 
-    if (!Ticket) {
-      throw new Error("Error al buscar los tickets.");
-    }
+  if (!Ticket) {
+    throw new Error("Error al buscar los tickets.");
+  }
 
-    return Ticket;
+  return Ticket;
 };
 
 export const getTicketAllByUser = async (id) => {
-    const query = { user: id };
-    const Ticket = await Tickets.find(query);
+  const query = { user: id };
+  const Ticket = await Tickets.find(query);
 
-    if (!Ticket) {
-      throw new Error("Error al buscar los tickets.");
-    }
+  if (!Ticket) {
+    throw new Error("Error al buscar los tickets.");
+  }
 
-    return Ticket;
+  return Ticket;
 };
 
 export const getTicketById = async (id) => {
-    const Ticket = await Tickets.findById(id);
+  const Ticket = await Tickets.findById(id);
 
-    if (!Ticket) {
-      throw new Error("Error al buscar el ticket.");
-    }
+  if (!Ticket) {
+    throw new Error("Error al buscar el ticket.");
+  }
 
-    return Ticket;
+  return Ticket;
 };
 
 export const createTickets = async (dataTicket) => {
-    if (!dataTicket) {
-      throw new Error("Falta informacion.");
-    }
+  if (!dataTicket) {
+    throw new Error("Falta informacion.");
+  }
 
-    const newData = new Tickets({
-      subject: dataTicket.subject,
-      description: dataTicket.description,
-      status: dataTicket.status || "En curso",
-      user: dataTicket.user,
-      firsName: dataTicket.firsName || "",
-      lastName: dataTicket.lastName || "",
-      phone: dataTicket.phone || "",
-      agent: dataTicket.agent,
-      service: dataTicket.service,
-    });
-    const newTicket = await Tickets.create(newData);
+  const newData = new Tickets({
+    subject: dataTicket.subject,
+    description: dataTicket.description,
+    status: dataTicket.status || "En curso",
+    user: dataTicket.user,
+    firsName: dataTicket.firsName || "",
+    lastName: dataTicket.lastName || "",
+    phone: dataTicket.phone || "",
+    agent: dataTicket.agent,
+    service: dataTicket.service,
+  });
+  const newTicket = await Tickets.create(newData);
 
-    if (!newTicket) {
-      throw new Error("Error al crear el tiecket.");
-    }
+  if (!newTicket) {
+    throw new Error("Error al crear el tiecket.");
+  }
 
-    return newTicket;
+  return newTicket;
 };
 
 export const updateTickets = async (dataTicket) => {
-    const query = { _id: dataTicket.id };
-    const update = {
-      $set: {
-        subject: dataTicket.subject,
-        description: dataTicket.description,
-        status: dataTicket.status,
-        user: dataTicket.user,
-        firsName: dataTicket.firsName,
-        lastName: dataTicket.lastName,
-        phone: dataTicket.phone,
-        agent: dataTicket.agent,
-        service: dataTicket.service,
-      },
-    };
-    const ticket = await Tickets.updateOne(query, update);
-    if (!ticket) {
-      throw new Error("Ticket no actualizado.");
-    }
+  const query = { _id: dataTicket.id };
+  const update = {
+    $set: {
+      subject: dataTicket.subject,
+      description: dataTicket.description,
+      status: dataTicket.status,
+      user: dataTicket.user,
+      firsName: dataTicket.firsName,
+      lastName: dataTicket.lastName,
+      phone: dataTicket.phone,
+      agent: dataTicket.agent,
+      service: dataTicket.service,
+    },
+  };
+  const ticket = await Tickets.updateOne(query, update);
+  if (!ticket) {
+    throw new Error("Ticket no actualizado.");
+  }
 
-    return ticket;
+  return ticket;
 };
 
 export const deleteTickets = async (id) => {
-    const query = { _id: id };
-    const deletedTicket = await Tickets.deleteOne(query);
-    if (!deletedTicket) {
-      throw new Error("Ticket no se pudo eliminar.");
-    }
-    return deletedTicket;
+  const query = { _id: id };
+  const deletedTicket = await Tickets.deleteOne(query);
+  if (!deletedTicket) {
+    throw new Error("Ticket no se pudo eliminar.");
+  }
+  return deletedTicket;
 };

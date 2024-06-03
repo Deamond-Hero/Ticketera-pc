@@ -1,6 +1,5 @@
 import { resSuccess, resFail } from "../../../config/utils/response.js";
 import {
-  getCommentsAll,
   getCommentsTicketAll,
   getCommentsTicketById,
   createCommentsTicket,

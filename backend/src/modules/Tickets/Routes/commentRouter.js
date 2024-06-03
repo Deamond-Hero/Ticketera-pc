@@ -3,7 +3,7 @@ import { getCommentTicket, createCommentTicket, updateCommentTicket, deleteComme
 
 const commentRouter = express.Router();
 
-// Rutas de los endpoints para modelo Tickets
+// Rutas de los endpoints para modelo Comments
 
 commentRouter.get("/", getCommentTicket);
 commentRouter.post("/", createCommentTicket);
