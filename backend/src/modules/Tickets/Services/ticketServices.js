@@ -1,21 +1,38 @@
 import Tickets from "../Schemas/ticketSchema.js";
 
 export const getTicketAll = async () => {
-    try {
-      const Ticket = await Tickets.find();
-  
-      if (!Ticket) {
-        throw new Error("Error al buscar el ticket.");
-      }
-  
-      return Ticket;
-    } catch (error) {
-      throw error;
+    const Ticket = await Tickets.find();
+
+    if (!Ticket) {
+      throw new Error("Error al buscar el ticket.");
     }
-  };
+
+    return Ticket;
+};
+
+export const getTicketAllByAgent = async (id) => {
+    const query = { agent: id };
+    const Ticket = await Tickets.find(query);
+
+    if (!Ticket) {
+      throw new Error("Error al buscar los tickets.");
+    }
+
+    return Ticket;
+};
+
+export const getTicketAllByUser = async (id) => {
+    const query = { user: id };
+    const Ticket = await Tickets.find(query);
+
+    if (!Ticket) {
+      throw new Error("Error al buscar los tickets.");
+    }
+
+    return Ticket;
+};
 
 export const getTicketById = async (id) => {
-  try {
     const Ticket = await Tickets.findById(id);
 
     if (!Ticket) {
@@ -23,27 +40,23 @@ export const getTicketById = async (id) => {
     }
 
     return Ticket;
-  } catch (error) {
-    throw error;
-  }
 };
 
 export const createTickets = async (dataTicket) => {
-  try {
     if (!dataTicket) {
       throw new Error("Falta informacion.");
     }
 
     const newData = new Tickets({
-        subject: dataTicket.subject,
-        description: dataTicket.description,
-        status: dataTicket.status || "En curso",
-        user: dataTicket.user,
-        firstName: dataTicket.firstName || "",
-        lastName: dataTicket.lastName || "",
-        phone: dataTicket.phone || "",
-        agent: dataTicket.agent,
-        service: dataTicket.service,
+      subject: dataTicket.subject,
+      description: dataTicket.description,
+      status: dataTicket.status || "En curso",
+      user: dataTicket.user,
+      firsName: dataTicket.firsName || "",
+      lastName: dataTicket.lastName || "",
+      phone: dataTicket.phone || "",
+      agent: dataTicket.agent,
+      service: dataTicket.service,
     });
     const newTicket = await Tickets.create(newData);
 
@@ -52,21 +65,17 @@ export const createTickets = async (dataTicket) => {
     }
 
     return newTicket;
-  } catch (error) {
-    throw error;
-  }
 };
 
 export const updateTickets = async (dataTicket) => {
-  try {
-    const query = { _id: dataTicket._id };
+    const query = { _id: dataTicket.id };
     const update = {
       $set: {
         subject: dataTicket.subject,
         description: dataTicket.description,
         status: dataTicket.status,
         user: dataTicket.user,
-        firstName: dataTicket.firstName,
+        firsName: dataTicket.firsName,
         lastName: dataTicket.lastName,
         phone: dataTicket.phone,
         agent: dataTicket.agent,
@@ -79,20 +88,13 @@ export const updateTickets = async (dataTicket) => {
     }
 
     return ticket;
-  } catch (error) {
-    throw error;
-  }
 };
 
 export const deleteTickets = async (id) => {
-  try {
     const query = { _id: id };
     const deletedTicket = await Tickets.deleteOne(query);
     if (!deletedTicket) {
       throw new Error("Ticket no se pudo eliminar.");
     }
     return deletedTicket;
-  } catch (error) {
-    throw error;
-  }
 };

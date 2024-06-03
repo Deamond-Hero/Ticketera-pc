@@ -1,5 +1,6 @@
 import { resSuccess, resFail } from "../../../config/utils/response.js";
 import {
+  getCommentsAll,
   getCommentsTicketAll,
   getCommentsTicketById,
   createCommentsTicket,
@@ -10,15 +11,16 @@ import {
 export const getCommentTicket = async (req, res) => {
   try {
     let result;
-    // Eliminar console.log antes de entregar
-    console.log(req.query);
     const { idComment, idTicket } = req.query;
     if (idComment) {
       result = await getCommentsTicketById(idComment); // id del comentario
       resSuccess(res, 200, `Comentario con id: ${idComment} :`, result);
-    } else {
+    } else if (idTicket) {
       result = await getCommentsTicketAll(idTicket); // id del ticket
       resSuccess(res, 200, `Lista total de Comentarios del ticket: ${idTicket}`, result);
+    }else {
+      result = await getCommentsAll(); // id del ticket
+      resSuccess(res, 200, "Lista total de Comentarios:", result);
     }
   } catch (error) {
     resFail(res, 400, "El comentario no existe. Verifique el id.", error);
@@ -27,7 +29,6 @@ export const getCommentTicket = async (req, res) => {
 
 export const createCommentTicket = async (req, res) => {
   try {
-    // const token = req.header("Authorization").replace("Bearer ", "");
     const newComment = req.body;
     const result = await createCommentsTicket(newComment);
     resSuccess(res, 200, "Comentario creado con éxito", result);
@@ -38,10 +39,6 @@ export const createCommentTicket = async (req, res) => {
 
 export const updateCommentTicket = async (req, res) => {
   try {
-    /* const token = req.header("Authorization").replace("Bearer ", "");
-        if(!token){
-            resFail(res, 400, "Logout fallido", error);
-        }*/
     const updateComment = req.body;
     const result = await updateCommentsTicket(updateComment);
     resSuccess(res, 200, "Comentario actualizado con éxito", result);
