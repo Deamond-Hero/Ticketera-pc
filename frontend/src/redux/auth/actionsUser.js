@@ -1,4 +1,4 @@
-import api from "../utils/Api";
+import api from "../../utils/Api";
 import { setUserData, setUserMessage, setUserLoged } from "./authSlice"
 
 
@@ -15,8 +15,7 @@ export const LoginService = (form) => {
                 dispatch(setUserData(response.data.payload));
                 dispatch(setUserLoged(true))
                 console.log(response.data.message);
-                localStorage.setItem("token", response.data.payload.token);
-                console.log(response.data.payload.token)
+                localStorage.setItem("token", response.data.payload.token);                console.log(response.data.payload.token)
             } else {
                 dispatch(setUserMessage(response.data.message));
                 console.log(response.data.message);
@@ -33,7 +32,7 @@ export const LogoutService = (session) => {
     return async (dispatch) => {
         try {
             if(session){
-               await localStorage.removeItem("token")
+               localStorage.removeItem("token")
                await dispatch(setUserLoged(false))
                await dispatch(setUserData({}))
                console.log("Sessión cerrada")
