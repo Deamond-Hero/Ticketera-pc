@@ -3,6 +3,7 @@ import User from "../schema.js";
 import { UserDTO } from "../dto.js";
 import { isValidPassword, generateEmailToken } from "../../../config/utils/hash.js";
 import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
+import { encode, decode } from "base64-url";
 import client from "../../../config/redisClient.js";
 import { createHash } from "../../../config/utils/hash.js";
 
@@ -83,7 +84,7 @@ export const passwordChangeRequestService = async ({ email,password}) => {
   const emailToken = await generateEmailToken();
   
   //logger.info(`Token generado ${emailToken}`);
-  user.token =emailToken;
+  user.emailToken = emailToken;
   await user.save();
 
   //logger.info(`Token guardado`);
@@ -112,7 +113,7 @@ export const changePasswordService = async ({ emailToken, newPassword, email }) 
   }
 
   user.password = createHash(newPassword);
-  user.token = "";
+  user.emailToken = "";
   await user.save();
   logger.info(user);
   return;
