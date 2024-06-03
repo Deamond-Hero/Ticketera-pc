@@ -2,7 +2,7 @@ import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
 import { isValidPassword } from "../../../config/utils/hash.js";
-import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
+import { generateToken, verifyToken } from "../../../middlewares/auth.js";
 import client from "../../../config/redisClient.js";
 import { configDotenv } from "dotenv";
 import crypto from "crypto";
@@ -50,6 +50,11 @@ export const loginService = async ({ email, password }) => {
 
     const token = generateToken({ id: user._id, email: user.email, role: user.role });
 
+    if (!token) {
+      throw new Error("Error al generar el token");
+    }
+
+    logger.info(`Token generado ${token}`);
     logger.info(`Inicio de sesión exitoso para el usuario: ${user.email}`);
     return { user, token };
   } catch (error) {
