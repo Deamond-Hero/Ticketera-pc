@@ -1,24 +1,24 @@
 import Comments from "../Schemas/commentSchema.js";
 
 export const getCommentsTicketAll = async (id) => {
-    try {
-      const query = {"ticket": id}
-      const Comment = await Comments.findOne(query);
-  
-      if (!Comment) {
-        throw new Error("Error al buscar el ticket.");
-      }
-  
-      return Comment;
-    } catch (error) {
-      throw error;
+  try {
+    const query = { ticket: id };
+    const Comment = await Comments.find(query);
+
+    if (!Comment) {
+      throw new Error("Error al buscar el ticket.");
     }
-  };
+
+    return Comment;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getCommentsTicketById = async (id) => {
   try {
-    const query = { _id: id };
-    const Comment = await Comments.findById(query);
+    console.log(id);
+    const Comment = await Comments.findById(id);
 
     if (!Comment) {
       throw new Error("Error al buscar el ticket.");
@@ -32,15 +32,15 @@ export const getCommentsTicketById = async (id) => {
 
 export const createCommentsTicket = async (data) => {
   try {
-    const dataCommentTicket = data
+    const dataCommentTicket = data;
     if (!dataCommentTicket) {
       throw new Error("Falta informacion.");
     }
 
     const newData = new Comments({
-        ticket: dataCommentTicket.idticket,
-        text: dataCommentTicket.text,
-        user: dataCommentTicket.iduser
+      ticket: dataCommentTicket.idticket,
+      text: dataCommentTicket.text,
+      user: dataCommentTicket.iduser,
     });
     const newComment = await Comments.create(newData);
 
@@ -54,28 +54,24 @@ export const createCommentsTicket = async (data) => {
   }
 };
 
-export const updateCommentsTicket = async (dataTicket) => {
+export const updateCommentsTicket = async (data) => {
   try {
-    const query = { _id: dataTicket.id };
+    console.log(data)
+    const query = { _id: data.id };
     const update = {
       $set: {
-        subject: dataTicket.subject,
-        description: dataTicket.description,
-        status: dataTicket.status,
-        user: dataTicket.user,
-        firsName: dataTicket.firsName,
-        lastName: dataTicket.lastName,
-        phone: dataTicket.phone,
-        agent: dataTicket.agent,
-        service: dataTicket.service,
-      },
+        ticket: data.ticket,
+        text: data.text,
+        user: data.user,
+      }
     };
-    const ticket = await Ticket.updateOne(query, update);
-    if (!ticket) {
-      throw new Error("Ticket no actualizado.");
+    const Comment = await Comments.updateOne(query, update);
+    console.log(Comment);
+    if (!Comment) {
+      throw new Error("Comments no actualizado.");
     }
 
-    return ticket;
+    return Comment;
   } catch (error) {
     throw error;
   }
@@ -84,11 +80,11 @@ export const updateCommentsTicket = async (dataTicket) => {
 export const deleteCommentsTicket = async (id) => {
   try {
     const query = { _id: id };
-    const deletedTicket = await Ticket.deleteOne(query);
-    if (!deletedTicket) {
-      throw new Error("Ticket no se pudo eliminar.");
+    const deletedComments = await Comments.deleteOne(query);
+    if (!deletedComments) {
+      throw new Error("Comments no se pudo eliminar.");
     }
-    return deletedTicket;
+    return deletedComments;
   } catch (error) {
     throw error;
   }

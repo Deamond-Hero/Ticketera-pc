@@ -5,8 +5,8 @@ const commentRouter = express.Router();
 
 // Rutas de los endpoints para modelo Tickets
 
-commentRouter.get("/:id", getCommentTicket);
-commentRouter.get("/comments/:id", getCommentTicket);
+commentRouter.get("/:idTicket", getCommentTicket);
+commentRouter.get("/one/:idComment", getCommentTicket);
 commentRouter.post("/", createCommentTicket);
 commentRouter.put("/", updateCommentTicket);
 commentRouter.delete("/", deleteCommentTicket);
