@@ -1,11 +1,10 @@
 import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
-import { isValidPassword } from "../../../config/utils/hash.js";
+import { isValidPassword, generateEmailToken } from "../../../config/utils/hash.js";
 import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
 import client from "../../../config/redisClient.js";
 import { configDotenv } from "dotenv";
-import crypto from "crypto";
 import { encode, decode } from "base64-url";
 import { createHash } from "../../../config/utils/hash.js";
 
@@ -69,10 +68,6 @@ export const logoutService = (token) => {
   });
 };
 
-const generateEmailToken = () => {
-  return crypto.randomBytes(32).toString("hex");
-};
-
 export const passwordChangeRequestService = async ({ email,password}) => {
   //logger.info(`Buscando usuario asociado al correo: ${email}`);
   const user = await User.findOne({ email });
@@ -88,10 +83,10 @@ export const passwordChangeRequestService = async ({ email,password}) => {
   }
 
   //logger.info(`Usuario encontrado`);
-  const token = generateEmailToken();
+  const emailToken = await generateEmailToken();
   
-  //logger.info(`Token generado ${token}`);
-  user.token =token;
+  //logger.info(`Token generado ${emailToken}`);
+  user.token =emailToken;
   await user.save();
 
   //logger.info(`Token guardado`);
@@ -100,11 +95,11 @@ export const passwordChangeRequestService = async ({ email,password}) => {
 
   //logger.info(`Sifrado`);
 
-  const magicLink = `https://tu-dominio.com/reset-password?token=${token}&email=${encodedEmail}`;
+  const magicLink = `https://tu-dominio.com/reset-password?token=${emailToken}&email=${encodedEmail}`;
   return magicLink;
 };
 
-export const changePasswordService = async ({ token, newPassword, email }) => {
+export const changePasswordService = async ({ emailToken, newPassword, email }) => {
 
   let decodedEmail;
   try {
@@ -113,7 +108,7 @@ export const changePasswordService = async ({ token, newPassword, email }) => {
     throw new Error("Error al decodificar el email", error);
   }
 
-  const user = await User.findOne({ email: decodedEmail, token });
+  const user = await User.findOne({ email: decodedEmail, emailToken });
 
   if (!user) {
     throw new Error("Usuario no encontrado o token inválido");
