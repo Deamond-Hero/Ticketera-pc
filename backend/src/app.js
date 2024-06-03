@@ -6,7 +6,8 @@ import cors from "cors";
 import { resFail } from "./config/utils/response.js";
 import usersRouter from "./modules/Users/router.js";
 import authRouter from "./modules/Users/Auth/router.js";
-import ticketsRouter from "./modules/Tickets/router.js";
+import ticketsRouter from "./modules/Tickets/Routes/ticketRouter.js";
+import commentRouter from "./modules/Tickets/Routes/commentRouter.js";
 import servicesRouter from "./modules/Services/router.js";
 import bodyParser from "body-parser";
 import swaggerJsdoc from "swagger-jsdoc";
@@ -65,6 +66,7 @@ app.use((err, req, res, next) => {
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/tickets", ticketsRouter);
+app.use("/api/comments", commentRouter);
 app.use("/api/services", servicesRouter);
 
 // Configuración de Swagger

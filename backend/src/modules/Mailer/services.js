@@ -1,7 +1,7 @@
 import { logger } from "../../config/logger.js";
 import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv";
-import Ticket from "../Tickets/schema.js";
+import Ticket from "../Tickets/Schemas/ticketSchema.js";
 import mongoose from "mongoose";
 configDotenv();
 

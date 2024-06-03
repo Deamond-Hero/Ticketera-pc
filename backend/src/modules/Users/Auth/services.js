@@ -4,11 +4,8 @@ import { UserDTO } from "../dto.js";
 import { isValidPassword, generateEmailToken } from "../../../config/utils/hash.js";
 import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
 import client from "../../../config/redisClient.js";
-import { configDotenv } from "dotenv";
-import { encode, decode } from "base64-url";
 import { createHash } from "../../../config/utils/hash.js";
 
-configDotenv();
 
 export const createUserService = async ({ email, password }) => {
   try {
