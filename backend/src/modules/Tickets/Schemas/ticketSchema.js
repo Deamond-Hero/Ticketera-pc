@@ -27,7 +27,7 @@ const ticketSchema = new Schema(
     service: [{ type: Schema.Types.ObjectId, ref: "Service", required: true }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment", default: [], required: true }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Ticket = model("Ticket", ticketSchema);

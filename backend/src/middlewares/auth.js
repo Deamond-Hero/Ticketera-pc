@@ -45,11 +45,11 @@ export const verifyToken = (req, res, next) => {
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get("Authorization");
   if (!authHeader) {
-    return res.status(401).send({ error: "Autenticacion requerida" });
+    resFail(res, 401, "Autenticacion requerida");
   }
 
   if (!authHeader.startsWith("Bearer ")) {
-    return res.status(401).send({ error: "Token invalido" });
+    resFail(res, 401, "Token invalido");
   }
 
   const token = authHeader.replace("Bearer ", "");
@@ -64,6 +64,6 @@ export const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).send({ error: "Autenticacion fallida" });
+    resFail(res, 401, "Autenticacion fallida", error);
   }
 };

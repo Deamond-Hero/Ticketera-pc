@@ -5,6 +5,7 @@ import {
   createCommentsTicket,
   updateCommentsTicket,
   deleteCommentsTicket,
+  getCommentsAll,
 } from "../Services/commentServices.js";
 
 export const getCommentTicket = async (req, res) => {
