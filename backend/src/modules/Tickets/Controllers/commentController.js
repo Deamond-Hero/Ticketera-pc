@@ -17,7 +17,7 @@ export const getCommentTicket = async (req, res) => {
     } else if (idTicket) {
       result = await getCommentsTicketAll(idTicket); // id del ticket
       resSuccess(res, 200, `Lista total de Comentarios del ticket: ${idTicket}`, result);
-    }else {
+    } else {
       result = await getCommentsAll(); // id del ticket
       resSuccess(res, 200, "Lista total de Comentarios:", result);
     }
