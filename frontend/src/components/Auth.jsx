@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { LoginService } from "../redux/actionsUser";
+import { LoginService } from "../redux/auth/actionsUser";
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { validateLogin } from "../utils/validationLogin";

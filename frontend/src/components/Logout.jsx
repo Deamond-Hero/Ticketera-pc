@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { LogoutService } from "../redux/actionsUser"
+import { LogoutService } from "../redux/auth/actionsUser"
 import { useNavigate } from "react-router-dom"
 
 
