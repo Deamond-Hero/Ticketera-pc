@@ -33,13 +33,7 @@ const RegisterPage = () => {
                 }
             } catch (error) {
                 if (error.response) {
-                    console.log('Mensaje 1' + error.response)
-                    // If the error has a response, handle it
                     setApiErrors({ general: error.response.data.message || "Error en el registro" });
-                } else {
-                    console.log('Mensaje 2' + error.response)
-                    // Handle generic errors
-                    setApiErrors({ general: "Error al conectarse con la API" });
                 }
             }
 
