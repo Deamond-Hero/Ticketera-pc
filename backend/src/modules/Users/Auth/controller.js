@@ -53,10 +53,10 @@ export const changePassword = async (req, res) => {
 export const passwordChangeRequest = async (req, res) => {
     try {
         const { email, password } = req.body;
-        logger.info(email);
-        logger.info(password);
+        //logger.info(email);
+        //logger.info(password);
         const magicLink = await passwordChangeRequestService({email, password});
-        logger.info(magicLink);
+        //logger.info(magicLink);
         await sendMail(
             email,
             "Restablecimiento de Contraseña",
