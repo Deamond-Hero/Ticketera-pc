@@ -3,6 +3,8 @@ import {
   Routes,
   Route,
   useNavigate,
+  useLocation,
+  Navigate
 } from "react-router-dom";
 import Login from './pages/LoginPage';
 import LandingPage from './pages/LandingPage'
@@ -12,29 +14,34 @@ import Navbar from "./components/Navbar";
 import Landing from './pages/Landing';
 import { useEffect } from 'react';
 
-
 function App() {
-  const isLogged = window.localStorage.getItem("token")
-  const navigate = useNavigate()
+  const isLogged = window.localStorage.getItem("token");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    navigate("/dashboard")
-    console.log("logueado")
-}, [isLogged])
-  
+    if (isLogged && (location.pathname === "/login" || location.pathname === "/register")) {
+      navigate("/dashboard");
+    }
+  }, [isLogged]);
 
   return (
     <main>
-      <Navbar/>
+      <Navbar />
       <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={isLogged ? <Dashboard /> : <Login />} />
-          <Route path='/dashboard' element={isLogged ? <Dashboard /> : <Login />} />
-          <Route path='/register' element={isLogged ? <LandingPage /> : <RegisterPage />} />
-          <Route path='/home' element={<Landing />} />
-        </Routes>
+        {/* Redirigir si está logueado */}
+        <Route path='/login' element={isLogged ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path='/register' element={isLogged ? <Navigate to="/dashboard" /> : <RegisterPage />} />
+        
+        {/* Rutas accesibles a todos */}
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/home' element={<Landing />} />
+        
+        {/* Ruta protegida */}
+        <Route path='/dashboard' element={isLogged ? <Dashboard /> : <Navigate to="/login" />} />
+      </Routes>
     </main>
   )
 }
 
-export default App
+export default App;
