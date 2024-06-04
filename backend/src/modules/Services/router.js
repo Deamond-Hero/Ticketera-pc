@@ -42,7 +42,59 @@ const router = express.Router();
  *                 example: 6657f8de8cb1fa4f813fa191
  *     responses:
  *       200:
- *         description: Service created successfully
+ *         description: Service created succesfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the operation was successful
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   description: A message describing the result
+ *                   example: El Servicio fue creado con éxito
+ *                 payload:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         description: The service ID
+ *                         example: 6659f8add7d1f2fdf4134936
+ *                       name:
+ *                         type: string
+ *                         description: The name of the service
+ *                         example: Prueba
+ *                       description:
+ *                         type: string
+ *                         description: The description of the service
+ *                         example: Descripcion Prueba
+ *                       price:
+ *                         type: number
+ *                         description: The price of the service
+ *                         example: 50
+ *                       agent:
+ *                         type: string
+ *                         description: The ID of the agent responsible for the service
+ *                         example: 6657f8de8cb1fa4f813fa191
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The creation date of the service
+ *                         example: 2024-05-31T16:19:57.772Z
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The last update date of the service
+ *                         example: 2024-05-31T16:19:57.772Z
+ *                       __v:
+ *                         type: number
+ *                         description: The version key
+ *                         example: 0
  *       404:
  *         description: Invalid input
  *       500:
@@ -199,10 +251,62 @@ router.get("/:id", getServiceById);
  *               agent:
  *                 type: string
  *                 description: The ID of the agent responsible for the service
- *                 example: 60c72b2f9b1d8b3b4c8a5e8e
+ *                 example: 6657f8de8cb1fa4f813fa191
  *     responses:
  *       200:
- *         description: Service updated successfully
+ *         description: Service updated succesfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the operation was successful
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   description: A message describing the result
+ *                   example: Se editó el servicio correctamente
+ *                 payload:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         description: The service ID
+ *                         example: 6659f8add7d1f2fdf4134936
+ *                       name:
+ *                         type: string
+ *                         description: The name of the service
+ *                         example: Prueba
+ *                       description:
+ *                         type: string
+ *                         description: The description of the service
+ *                         example: Descripcion Prueba
+ *                       price:
+ *                         type: number
+ *                         description: The price of the service
+ *                         example: 50
+ *                       agent:
+ *                         type: string
+ *                         description: The ID of the agent responsible for the service
+ *                         example: 6657f8de8cb1fa4f813fa191
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The creation date of the service
+ *                         example: 2024-05-31T16:19:57.772Z
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The last update date of the service
+ *                         example: 2024-05-31T16:19:57.772Z
+ *                       __v:
+ *                         type: number
+ *                         description: The version key
+ *                         example: 0
  *       400:
  *         description: Service not found
  *       404:
