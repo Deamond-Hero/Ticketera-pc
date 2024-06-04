@@ -146,7 +146,77 @@ router.post("/login", loginValidation, validate, login);
  */
 router.post("/logout", logout);
 
+
+/**
+ * @swagger
+ * /api/auth/passwordChangeRequest:
+ *   post:
+ *     summary: Request password change
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: User Email
+ *                 example: johndoe@example.com
+ *               password:
+ *                 type: string
+ *                 description: User password
+ *                 example: newpassword123
+ *     responses:
+ *       200:
+ *         description: Password change request successful
+ *       400:
+ *         description: Password change request failed
+ *       500:
+ *         description: Internal Server Error
+ */
+
 router.post("/passwordChangeRequest",passwordChangeRequest);
+
+/**
+ * @swagger
+ * /api/auth/changePassword:
+ *   post:
+ *     summary: Change a user's password
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: token
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Password change token
+ *       - in: query
+ *         name: email
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User Email
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               newPassword:
+ *                 type: string
+ *                 description: New user password
+ *                 example: newpassword123
+ *     responses:
+ *       200:
+ *         description: Password change successful
+ *       400:
+ *         description: Password change error
+ *       500:
+ *         description: Internal Server Error
+ */
 router.post("/changePassword",changePassword);
 
 export default router;

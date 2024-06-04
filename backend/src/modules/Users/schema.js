@@ -17,7 +17,7 @@ const userSchema = new Schema(
     },
     services: [{ type: Schema.Types.ObjectId, ref: "Service", default: [], required: true }],
     tickets: [{ type: Schema.Types.ObjectId, ref: "Ticket", default: [], required: true }],
-    token: { type: String },
+    emailToken: { type: String },
   },
   { timestamps: true },
 );
