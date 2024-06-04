@@ -1,12 +1,10 @@
 import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
-import { isValidPassword, generateEmailToken } from "../../../config/utils/hash.js";
+import { createHash, isValidPassword, generateEmailToken } from "../../../config/utils/hash.js";
 import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
 import { encode, decode } from "base64-url";
 import client from "../../../config/redisClient.js";
-import { createHash } from "../../../config/utils/hash.js";
-
 
 export const createUserService = async ({ email, password }) => {
   try {
