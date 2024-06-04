@@ -53,7 +53,7 @@ export const updateTicket = async (req, res) => {
 
 export const deleteTicket = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
     const result = await deleteTickets(id);
     resSuccess(res, 200, `Ticket con id: ${id} fue eliminado exitosamente.`, result);
   } catch (error) {
