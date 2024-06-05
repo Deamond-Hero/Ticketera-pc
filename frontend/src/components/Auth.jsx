@@ -7,11 +7,11 @@ import { useEffect } from "react"
 import { validateLogin } from "../utils/validationLogin";
 
 const Auth = () => {
-
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const dispatch = useDispatch()
-    const isLogged = window.localStorage.getItem("token")
+    const isLogged = useSelector((state) => state.auth.userData)
+    const errorMessage = useSelector((state)=> state.auth.userMesaggeError)
     const dataUser = useSelector(state => state.auth.userData)
-    const errorRequest = useSelector(state => state.auth.userMesaggeError)
     const navigate = useNavigate()
     const [flag, setFlag] = useState(false)
     const [form, setForm] = useState({
@@ -23,20 +23,22 @@ const Auth = () => {
         password: '',
     });
 
-    useEffect(() => {
-        navigate("/dashboard")
-    }, [isLogged])
-
 
     useEffect(() => {
-        if (errorRequest) {
+        if (isLogged) {
+            navigate("/dashboard");
+        }
+    }, [isLogged, navigate]);
+
+    useEffect(() => {
+        if (errorMessage) {
             setFlag(true)
             setTimeout(() => {
                 setFlag(false)
             }, 3000);
             setFlag(false)
         }
-    }, [errorRequest])
+    }, [errorMessage])
 
     useEffect(() => {
         if (errors.email || errors.password) {
@@ -69,14 +71,20 @@ const Auth = () => {
 
             console.log(dataUser)
 
-
             console.log("Formulario enviado", form);
+
+
         } else {
 
             console.log("Errores en el formulario", validationErrors);
 
         }
     };
+
+    useEffect(() => {    
+        const isFormValid = form.email !== '' && form.password !== '';
+        setIsButtonDisabled(!isFormValid);
+      }, [form]);
 
     return (
         <div className="bg-[#FFFFFF] text-text-dark w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-12">
@@ -93,7 +101,7 @@ const Auth = () => {
                     />
                 </div>
 
-                {flag && errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
+                {flag && errors.email && <span  className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errors.email}</span>}
 
                 <div className="flex flex-col gap-1">
                     <label>Contraseña</label>
@@ -106,14 +114,24 @@ const Auth = () => {
                     />
                 </div>
 
-                {flag && errors.password && <span style={{ color: "red" }}>{errors.password}</span>}
+                {flag && errors.password && <span className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errors.password}</span>}
 
                 <div>
-                    <button type="submit" className="h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide bg-default-btn">Ingresar</button>
+                    <button 
+                    type="submit" 
+                    className={`h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide 
+                        ${isButtonDisabled ? 'bg-default-btn cursor-not-allowed' : 'bg-blue-ppal shadow-xl'}`}
+                    disabled={isButtonDisabled}
+                    >Ingresar</button>
                 </div>
+
+                {flag && errorMessage && <span className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errorMessage}</span>}
             </form>
             <div>
                 <Link className="text-xl underline tracking-wide"><p>¿Has olvidado tu contraseña?</p></Link>
+            </div>
+            <div>
+                <Link to="/register" className="text-xl underline tracking-wide"><p>Registrarse</p></Link>
             </div>
         </div>
     );

@@ -2,8 +2,6 @@ import api from "../../utils/Api";
 import { setUserData, setUserMessage, setUserLoged } from "./authSlice"
 
 
-
-
 export const LoginService = (form) => {
     return async (dispatch) => {
         try {
@@ -12,10 +10,12 @@ export const LoginService = (form) => {
             console.log(response.data.message);
 
             if (response.data.message === "Inicio de sesión exitoso") {
-                dispatch(setUserData(response.data.payload));
-                dispatch(setUserLoged(true))
-                console.log(response.data.message);
-                localStorage.setItem("token", response.data.payload.token);                console.log(response.data.payload.token)
+                await dispatch(setUserData(response.data.payload));
+                await dispatch(setUserLoged(true))
+                // console.log(response.data.message);
+                await window.localStorage.setItem("token", response.data.payload.token); 
+                // console.log(response.data.payload.token)
+
             } else {
                 dispatch(setUserMessage(response.data.message));
                 console.log(response.data.message);
@@ -31,11 +31,11 @@ export const LoginService = (form) => {
 export const LogoutService = (session) => {
     return async (dispatch) => {
         try {
-            if(session){
-               localStorage.removeItem("token")
-               await dispatch(setUserLoged(false))
-               await dispatch(setUserData({}))
-               console.log("Sessión cerrada")
+            if (session) {
+                localStorage.removeItem("token")
+                await dispatch(setUserLoged(false))
+                await dispatch(setUserData())
+                console.log("Sessión cerrada")
             }
 
         } catch (error) {

@@ -5,7 +5,7 @@ import User from "../Users/schema.js";
 
 export const getAllServices = async () => {
     try {
-        const services = await Service.find();
+        const services = await Service.find().populate("agent");
 
         logger.info(`Se han encontrado ${services.length} servicios`);
         return services;
@@ -21,7 +21,7 @@ export const getIdService = async (id) => {
             logger.info(`ID inválido: ${id}`);
             return null;
         }
-        const service = await Service.findById(id);
+        const service = await Service.findById(id).populate("agent");
         if (!service) {
             logger.info(`No se ha encontrado el servicio con el ID: ${id}`);
             return null;
