@@ -14,10 +14,10 @@ export default {
         'text-light': '#808080',
         'principal': '#004562',
         'color-input': '#979797',
+        'text-reviews': '#707070',
       },   
       backgroundImage: {
         'gradient-custom': 'linear-gradient(to right, #004562, #42B4C2)',
-        
       },
       boxShadow: {
         'input-focus': '0px 0px 4px .1px #00A4E8',

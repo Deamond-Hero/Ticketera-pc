@@ -1,8 +1,9 @@
 import { logger } from "../../../config/logger.js";
 import User from "../schema.js";
 import { UserDTO } from "../dto.js";
-import { isValidPassword } from "../../../config/utils/hash.js";
+import { createHash, isValidPassword, generateEmailToken } from "../../../config/utils/hash.js";
 import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
+import { encode, decode } from "base64-url";
 import client from "../../../config/redisClient.js";
 
 export const createUserService = async ({ email, password }) => {
@@ -61,4 +62,57 @@ export const logoutService = (token) => {
       throw new Error("Failed to blacklist token");
     }
   });
+};
+
+export const passwordChangeRequestService = async ({ email,password}) => {
+  //logger.info(`Buscando usuario asociado al correo: ${email}`);
+  const user = await User.findOne({ email });
+
+  if (!user) {
+   // logger.error(`Usuario no encontrado`);
+    throw new Error("Usuario no encontrado");
+  }
+  
+  if (!isValidPassword(user, password)) {
+    //logger.error(`Contraseña incorrecta`);
+    throw new Error("Contraseña incorrecta");
+  }
+
+  //logger.info(`Usuario encontrado`);
+  const emailToken = await generateEmailToken();
+  
+  //logger.info(`Token generado ${emailToken}`);
+  user.emailToken = emailToken;
+  await user.save();
+
+  //logger.info(`Token guardado`);
+
+  const encodedEmail = encode(email);
+
+  //logger.info(`Sifrado`);
+
+  const magicLink = `https://tu-dominio.com/reset-password?token=${emailToken}&email=${encodedEmail}`;
+  return magicLink;
+};
+
+export const changePasswordService = async ({ emailToken, newPassword, email }) => {
+
+  let decodedEmail;
+  try {
+    decodedEmail = decode(email);
+  } catch (error) {
+    throw new Error("Error al decodificar el email", error);
+  }
+
+  const user = await User.findOne({ email: decodedEmail, emailToken });
+
+  if (!user) {
+    throw new Error("Usuario no encontrado o token inválido");
+  }
+
+  user.password = createHash(newPassword);
+  user.emailToken = "";
+  await user.save();
+  logger.info(user);
+  return;
 };
