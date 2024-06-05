@@ -7,7 +7,7 @@ const Footer = () => {
       <main className="bg-blue-ppal w-full py-12 md:py-20 px-20 md:px-36 text-text-light flex flex-col items-center font-poppins">
         <div className="flex flex-col sm:flex-row justify-center w-full mb-8 gap-2">
           <section className="flex flex-col gap-4">
-            <h2 className="text-white mb-6 text-2xl">Logo</h2>
+            <h5 className="text-white mb-6 text-2xl">S15-Ticketera</h5>
             <div className="flex items-center gap-4">              
               <BsTelephoneFill className="text-[#01B9D0] w-6 h-6"/>
               <div className="flex flex-col gap-1">

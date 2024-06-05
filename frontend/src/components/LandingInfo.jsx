@@ -15,7 +15,7 @@ import msi from '../assets/msi.png'
 
 const LandingInfo = () => {
   return (
-    <main className="font-urbanist mt-32 w-full">
+    <main className="font-urbanist mt-8 w-full">
         <section className="flex flex-col md:flex-row justify-center gap-10 p-10">
             <div className="flex flex-col items-center justify-center md:w-1/5 gap-4"> 
                 <GrAlarm className='w-12 h-12 text-blue-ppal'/> 
