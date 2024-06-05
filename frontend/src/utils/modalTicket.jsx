@@ -39,6 +39,7 @@ export const ModalTicket = ({ ticket, closeModal }) => {
     const ticketSubmit = () => {
         // event.prevent.default()
         console.log("TicketModificado")
+        updateTicket(formTicket)
     }
 
     const cancelSubmit = () => {
