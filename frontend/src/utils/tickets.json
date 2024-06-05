@@ -1,0 +1,122 @@
+[
+    {
+      "subject": "Problema con inicio de sesión",
+      "description": "No puedo iniciar sesión con las credenciales correctas.",
+      "status": "En cola",
+      "user": "usuario01",
+      "firstName": "Juan",
+      "lastName": "Pérez",
+      "phone": "555-1234",
+      "agent": "agenteA",
+      "service": "Autenticación",
+      "id": "1"
+    },
+    {
+      "subject": "Correo no se envía",
+      "description": "Los correos electrónicos están atascados en la bandeja de salida.",
+      "status": "En Revisión",
+      "user": "usuario02",
+      "firstName": "Ana",
+      "lastName": "García",
+      "phone": "555-5678",
+      "agent": "agenteB",
+      "service": "Correo Electrónico",
+      "id": "2"
+    },
+    {
+      "subject": "Velocidad de internet lenta",
+      "description": "La velocidad de internet es más lenta de lo esperado.",
+      "status": "Presupuestado",
+      "user": "usuario03",
+      "firstName": "Carlos",
+      "lastName": "Rodríguez",
+      "phone": "555-8765",
+      "agent": "agenteC",
+      "service": "Internet",
+      "id": "3"
+    },
+    {
+      "subject": "Pantalla azul",
+      "description": "La computadora muestra una pantalla azul al iniciar.",
+      "status": "En proceso",
+      "user": "usuario04",
+      "firstName": "María",
+      "lastName": "López",
+      "phone": "555-4321",
+      "agent": "agenteD",
+      "service": "Soporte Técnico",
+      "id": "4"
+    },
+    {
+      "subject": "Error al imprimir",
+      "description": "No se puede imprimir desde ninguna aplicación.",
+      "status": "Finalizado",
+      "user": "usuario05",
+      "firstName": "Pedro",
+      "lastName": "Martínez",
+      "phone": "555-9876",
+      "agent": "agenteE",
+      "service": "Impresión",
+      "id": "5"
+    },
+    {
+      "subject": "Aplicación se cierra inesperadamente",
+      "description": "La aplicación se cierra sola después de unos minutos.",
+      "status": "Retirado",
+      "user": "usuario06",
+      "firstName": "Laura",
+      "lastName": "Hernández",
+      "phone": "555-6789",
+      "agent": "agenteF",
+      "service": "Software",
+      "id": "6"
+    },
+    {
+      "subject": "Problema de conexión a la red",
+      "description": "No se puede conectar a la red Wi-Fi de la oficina.",
+      "status": "Cancelado",
+      "user": "usuario07",
+      "firstName": "Miguel",
+      "lastName": "Gómez",
+      "phone": "555-3456",
+      "agent": "agenteG",
+      "service": "Red",
+      "id": "7"
+    },
+    {
+      "subject": "No se puede acceder al servidor",
+      "description": "El servidor no responde a las solicitudes.",
+      "status": "En cola",
+      "user": "usuario08",
+      "firstName": "Sandra",
+      "lastName": "Fernández",
+      "phone": "555-6543",
+      "agent": "agenteH",
+      "service": "Servidor",
+      "id": "8"
+    },
+    {
+      "subject": "Problema con el software antivirus",
+      "description": "El software antivirus no se actualiza.",
+      "status": "En Revisión",
+      "user": "usuario09",
+      "firstName": "José",
+      "lastName": "Ramírez",
+      "phone": "555-2134",
+      "agent": "agenteI",
+      "service": "Antivirus",
+      "id": "9"
+    },
+    {
+      "subject": "Problema con la cuenta de usuario",
+      "description": "No se puede cambiar la contraseña de la cuenta de usuario.",
+      "status": "Presupuestado",
+      "user": "usuario10",
+      "firstName": "Lucía",
+      "lastName": "Sánchez",
+      "phone": "555-7890",
+      "agent": "agenteJ",
+      "service": "Cuentas de Usuario",
+      "id": "10"
+    }
+  ]

@@ -2,15 +2,29 @@ import { useState } from "react";
 
 export const ModalTicket = ({ ticket, closeModal }) => {
 
-    //acá lo que podría hacer es traer directamente con el id del usuario que me trae el ticket, es traér el usuario por id y con él toda su info.
+
+    const updateTicket = async(formTicket) =>{
+        return async() =>{
+            try {
+                const response = await api.put(`/api/tickets`, formTicket);
+                console.log(response)
+            }catch{
+                console.log("Error");
+            }
+        }
+    }
 
     const [formTicket, setFormTicket] = useState({
-        name: ticket?.name,
-        lastname: ticket?.lastname,
+        id: ticket?.id,
+        user: ticket?.user,
+        subject : ticket?.subject,
+        description: ticket?.description,
+        status: ticket?.status,
+        firstName: ticket?.firstName,
+        lastName: ticket?.lastName,
         phone: ticket?.phone,
-        title: ticket?.title,
-        oCliente: ticket?.oCliente,
-        oTecnico: ticket?.oTecnico
+        agent: ticket?.agent,
+        service: ticket?.service,
     })
 
     const changeValue = (e) => {
