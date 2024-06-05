@@ -12,6 +12,8 @@ export default {
         'shadow-input': '#00A4E8',
         'text-dark': '#303030',
         'text-light': '#808080',
+        'text-reviews': '#707070',
+        
       },   
       boxShadow: {
         'input-focus': '0px 0px 4px .1px #00A4E8',

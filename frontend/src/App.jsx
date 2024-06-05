@@ -17,10 +17,10 @@ function App() {
   const isLogged = window.localStorage.getItem("token")
   const navigate = useNavigate()
 
-  useEffect(() => {
+/*   useEffect(() => {
     navigate("/dashboard")
     console.log("logueado")
-}, [isLogged])
+}, [isLogged]) */
   
 
   return (
