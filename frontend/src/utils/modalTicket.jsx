@@ -30,6 +30,7 @@ export const ModalTicket = ({ ticket, closeModal }) => {
     const cancelSubmit = () => {
         // event.prevent.default()
         console.log("TicketCancelado")
+        closeModal()
     }
 
     const stateMachine = {
