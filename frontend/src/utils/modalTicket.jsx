@@ -16,13 +16,13 @@ export const ModalTicket = ({ ticket, closeModal }) => {
 
     const [formTicket, setFormTicket] = useState({
         id: ticket?.id,
-        user: ticket?.user,
-        subject : ticket?.subject,
-        description: ticket?.description,
-        status: ticket?.status,
         firstName: ticket?.firstName,
         lastName: ticket?.lastName,
         phone: ticket?.phone,
+        subject : ticket?.subject,
+        user: ticket?.user,
+        description: ticket?.description,
+        status: ticket?.status,
         agent: ticket?.agent,
         service: ticket?.service,
     })
@@ -76,10 +76,10 @@ export const ModalTicket = ({ ticket, closeModal }) => {
                             <input
                                 className="appearance-none bg-white border border-gray-300 rounded mt-[.1rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[90%]"
                                 type="text"
-                                name="name"
-                                value={formTicket.name}
+                                name="firstName"
+                                value={formTicket.firstName}
                                 onChange={changeValue}
-                                placeholder={ticket?.name}
+                                placeholder={ticket?.firstName}
                             />
                         </div>
                         <div className="flex flex-col ">
@@ -87,10 +87,10 @@ export const ModalTicket = ({ ticket, closeModal }) => {
                             <input
                                 className="appearance-none bg-white border border-gray-300 rounded mt-[.1rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[90%]"
                                 type="text"
-                                name="lastname"
-                                value={formTicket.lastname}
+                                name="lastName"
+                                value={formTicket.lastName}
                                 onChange={changeValue}
-                                placeholder={ticket?.lastname}
+                                placeholder={ticket?.lastName}
                             />
                         </div>
                     </div>
@@ -112,10 +112,10 @@ export const ModalTicket = ({ ticket, closeModal }) => {
                             className="appearance-none bg-white border border-gray-300 rounded mt-[.1rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[95%]"
 
                             type="text"
-                            name="title"
-                            value={formTicket.title}
+                            name="subject"
+                            value={formTicket.subject}
                             onChange={changeValue}
-                            placeholder={ticket?.title}
+                            placeholder={ticket?.subject}
                         />
                     </div>
                     <div className="flex flex-col mt-[1rem]">
@@ -124,9 +124,9 @@ export const ModalTicket = ({ ticket, closeModal }) => {
                             className="appearance-none bg-white border border-gray-300 rounded mt-[.1rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[95%]"
                             maxLength={250}
                             onChange={changeValue}
-                            name="OCliente"
-                            value={formTicket.oCliente}
-                            placeholder={ticket?.oCliente ? ticket.oCliente : ""}
+                            name="description"
+                            value={formTicket.description}
+                            placeholder={ticket?.description ? ticket.description : ""}
                         />
                     </div>
 
@@ -136,14 +136,14 @@ export const ModalTicket = ({ ticket, closeModal }) => {
                             className="appearance-none bg-white border border-gray-300 rounded mt-[.1rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[95%]"
                             maxLength={250}
                             onChange={changeValue}
-                            name="OTécnico"
-                            value={formTicket.oTecnico}
-                            placeholder={ticket?.oTecnico ? ticket.oTecnico : ""}
+                            name="description"
+                            value={formTicket.description}
+                            placeholder={ticket?.description ? ticket.description : ""}
                         />
                     </div>
                     <div className="flex flex-col mt-[1rem]">
                         <label>Modificar estado del ticket</label>
-                        <select className="appearance-none bg-white border border-gray-300 rounded mt-[.5rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[95%]">
+                        <select onChange={changeValue} name="status" className="appearance-none bg-white border border-gray-300 rounded mt-[.5rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[95%]">
                             <option className="bg-orange-200 text-orange-500" value={stateMachine.enCola}>En cola</option>
                             <option className="bg-yellow-200 text-purple-500" value={stateMachine.enRevisión}>En revisión</option>
                             <option className="bg-purple-200 text-purple-800" value={stateMachine.presupuestado}>Presupuestado</option>
