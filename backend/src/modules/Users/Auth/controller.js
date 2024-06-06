@@ -43,20 +43,20 @@ export const changePassword = async (req, res) => {
         const { newPassword } = req.body;
 
         changePasswordService({token, newPassword, email});
-        resSuccess(res, 200, "Cambio de contraseña exitoso");
+        resSuccess(res, 200, "Password change successful");
     } catch (error) {
         logger.error(error);
-        resFail(res, 400, "Cambio de contraseña fallido", error);
+        resFail(res, 400, "Password change failed", error);
     }
 };
 
 export const passwordChangeRequest = async (req, res) => {
     try {
         const { email, password } = req.body;
-        logger.info(email);
-        logger.info(password);
+        //logger.info(email);
+        //logger.info(password);
         const magicLink = await passwordChangeRequestService({email, password});
-        logger.info(magicLink);
+        //logger.info(magicLink);
         await sendMail(
             email,
             "Restablecimiento de Contraseña",
@@ -69,9 +69,9 @@ export const passwordChangeRequest = async (req, res) => {
             <p>Saludos cordiales,
             El equipo de [Nombre del Sitio o Aplicación]</p>`,
         );
-        resSuccess(res, 200, "Solicitud de cambio de contraseña exitoso");
+        resSuccess(res, 200, "Password change request successful");
     } catch (error) {
         logger.error(error);
-        resFail(res, 400, "Solicitud de cambio de contraseña fallido", error);
+        resFail(res, 400, "Password change request failed", error);
     }
 };

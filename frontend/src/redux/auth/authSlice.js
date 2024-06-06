@@ -5,7 +5,7 @@ export const authReducer = createSlice({
     initialState: {
         userData:"",
         userMesaggeError:"",
-        isLoged:"" 
+        isLoged:false
     },
     reducers: {
         setUserData: (state, action) => {
