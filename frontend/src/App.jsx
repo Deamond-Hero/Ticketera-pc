@@ -13,6 +13,7 @@ import Dashboard from './pages/Dashboard';
 import RegisterPage from './components/Register';
 import Navbar from "./components/Navbar";
 import Landing from './pages/Landing';
+import TicketForm from './components/TicketForm';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/home' element={<Landing />} />
+        <Route path='/newticket' element={<TicketForm/>}/>
       </Routes >
     </main>
   )
