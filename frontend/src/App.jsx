@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
   useLocation,
-  Navigate
+  Navigate,
 } from "react-router-dom";
 import Login from './pages/LoginPage';
 import LandingPage from './pages/LandingPage'
@@ -12,36 +13,33 @@ import Dashboard from './pages/Dashboard';
 import RegisterPage from './components/Register';
 import Navbar from "./components/Navbar";
 import Landing from './pages/Landing';
-import { useEffect } from 'react';
+import TicketForm from './components/TicketForm';
+
 
 function App() {
-  const isLogged = window.localStorage.getItem("token");
-  const navigate = useNavigate();
-  const location = useLocation();
+  const isLoged = useSelector((state) => state.auth.userData)
+  const location = useLocation()
 
-  useEffect(() => {
-    if (isLogged && (location.pathname === "/login" || location.pathname === "/register")) {
-      navigate("/dashboard");
-    }
-  }, [isLogged]);
+  console.log(isLoged)
 
   return (
     <main>
-      <Navbar />
-      <Routes>
-        {/* Redirigir si está logueado */}
-        <Route path='/login' element={isLogged ? <Navigate to="/dashboard" /> : <Login />} />
-        <Route path='/register' element={isLogged ? <Navigate to="/dashboard" /> : <RegisterPage />} />
-        
-        {/* Rutas accesibles a todos */}
+      <Navbar/>
+      <Routes >
         <Route path='/' element={<LandingPage />} />
+        {/* {!isLoged ? (<Route path='/login' element={<Login />} />) : (<Route path='/login' element={<Dashboard />} />)}
+        {!isLoged ? (<Route path='/dashboard' element={<Login />} />) : (<Route path='/dashboard' element={<Dashboard />} />)}
+        {!isLoged ? (<Route path='/register' element={<RegisterPage />} />) : (<Route path='/register' element={<LandingPage />} />)}
+        {!isLoged ? (<Route path='/home' element={<Landing />} />) : (<Route path='/home' element={<Landing />} />)} */}
+
+        <Route path='/login' element={<Login />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/register' element={<RegisterPage />} />
         <Route path='/home' element={<Landing />} />
-        
-        {/* Ruta protegida */}
-        <Route path='/dashboard' element={isLogged ? <Dashboard /> : <Navigate to="/login" />} />
-      </Routes>
+        <Route path='/newticket' element={<TicketForm/>}/>
+      </Routes >
     </main>
   )
 }
 
-export default App;
+export default App

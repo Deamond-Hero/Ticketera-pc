@@ -7,7 +7,7 @@ import { useEffect } from "react"
 import { validateLogin } from "../utils/validationLogin";
 
 const Auth = () => {
-
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const dispatch = useDispatch()
     const isLogged = useSelector((state) => state.auth.userData)
     const errorMessage = useSelector((state)=> state.auth.userMesaggeError)
@@ -81,6 +81,11 @@ const Auth = () => {
         }
     };
 
+    useEffect(() => {    
+        const isFormValid = form.email !== '' && form.password !== '';
+        setIsButtonDisabled(!isFormValid);
+      }, [form]);
+
     return (
         <div className="bg-[#FFFFFF] text-text-dark w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-12">
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -112,7 +117,12 @@ const Auth = () => {
                 {flag && errors.password && <span className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errors.password}</span>}
 
                 <div>
-                    <button type="submit" className="h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide bg-default-btn">Ingresar</button>
+                    <button 
+                    type="submit" 
+                    className={`h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide 
+                        ${isButtonDisabled ? 'bg-default-btn cursor-not-allowed' : 'bg-blue-ppal shadow-xl'}`}
+                    disabled={isButtonDisabled}
+                    >Ingresar</button>
                 </div>
 
                 {flag && errorMessage && <span className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errorMessage}</span>}
