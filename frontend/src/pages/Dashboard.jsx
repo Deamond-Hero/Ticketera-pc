@@ -1,6 +1,6 @@
 import { Logout } from "../components/Logout"
 import { useModal } from "../hooks/useModal"
-import { ModalTicket } from "../utils/modalTicket"
+import {ModalTicket} from "../utils/ModalTicket"
 
 const Dashboard = () => {
 

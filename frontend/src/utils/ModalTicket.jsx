@@ -1,12 +1,12 @@
 import { useState } from "react";
 
+// eslint-disable-next-line react/prop-types
 export const ModalTicket = ({ ticket, closeModal }) => {
-
 
     const updateTicket = async(formTicket) =>{
         return async() =>{
             try {
-                const response = await api.put(`/api/tickets`, formTicket);
+                const response = await api.get(`/api/tickets`, formTicket);
                 console.log(response)
             }catch{
                 console.log("Error");
@@ -163,3 +163,4 @@ export const ModalTicket = ({ ticket, closeModal }) => {
 
     )
 }
+

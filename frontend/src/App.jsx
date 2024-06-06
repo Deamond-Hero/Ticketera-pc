@@ -8,11 +8,10 @@ import {
   Navigate
 } from "react-router-dom";
 import Login from './pages/LoginPage';
-import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard';
 import RegisterPage from './components/Register';
-import Navbar from "./components/Navbar";
 import Landing from './pages/Landing';
+import CreateConsultTicket from './components/CreateConsultTicket'; // Adjust the path as needed
 import { useEffect } from 'react';
 
 function App() {
@@ -24,22 +23,23 @@ function App() {
     if (isLogged && (location.pathname === "/login" || location.pathname === "/register")) {
       navigate("/dashboard");
     }
-  }, [isLogged]);
+  }, [isLogged, location.pathname, navigate]);
 
   return (
     <main>
-      <Navbar />
       <Routes>
         {/* Redirigir si está logueado */}
         <Route path='/login' element={isLogged ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path='/register' element={isLogged ? <Navigate to="/dashboard" /> : <RegisterPage />} />
         
         {/* Rutas accesibles a todos */}
-        <Route path='/' element={<LandingPage />} />
         <Route path='/home' element={<Landing />} />
         
         {/* Ruta protegida */}
         <Route path='/dashboard' element={isLogged ? <Dashboard /> : <Navigate to="/login" />} />
+
+        {/* Ruta para crear ticket */}
+        <Route path='/create-ticket' element={<CreateConsultTicket />} />
       </Routes>
     </main>
   )
