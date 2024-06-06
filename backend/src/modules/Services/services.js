@@ -51,8 +51,12 @@ export const addNewService = async ({ name, description, price, agent }) => {
             logger.info(`El agente con ID: ${agent} no existe`);
             return null;
         }
-
+        
+        const user = await User.findById(agent);
         const newService = await Service.create({ name, description, price, agent });
+
+        user.services.push(newService._id);
+        await user.save();
 
         logger.info("Servicio creado con éxito");
         return newService;
