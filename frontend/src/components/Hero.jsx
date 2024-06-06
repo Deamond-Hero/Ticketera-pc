@@ -25,7 +25,7 @@ const Hero = () => {
         marginBottom: '20px' // Espacio entre el título y el SVG
     }}>Tu reparación a un <br /> clic de distancia</h1>
 
-    <svg width="100px" height="100px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style={{
+    <svg width="100px" height="100px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{
         position: 'absolute',
         top: '120px', // Ajustar según sea necesario
         left: '73%',

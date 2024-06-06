@@ -1,23 +1,24 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
-  // eslint-disable-next-line no-unused-vars
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
   useLocation,
-  Navigate
+  Navigate,
+  useNavigate, // Asegúrate de que useNavigate está importado
 } from "react-router-dom";
 import Login from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import RegisterPage from './components/Register';
 import Landing from './pages/Landing';
-import CreateConsultTicket from './components/CreateConsultTicket'; // Adjust the path as needed
-import { useEffect } from 'react';
+import CreateConsultTicket from './components/CreateConsultTicket';
+import TicketForm from './components/TicketForm';
 
 function App() {
-  const isLogged = window.localStorage.getItem("token");
-  const navigate = useNavigate();
+  const isLogged = useSelector((state) => state.auth.userData); // Usa el nombre correcto de la variable
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLogged && (location.pathname === "/login" || location.pathname === "/register")) {
@@ -40,9 +41,12 @@ function App() {
 
         {/* Ruta para crear ticket */}
         <Route path='/create-ticket' element={<CreateConsultTicket />} />
+        
+        {/* Ruta para nuevo ticket */}
+        <Route path='/newticket' element={<TicketForm />} />
       </Routes>
     </main>
-  )
+  );
 }
 
 export default App;

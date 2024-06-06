@@ -58,6 +58,7 @@ export const ModalTicket = ({ ticket, closeModal }) => {
         cancelado: "Cancelado"
     }
 
+
     return (
         <div className="flex fixed top-0 left-0 w-full h-full items-center justify-center bg-gray-800 bg-opacity-50 ">
             <div className="flex-col bg-white rounded-3xl p-8 max-w-lg w-[70rem] h-[fit-content]">
