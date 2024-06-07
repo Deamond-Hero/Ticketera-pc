@@ -95,16 +95,16 @@ export const passwordChangeRequestService = async ({ email,password}) => {
   return magicLink;
 };
 
-export const changePasswordService = async ({ emailToken, newPassword, email }) => {
+export const changePasswordService = async ({ emailToken, newPassword, encodedEmail }) => {
 
-  let decodedEmail;
+  let email;
   try {
-    decodedEmail = decode(email);
+    email = decode(encodedEmail);
   } catch (error) {
     throw new Error("Error al decodificar el email", error);
   }
 
-  const user = await User.findOne({ email: decodedEmail, emailToken });
+  const user = await User.findOne({ email, emailToken });
 
   if (!user) {
     throw new Error("Usuario no encontrado o token inválido");

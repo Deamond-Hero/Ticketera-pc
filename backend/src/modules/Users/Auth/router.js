@@ -146,7 +146,6 @@ router.post("/login", loginValidation, validate, login);
  */
 router.post("/logout", logout);
 
-
 /**
  * @swagger
  * /api/auth/passwordChangeRequest:
@@ -176,7 +175,6 @@ router.post("/logout", logout);
  *       500:
  *         description: Internal Server Error
  */
-
 router.post("/passwordChangeRequest",passwordChangeRequest);
 
 /**
