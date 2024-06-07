@@ -1,5 +1,5 @@
 import express from "express";
-import { register, login, logout, passwordChangeRequest ,changePassword} from "./controller.js";
+import { register, login, logout, passwordChangeRequest, changePassword } from "./controller.js";
 import {
   registerValidation,
   loginValidation,
@@ -26,40 +26,14 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 description: The user's email
- *                 example: johndoe@example.com
- *               password:
- *                 type: string
- *                 description: The user's password
- *                 example: secret
+ *             $ref: '#/components/schemas/RegisterUser'
  *     responses:
  *       200:
  *         description: User created successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 _id:
- *                   type: string
- *                   description: The user's ID
- *                   example: 60c72b2f9b1d8b3b4c8a5e8e
- *                 email:
- *                   type: string
- *                   description: The user's email
- *                   example: johndoe@example.com
- *                 password:
- *                   type: string
- *                   description: The user's hashed password
- *                   example: $2b$10$...
- *                 role:
- *                   type: string
- *                   description: The user's role
- *                   example: Cliente
+ *               $ref: '#/components/schemas/UserResponse'
  *       400:
  *         description: Invalid input
  *       500:
@@ -78,44 +52,14 @@ router.post("/register", registerValidation, validate, register);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 description: The user's email
- *                 example: johndoe@example.com
- *               password:
- *                 type: string
- *                 description: The user's password
- *                 example: secret
+ *             $ref: '#/components/schemas/LoginUser'
  *     responses:
  *       200:
  *         description: Successful login
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 _id:
- *                   type: string
- *                   description: The user's ID
- *                   example: 60c72b2f9b1d8b3b4c8a5e8e
- *                 email:
- *                   type: string
- *                   description: The user's email
- *                   example: johndoe@example.com
- *                 password:
- *                   type: string
- *                   description: The user's hashed password
- *                   example: $2b$10$...
- *                 role:
- *                   type: string
- *                   description: The user's role
- *                   example: Cliente
- *                 token:
- *                   type: string
- *                   description: JWT token
- *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *               $ref: '#/components/schemas/UserResponseWithToken'
  *       400:
  *         description: Invalid credentials
  *       500:
@@ -157,16 +101,7 @@ router.post("/logout", logout);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 description: User Email
- *                 example: johndoe@example.com
- *               password:
- *                 type: string
- *                 description: User password
- *                 example: newpassword123
+ *             $ref: '#/components/schemas/PasswordChangeRequest'
  *     responses:
  *       200:
  *         description: Password change request successful
@@ -175,7 +110,7 @@ router.post("/logout", logout);
  *       500:
  *         description: Internal Server Error
  */
-router.post("/passwordChangeRequest",passwordChangeRequest);
+router.post("/passwordChangeRequest", passwordChangeRequest);
 
 /**
  * @swagger
@@ -201,12 +136,7 @@ router.post("/passwordChangeRequest",passwordChangeRequest);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               newPassword:
- *                 type: string
- *                 description: New user password
- *                 example: newpassword123
+ *             $ref: '#/components/schemas/ChangePassword'
  *     responses:
  *       200:
  *         description: Password change successful
@@ -215,6 +145,6 @@ router.post("/passwordChangeRequest",passwordChangeRequest);
  *       500:
  *         description: Internal Server Error
  */
-router.post("/changePassword",changePassword);
+router.post("/changePassword", changePassword);
 
 export default router;
