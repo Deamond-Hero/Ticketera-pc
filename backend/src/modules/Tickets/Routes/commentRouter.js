@@ -1,5 +1,10 @@
 import express from "express";
-import { getCommentTicket, createCommentTicket, updateCommentTicket, deleteCommentTicket } from "../Controllers/commentController.js";
+import {
+  createCommentTicket,
+  deleteCommentTicket,
+  getCommentTicket,
+  updateCommentTicket,
+} from "../Controllers/commentController.js";
 
 const commentRouter = express.Router();
 

@@ -1,17 +1,17 @@
+import bodyParser from "body-parser";
+import cors from "cors";
 import { configDotenv } from "dotenv";
 import express from "express";
-import { connectDb } from "./config/mongoConnect.js";
-import { addLogger, logger } from "./config/logger.js";
-import cors from "cors";
-import { resFail } from "./config/utils/response.js";
-import usersRouter from "./modules/Users/router.js";
-import authRouter from "./modules/Users/Auth/router.js";
-import ticketsRouter from "./modules/Tickets/Routes/ticketRouter.js";
-import commentRouter from "./modules/Tickets/Routes/commentRouter.js";
-import servicesRouter from "./modules/Services/router.js";
-import bodyParser from "body-parser";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import { addLogger, logger } from "./config/logger.js";
+import { connectDb } from "./config/mongoConnect.js";
+import { resFail } from "./config/utils/response.js";
+import servicesRouter from "./modules/Services/router.js";
+import commentRouter from "./modules/Tickets/Routes/commentRouter.js";
+import ticketsRouter from "./modules/Tickets/Routes/ticketRouter.js";
+import authRouter from "./modules/Users/Auth/router.js";
+import usersRouter from "./modules/Users/router.js";
 
 configDotenv();
 
@@ -450,7 +450,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./src/modules/**/**/*.js"], 
+  apis: ["./src/modules/**/**/*.js"],
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);

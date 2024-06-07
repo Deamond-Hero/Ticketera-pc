@@ -1,13 +1,13 @@
-import { resSuccess, resFail } from "../../../config/utils/response.js";
+import { resFail, resSuccess } from "../../../config/utils/response.js";
+import { commentsEmail } from "../../Mailer/controller.js";
 import {
-  getCommentsTicketAll,
-  getCommentsTicketById,
   createCommentsTicket,
-  updateCommentsTicket,
   deleteCommentsTicket,
   getCommentsAll,
+  getCommentsTicketAll,
+  getCommentsTicketById,
+  updateCommentsTicket,
 } from "../Services/commentServices.js";
-import { commentsEmail } from "../../Mailer/controller.js";
 
 export const getCommentTicket = async (req, res) => {
   try {
@@ -30,9 +30,9 @@ export const getCommentTicket = async (req, res) => {
 
 export const createCommentTicket = async (req, res) => {
   try {
-    const {newComment,role} = req.body;
+    const { newComment, role } = req.body;
     const result = await createCommentsTicket(newComment);
-    await commentsEmail(result.id,role);
+    await commentsEmail(result.id, role);
     resSuccess(res, 200, "Comentario creado con éxito", result);
   } catch (error) {
     resFail(res, 400, error.message, error);

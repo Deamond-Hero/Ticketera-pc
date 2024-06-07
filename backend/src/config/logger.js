@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import { format, createLogger, transports, addColors } from "winston";
+import { addColors, createLogger, format, transports } from "winston";
 
 configDotenv();
 const { combine, printf } = format;

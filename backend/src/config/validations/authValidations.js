@@ -3,7 +3,9 @@ import { resFail } from "../utils/response.js";
 
 export const registerValidation = [
   check("email").isEmail().withMessage("Debe ser un correo válido"),
-  check("password").isLength({ min: 8 }).withMessage("La contraseña debe tener al menos 8 caracteres"),
+  check("password")
+    .isLength({ min: 8 })
+    .withMessage("La contraseña debe tener al menos 8 caracteres"),
 ];
 
 export const loginValidation = [

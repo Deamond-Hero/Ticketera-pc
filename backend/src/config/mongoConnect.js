@@ -5,7 +5,7 @@ configDotenv();
 
 const connectMongoose = async () => {
   await mongoose.connect(process.env.MONGO_URL, {
-    dbName: "s15-09-ft-node-react", 
+    dbName: "s15-09-ft-node-react",
   });
 };
 

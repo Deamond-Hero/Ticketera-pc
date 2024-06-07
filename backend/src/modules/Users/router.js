@@ -1,8 +1,18 @@
 import express from "express";
-import { createUser, updateUserById, deleteUser, uploadAvatar, getUserById, getAllUsers, getMyUser, updateMyUser, deleteMyUser } from "./controller.js";
 import upload from "../../config/multer.js";
 import { createUserValidation, validate } from "../../config/validations/userValidations.js";
 import { authenticate } from "../../middlewares/auth.js";
+import {
+  createUser,
+  deleteMyUser,
+  deleteUser,
+  getAllUsers,
+  getMyUser,
+  getUserById,
+  updateMyUser,
+  updateUserById,
+  uploadAvatar,
+} from "./controller.js";
 
 const router = express.Router();
 

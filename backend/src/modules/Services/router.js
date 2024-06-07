@@ -1,6 +1,12 @@
 import express from "express";
-import { getService, getServiceById, createService, updateService, deleteService } from "./controller.js";
 import { serviceValidation, validate } from "../../config/validations/servicesValidations.js";
+import {
+  createService,
+  deleteService,
+  getService,
+  getServiceById,
+  updateService,
+} from "./controller.js";
 
 const router = express.Router();
 

@@ -1,10 +1,14 @@
+import { decode, encode } from "base64-url";
 import { logger } from "../../../config/logger.js";
-import User from "../schema.js";
-import { UserDTO } from "../dto.js";
-import { createHash, isValidPassword, generateEmailToken } from "../../../config/utils/hash.js";
-import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
-import { encode, decode } from "base64-url";
 import client from "../../../config/redisClient.js";
+import {
+  createHash,
+  generateEmailToken,
+  isValidPassword,
+} from "../../../config/utils/hash.js";
+import { generateToken, verifyToken } from "../../../config/utils/jwt.js";
+import { UserDTO } from "../dto.js";
+import User from "../schema.js";
 
 export const createUserService = async ({ email, password }) => {
   try {
@@ -64,15 +68,15 @@ export const logoutService = (token) => {
   });
 };
 
-export const passwordChangeRequestService = async ({ email,password}) => {
+export const passwordChangeRequestService = async ({ email, password }) => {
   //logger.info(`Buscando usuario asociado al correo: ${email}`);
   const user = await User.findOne({ email });
 
   if (!user) {
-   // logger.error(`Usuario no encontrado`);
+    // logger.error(`Usuario no encontrado`);
     throw new Error("Usuario no encontrado");
   }
-  
+
   if (!isValidPassword(user, password)) {
     //logger.error(`Contraseña incorrecta`);
     throw new Error("Contraseña incorrecta");
@@ -80,7 +84,7 @@ export const passwordChangeRequestService = async ({ email,password}) => {
 
   //logger.info(`Usuario encontrado`);
   const emailToken = await generateEmailToken();
-  
+
   //logger.info(`Token generado ${emailToken}`);
   user.emailToken = emailToken;
   await user.save();
@@ -96,7 +100,6 @@ export const passwordChangeRequestService = async ({ email,password}) => {
 };
 
 export const changePasswordService = async ({ emailToken, newPassword, encodedEmail }) => {
-
   let email;
   try {
     email = decode(encodedEmail);
