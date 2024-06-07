@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import { useFormValidations } from "../hooks/useFormValidations";
 
 const RegisterPage = () => {
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [formState, setFormState] = useState({
         email: '',
         password: '',
@@ -43,6 +44,11 @@ const RegisterPage = () => {
         }
     };
 
+    useEffect(() => {    
+        const isFormFull = formState.email !== '' && formState.password !== '' && formState.password2 !== '';
+        setIsButtonDisabled(!isFormFull);
+      }, [formState]);
+
     return (
         <div className="bg-[#FFFFFF] text-text-dark w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-12">
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -58,8 +64,8 @@ const RegisterPage = () => {
                         className="rounded-lg bg-[#FBFBFB] h-12 w-96 border border-text-dark text-text-dark px-2 focus:shadow-input-focus focus:outline-none focus:border-none"
                     />
                 </label>
-                {errorsState.apiError.general && <p>{errorsState.apiError.general}</p>}
-                {errorsState.error.email && <p>{errorsState.error.email}</p>}
+                {errorsState.apiError.general && <p className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errorsState.apiError.general}</p>}
+                {errorsState.error.email && <p className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errorsState.error.email}</p>}
 
                 <label className="flex flex-col">Password
                     <input
@@ -72,7 +78,7 @@ const RegisterPage = () => {
                         className="rounded-lg bg-[#FBFBFB] h-12 w-96 border border-text-dark text-text-dark px-2 focus:shadow-input-focus focus:outline-none focus:border-none"
                     />
                 </label>
-                {errorsState.error.password && <p>{errorsState.error.password}</p>}
+                {errorsState.error.password && <p className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errorsState.error.password}</p>}
 
                 <label className="flex flex-col">Confirm Password
                     <input
@@ -85,9 +91,14 @@ const RegisterPage = () => {
                         className="rounded-lg bg-[#FBFBFB] h-12 w-96 border border-text-dark text-text-dark px-2 focus:shadow-input-focus focus:outline-none focus:border-none"
                     />
                 </label>
-                {errorsState.error.password && <p>{errorsState.error.password}</p>}
+                {errorsState.error.password && <p className="text-red-500 font-bold mt-[-20px] mb-[-20px]">{errorsState.error.password}</p>}
 
-                <button type="submit" className="h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide bg-default-btn">Registrarse</button>
+                <button 
+                    type="submit"
+                    className={`h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide 
+                    ${isButtonDisabled ? 'bg-default-btn cursor-not-allowed' : 'bg-blue-ppal shadow-xl'}`}
+                    disabled={isButtonDisabled}
+                >Registrarse</button>
             </form>
             <Link to={'/login'}><span className="text-xl underline tracking-wide">¿Ya tienes una cuenta?</span></Link>
         </div>
