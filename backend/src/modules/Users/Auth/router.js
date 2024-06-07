@@ -120,13 +120,13 @@ router.post("/passwordChangeRequest", passwordChangeRequest);
  *     tags: [Auth]
  *     parameters:
  *       - in: query
- *         name: token
+ *         name: emailToken
  *         schema:
  *           type: string
  *         required: true
  *         description: Password change token
  *       - in: query
- *         name: email
+ *         name: encodedEmail
  *         schema:
  *           type: string
  *         required: true
