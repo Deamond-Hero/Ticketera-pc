@@ -44,29 +44,29 @@ export const logout = async (req, res) => {
 };
 
 export const changePassword = async (req, res) => {
-  try {
-    const { token, email } = req.query;
-    const { newPassword } = req.body;
+    try {
+        const { emailToken, encodedEmail } = req.query;
+        const { newPassword } = req.body;
 
-    changePasswordService({ token, newPassword, email });
-    resSuccess(res, 200, "Password change successful");
-  } catch (error) {
-    logger.error(error);
-    resFail(res, 400, "Password change failed", error);
-  }
+        changePasswordService({emailToken, newPassword, encodedEmail});
+        resSuccess(res, 200, "Password change successful");
+    } catch (error) {
+        logger.error(error);
+        resFail(res, 400, "Password change failed", error);
+    }
 };
 
 export const passwordChangeRequest = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    //logger.info(email);
-    //logger.info(password);
-    const magicLink = await passwordChangeRequestService({ email, password });
-    //logger.info(magicLink);
-    await sendMail(
-      email,
-      "Restablecimiento de Contraseña",
-      /*html*/ `<p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en [Nombre del Sitio o Aplicación]. Si no realizaste esta solicitud, por favor ignora este correo electrónico. De lo contrario, puedes cambiar tu contraseña utilizando el siguiente enlace:</p>
+    try {
+        const { email, password } = req.body;
+        logger.info(email);
+        logger.info(password);
+        const magicLink = await passwordChangeRequestService({email, password});
+        logger.info(magicLink);
+        await sendMail(
+            email,
+            "Restablecimiento de Contraseña",
+/*html*/    `<p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en [Nombre del Sitio o Aplicación]. Si no realizaste esta solicitud, por favor ignora este correo electrónico. De lo contrario, puedes cambiar tu contraseña utilizando el siguiente enlace:</p>
             <p>Para verificar tu dirección de correo electrónico, por favor haz clic en el siguiente 
             <a href="${magicLink}">enlace</a>.</p>
             
