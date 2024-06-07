@@ -68,7 +68,7 @@ export const logoutService = (token) => {
   });
 };
 
-export const passwordChangeRequestService = async ({ email,password}) => {
+export const passwordChangeRequestService = async ({ email, password }) => {
   logger.info(`Buscando usuario asociado al correo: ${email}`);
   const user = await User.findOne({ email });
 
@@ -102,7 +102,7 @@ export const passwordChangeRequestService = async ({ email,password}) => {
 export const changePasswordService = async ({ emailToken, newPassword, encodedEmail }) => {
   const email = decode(encodedEmail);
   logger.info(email);
-  
+
   const user = await User.findOne({ email, emailToken });
 
   if (!user) {
