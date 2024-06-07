@@ -2,21 +2,23 @@ import { useState } from "react";
 import services from "../utils/services.json"
 
 const techservices = services
+const userData = JSON.parse(window.localStorage.getItem('user'))
 
 const TicketForm = (ticket) => {
 
     const [formTicket, setFormTicket] = useState({
-        id: "",
+        subject: "",
+        description: "",
+        status: "",
+        user: userData._id,
         firstName: "",
         lastName: "",
         phone: "",
-        subject: "",
-        user: "",
-        description: "",
-        status: "",
-        agent: "",
-        service: "",
+        agent: "6661c79417513136088f4575",  // Como va a definir un agente el cliente?
+        service: "Reballing", // De donde me traigo las lista de servicios?
     })
+
+    console.log (userData)
 
     const changeValue = (e) => {
         const { name, value } = e.target;
