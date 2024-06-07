@@ -65,49 +65,45 @@ export const logoutService = (token) => {
 };
 
 export const passwordChangeRequestService = async ({ email,password}) => {
-  //logger.info(`Buscando usuario asociado al correo: ${email}`);
+  logger.info(`Buscando usuario asociado al correo: ${email}`);
   const user = await User.findOne({ email });
 
   if (!user) {
-   // logger.error(`Usuario no encontrado`);
-    throw new Error("Usuario no encontrado");
+    logger.error(`Usuario no encontrado`);
+    return new Error("Usuario no encontrado");
   }
   
   if (!isValidPassword(user, password)) {
-    //logger.error(`Contraseña incorrecta`);
-    throw new Error("Contraseña incorrecta");
+    logger.error(`Contraseña incorrecta`);
+    return new Error("Contraseña incorrecta");
   }
 
-  //logger.info(`Usuario encontrado`);
+  logger.info(`Usuario encontrado`);
   const emailToken = await generateEmailToken();
-  
-  //logger.info(`Token generado ${emailToken}`);
+
+  logger.info(`Token generado ${emailToken}`);
   user.emailToken = emailToken;
   await user.save();
 
-  //logger.info(`Token guardado`);
+  logger.info(`Token guardado`);
 
   const encodedEmail = encode(email);
 
-  //logger.info(`Sifrado`);
+  logger.info(`Sifrado`);
 
-  const magicLink = `https://tu-dominio.com/reset-password?token=${emailToken}&email=${encodedEmail}`;
+  const magicLink = `https://tu-dominio.com/reset-password?emailToken=${emailToken}&encodedEmail=${encodedEmail}`;
   return magicLink;
 };
 
 export const changePasswordService = async ({ emailToken, newPassword, encodedEmail }) => {
-
-  let email;
-  try {
-    email = decode(encodedEmail);
-  } catch (error) {
-    throw new Error("Error al decodificar el email", error);
-  }
-
+  const email = decode(encodedEmail);
+  logger.info(email);
+  
   const user = await User.findOne({ email, emailToken });
 
   if (!user) {
-    throw new Error("Usuario no encontrado o token inválido");
+    logger.error(`Usuario no encontrado o token inválido`);
+    return new Error("Usuario no encontrado o token inválido");
   }
 
   user.password = createHash(newPassword);

@@ -39,10 +39,10 @@ export const logout = async (req, res) => {
 
 export const changePassword = async (req, res) => {
     try {
-        const { token, email } = req.query;
+        const { emailToken, encodedEmail } = req.query;
         const { newPassword } = req.body;
 
-        changePasswordService({token, newPassword, email});
+        changePasswordService({emailToken, newPassword, encodedEmail});
         resSuccess(res, 200, "Password change successful");
     } catch (error) {
         logger.error(error);
@@ -53,10 +53,10 @@ export const changePassword = async (req, res) => {
 export const passwordChangeRequest = async (req, res) => {
     try {
         const { email, password } = req.body;
-        //logger.info(email);
-        //logger.info(password);
+        logger.info(email);
+        logger.info(password);
         const magicLink = await passwordChangeRequestService({email, password});
-        //logger.info(magicLink);
+        logger.info(magicLink);
         await sendMail(
             email,
             "Restablecimiento de Contraseña",
