@@ -1,19 +1,5 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "main": "app.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/app.js",
-    "start": "node src/app.js",
-    "lint": "npx eslint -c eslint.config.js --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "npx eslint -c eslint.config.js --fix --report-unused-disable-directives --max-warnings 0"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "s15-09-ft-node-react",
   "dependencies": {
     "base64-url": "^2.3.3",
     "bcrypt": "^5.1.1",
@@ -31,9 +17,23 @@
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.13.0"
   },
+  "description": "Simulacion laboral No Country",
   "devDependencies": {
     "@eslint/js": "^9.2.0",
     "eslint": "^9.2.0",
     "globals": "^15.2.0"
-  }
+  },
+  "keywords": [],
+  "license": "ISC",
+  "main": "app.js",
+  "name": "backend",
+  "scripts": {
+    "dev": "node --watch src/app.js",
+    "lint": "npx eslint -c eslint.config.js --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "npx eslint -c eslint.config.js --fix --report-unused-disable-directives --max-warnings 0",
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "version": "1.0.0"
 }
