@@ -1,14 +1,29 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import api from "../utils/Api"
 import axios from "axios"
+import { getAllAgents, getAllServices } from "../redux/ticket/actionsTicket"
+import { useDispatch, useSelector } from "react-redux"
 
 const ServiceForm = () => {
+
+    const dispatch = useDispatch();
+    const allAgents = useSelector(state => state.ticket.agentList)
     const [formNewService, setFormNewService] = useState({
         name: '',
         description: '',
         price: "",
         agent: "6661c79417513136088f4575"
     })
+
+    useEffect(()=>{
+        dispatch(getAllAgents())
+        console.log(allAgents)
+    },[])
+
+    
+    useEffect(()=>{
+        console.log(formNewService)
+    },[formNewService])
 
     const createService = async (form) => {
         console.log(form)
@@ -90,13 +105,10 @@ const ServiceForm = () => {
                     <div className="flex flex-col mt-[1rem]">
                         <label>Selecciona un Técnico</label>
                         <select>
-                            <option>Rocket</option>
-                            <option>Fer</option>
-                            <option>Groot</option>
-                            <option>Flor</option>
-                            <option>Agustin</option>
-                            <option>Sofi</option>
-                            <option>Lean</option>
+                            {allAgents?.map(agent => (
+                                <option key={agent._id} value={agent._id}>{agent.firstName} {agent.lastName}</option>
+                            ))}
+]
                         </select>
                     </div>
                 </form>
