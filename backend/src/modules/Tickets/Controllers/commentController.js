@@ -1,26 +1,21 @@
 import { resSuccess, resFail } from "../../../config/utils/response.js";
 import {
-  getCommentsTicketAll,
+  getCommentsAll,
   getCommentsTicketById,
   createCommentsTicket,
   updateCommentsTicket,
   deleteCommentsTicket,
-  getCommentsAll,
 } from "../Services/commentServices.js";
-import { commentsEmail } from "../../Mailer/controller.js";
 
 export const getCommentTicket = async (req, res) => {
   try {
     let result;
-    const { idComment, idTicket } = req.query;
-    if (idComment) {
-      result = await getCommentsTicketById(idComment); // id del comentario
-      resSuccess(res, 200, `Comentario con id: ${idComment} :`, result);
-    } else if (idTicket) {
-      result = await getCommentsTicketAll(idTicket); // id del ticket
-      resSuccess(res, 200, `Lista total de Comentarios del ticket: ${idTicket}`, result);
+    const { id } = req.params;
+    if (id!="{id}") {
+      result = await getCommentsTicketById(id); // id del comentario
+      resSuccess(res, 200, `Comentario con id: ${id} :`, result);
     } else {
-      result = await getCommentsAll(); // id del ticket
+      result = await getCommentsAll(); // todos los comentarios existentes
       resSuccess(res, 200, "Lista total de Comentarios:", result);
     }
   } catch (error) {
@@ -30,9 +25,8 @@ export const getCommentTicket = async (req, res) => {
 
 export const createCommentTicket = async (req, res) => {
   try {
-    const {newComment,role} = req.body;
+    const newComment = req.body;
     const result = await createCommentsTicket(newComment);
-    await commentsEmail(result.id,role);
     resSuccess(res, 200, "Comentario creado con éxito", result);
   } catch (error) {
     resFail(res, 400, error.message, error);
@@ -51,7 +45,7 @@ export const updateCommentTicket = async (req, res) => {
 
 export const deleteCommentTicket = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const result = await deleteCommentsTicket(id);
     resSuccess(res, 200, `Comentario con id: ${id} fue eliminado exitosamente.`, result);
   } catch (error) {
