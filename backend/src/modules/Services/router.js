@@ -1,6 +1,12 @@
 import express from "express";
-import { getService, getServiceById, createService, updateService, deleteService } from "./controller.js";
 import { serviceValidation, validate } from "../../config/validations/servicesValidations.js";
+import {
+  createService,
+  deleteService,
+  getService,
+  getServiceById,
+  updateService,
+} from "./controller.js";
 
 const router = express.Router();
 
@@ -22,79 +28,14 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: The name of the service
- *                 example: Repair
- *               description:
- *                 type: string
- *                 description: The description of the service
- *                 example: Fixing household items
- *               price:
- *                 type: number
- *                 description: The price of the service
- *                 example: 100
- *               agent:
- *                 type: string
- *                 description: The ID of the agent responsible for the service
- *                 example: 6657f8de8cb1fa4f813fa191
+ *             $ref: '#/components/schemas/Service'
  *     responses:
  *       200:
- *         description: Service created succesfully
+ *         description: Service created successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   description: Indicates if the operation was successful
- *                   example: true
- *                 message:
- *                   type: string
- *                   description: A message describing the result
- *                   example: El Servicio fue creado con éxito
- *                 payload:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                         description: The service ID
- *                         example: 6659f8add7d1f2fdf4134936
- *                       name:
- *                         type: string
- *                         description: The name of the service
- *                         example: Prueba
- *                       description:
- *                         type: string
- *                         description: The description of the service
- *                         example: Descripcion Prueba
- *                       price:
- *                         type: number
- *                         description: The price of the service
- *                         example: 50
- *                       agent:
- *                         type: string
- *                         description: The ID of the agent responsible for the service
- *                         example: 6657f8de8cb1fa4f813fa191
- *                       createdAt:
- *                         type: string
- *                         format: date-time
- *                         description: The creation date of the service
- *                         example: 2024-05-31T16:19:57.772Z
- *                       updatedAt:
- *                         type: string
- *                         format: date-time
- *                         description: The last update date of the service
- *                         example: 2024-05-31T16:19:57.772Z
- *                       __v:
- *                         type: number
- *                         description: The version key
- *                         example: 0
+ *               $ref: '#/components/schemas/ServiceResponse'
  *       404:
  *         description: Invalid input
  *       500:
@@ -114,55 +55,7 @@ router.post("/", serviceValidation, validate, createService);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   description: Indicates if the operation was successful
- *                   example: true
- *                 message:
- *                   type: string
- *                   description: A message describing the result
- *                   example: GET de servicios exitoso
- *                 payload:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                         description: The service ID
- *                         example: 6659f8add7d1f2fdf4134936
- *                       name:
- *                         type: string
- *                         description: The name of the service
- *                         example: Prueba
- *                       description:
- *                         type: string
- *                         description: The description of the service
- *                         example: Descripcion Prueba
- *                       price:
- *                         type: number
- *                         description: The price of the service
- *                         example: 50
- *                       agent:
- *                         type: string
- *                         description: The ID of the agent responsible for the service
- *                         example: 6657f8de8cb1fa4f813fa191
- *                       createdAt:
- *                         type: string
- *                         format: date-time
- *                         description: The creation date of the service
- *                         example: 2024-05-31T16:19:57.772Z
- *                       updatedAt:
- *                         type: string
- *                         format: date-time
- *                         description: The last update date of the service
- *                         example: 2024-05-31T16:19:57.772Z
- *                       __v:
- *                         type: number
- *                         description: The version key
- *                         example: 0
+ *               $ref: '#/components/schemas/ServiceListResponse'
  *       500:
  *         description: Internal server error
  */
@@ -187,28 +80,7 @@ router.get("/", getService);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 _id:
- *                   type: string
- *                   description: The service ID
- *                   example: 60c72b2f9b1d8b3b4c8a5e8e
- *                 name:
- *                   type: string
- *                   description: The name of the service
- *                   example: Repair
- *                 description:
- *                   type: string
- *                   description: The description of the service
- *                   example: Fixing household items
- *                 price:
- *                   type: number
- *                   description: The price of the service
- *                   example: 100
- *                 agent:
- *                   type: string
- *                   description: The ID of the agent responsible for the service
- *                   example: 60c72b2f9b1d8b3b4c8a5e8e
+ *               $ref: '#/components/schemas/ServiceResponse'
  *       404:
  *         description: Service not found
  *       500:
@@ -234,79 +106,14 @@ router.get("/:id", getServiceById);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: The name of the service
- *                 example: Repair
- *               description:
- *                 type: string
- *                 description: The description of the service
- *                 example: Fixing household items
- *               price:
- *                 type: number
- *                 description: The price of the service
- *                 example: 100
- *               agent:
- *                 type: string
- *                 description: The ID of the agent responsible for the service
- *                 example: 6657f8de8cb1fa4f813fa191
+ *             $ref: '#/components/schemas/Service'
  *     responses:
  *       200:
- *         description: Service updated succesfully
+ *         description: Service updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   description: Indicates if the operation was successful
- *                   example: true
- *                 message:
- *                   type: string
- *                   description: A message describing the result
- *                   example: Se editó el servicio correctamente
- *                 payload:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                         description: The service ID
- *                         example: 6659f8add7d1f2fdf4134936
- *                       name:
- *                         type: string
- *                         description: The name of the service
- *                         example: Prueba
- *                       description:
- *                         type: string
- *                         description: The description of the service
- *                         example: Descripcion Prueba
- *                       price:
- *                         type: number
- *                         description: The price of the service
- *                         example: 50
- *                       agent:
- *                         type: string
- *                         description: The ID of the agent responsible for the service
- *                         example: 6657f8de8cb1fa4f813fa191
- *                       createdAt:
- *                         type: string
- *                         format: date-time
- *                         description: The creation date of the service
- *                         example: 2024-05-31T16:19:57.772Z
- *                       updatedAt:
- *                         type: string
- *                         format: date-time
- *                         description: The last update date of the service
- *                         example: 2024-05-31T16:19:57.772Z
- *                       __v:
- *                         type: number
- *                         description: The version key
- *                         example: 0
+ *               $ref: '#/components/schemas/ServiceResponse'
  *       400:
  *         description: Service not found
  *       404:

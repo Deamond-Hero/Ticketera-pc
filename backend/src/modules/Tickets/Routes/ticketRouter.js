@@ -1,4 +1,5 @@
 import express from "express";
+import { ticketValidation, validate } from "../../../config/validations/ticketsValidations.js";
 import {
   getTicket,
   getTicketByUser,
@@ -7,7 +8,6 @@ import {
   updateTicket,
   deleteTicket,
 } from "../Controllers/ticketController.js";
-import { ticketValidation, validate } from "../../../config/validations/ticketsValidations.js";
 
 const ticketRouter = express.Router();
 
@@ -162,7 +162,7 @@ ticketRouter.get("/user/:id", getTicketByUser);
  *     summary: Crear un nuevo ticket
  *     description: Los datos de firstName, lastName y phone pueden estar en blanco.
  *     tags: [Tickets]
- *     requestBody:      
+ *     requestBody:
  *       content:
  *         application/json:
  *           schema:
@@ -174,7 +174,7 @@ ticketRouter.get("/user/:id", getTicketByUser);
  *         description: Descripción breve del problema.
  *         schema:
  *           type: string
- *         required: true 
+ *         required: true
  *         example: Pantalla con manchas negras
  *       - in: body
  *         name: description

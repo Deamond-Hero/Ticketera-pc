@@ -12,13 +12,13 @@ export const getCommentsTicketAll = async (id) => {
 };
 
 export const getCommentsAll = async () => {
-const Comment = await Comments.find();
+  const Comment = await Comments.find();
 
-if (!Comment) {
-  throw new Error("Error al buscar los comentarios.");
-}
+  if (!Comment) {
+    throw new Error("Error al buscar los comentarios.");
+  }
 
-return Comment;
+  return Comment;
 };
 
 export const getCommentsTicketById = async (id) => {

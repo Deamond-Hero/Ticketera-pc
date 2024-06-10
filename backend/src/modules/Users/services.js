@@ -1,23 +1,23 @@
 import { logger } from "../../config/logger.js";
-import User from "./schema.js";
 import { createHash } from "../../config/utils/hash.js";
+import User from "./schema.js";
 
 export const getUsersService = async () => {
   logger.info("Buscando usuarios");
-  const users = await User.find();
+  const users = await User.find().populate("services", "tickets");
   if (!users) throw new Error("Usuarios no encontrados");
   return users;
 };
 
 export const getUserByIdService = async (id) => {
   logger.info("Buscando usuario por id");
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("services", "tickets");
   if (!user) throw new Error("Usuario no encontrado");
   return user;
 };
 
 export const createUserService = async (user) => {
-  if(!user) throw new Error("No se pudo crear el usuario");
+  if (!user) throw new Error("No se pudo crear el usuario");
   logger.info("Validando usuario");
   const existsUser = await User.findOne({ email: user.email });
   if (existsUser) throw new Error("El correo ya existe");

@@ -1,0 +1,20 @@
+[
+    {
+        "id": "1",
+        "name": "Limpieza de equipo",
+        "description": "Limpieza de equipo de computadora",
+        "price": 50
+    },
+    {
+        "id": "2",
+        "name": "Reparación de software",
+        "description": "Ficheros defectosos dañados",
+        "price": 80
+    },
+    {
+        "id": "3",
+        "name": "Reparación de hardware",
+        "description": "Componentes físicos dañados",
+        "price": 80
+    }
+]

@@ -1,10 +1,11 @@
-import { resSuccess, resFail } from "../../../config/utils/response.js";
+import { resFail, resSuccess } from "../../../config/utils/response.js";
+import { commentsEmail } from "../../Mailer/controller.js";
 import {
+  createCommentsTicket,
+  deleteCommentsTicket,
   getCommentsAll,
   getCommentsTicketById,
-  createCommentsTicket,
   updateCommentsTicket,
-  deleteCommentsTicket,
 } from "../Services/commentServices.js";
 
 export const getCommentTicket = async (req, res) => {
@@ -25,8 +26,9 @@ export const getCommentTicket = async (req, res) => {
 
 export const createCommentTicket = async (req, res) => {
   try {
-    const newComment = req.body;
+    const { newComment, role } = req.body;
     const result = await createCommentsTicket(newComment);
+    await commentsEmail(result.id, role);
     resSuccess(res, 200, "Comentario creado con éxito", result);
   } catch (error) {
     resFail(res, 400, error.message, error);

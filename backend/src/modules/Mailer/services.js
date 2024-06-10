@@ -1,39 +1,38 @@
-import { logger } from "../../config/logger.js";
-import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv";
-import Ticket from "../Tickets/Schemas/ticketSchema.js";
 import mongoose from "mongoose";
+import nodemailer from "nodemailer";
+import { logger } from "../../config/logger.js";
+import Ticket from "../Tickets/Schemas/ticketSchema.js";
 configDotenv();
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.MAIL_USERNAME,
-      pass: process.env.MAIL_PASSWORD,
-    },
-  });
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD,
+  },
+});
 
 export const sendMail = async (to, subject, htmlContent) => {
   const mailOptions = {
-      from: `${process.env.MAIL_USERNAME}`,
-      to: to,
-      subject: subject,
-      html: htmlContent,
+    from: `${process.env.MAIL_USERNAME}`,
+    to: to,
+    subject: subject,
+    html: htmlContent,
   };
 
   try {
-      await transporter.sendMail(mailOptions);
-      console.log("Correo electrónico enviado correctamente.");
+    await transporter.sendMail(mailOptions);
+    console.log("Correo electrónico enviado correctamente.");
   } catch (error) {
-      console.error(`Error al enviar el correo electrónico error: ${error.message}`, error);
-      throw new Error("Error al enviar el correo electrónico");
+    console.error(`Error al enviar el correo electrónico error: ${error.message}`, error);
+    throw new Error("Error al enviar el correo electrónico");
   }
 };
 
-
-export const statusEmailService = async (id, role ) => {
+export const statusEmailService = async (id, role) => {
   logger.info(id);
   logger.info(role);
   try {
@@ -43,9 +42,9 @@ export const statusEmailService = async (id, role ) => {
     }
 
     const ticket = await Ticket.findById(id)
-        .select("agent user status")
-        .populate("agent")
-        .populate("user");
+      .select("agent user status")
+      .populate("agent")
+      .populate("user");
 
     if (!ticket) {
       logger.error("Ticket no encontrado");
@@ -65,17 +64,17 @@ export const statusEmailService = async (id, role ) => {
     await sendMail(
       email,
       `Cambio de estado del ticket: ${id}`,
-      /*html*/`<p>El estado del ticket: ${id} fue actualizado a ${status}</p>`,
+      /*html*/ `<p>El estado del ticket: ${id} fue actualizado a ${status}</p>`,
     );
     logger.info("Correo electrónico enviado correctamente.");
-    return ;
+    return;
   } catch (error) {
     console.error(`Error al enviar el correo electrónico error: ${error.message}`, error);
-      throw error;
-  };
+    throw error;
+  }
 };
 
-export const commentsEmailService = async (id, role ) => {
+export const commentsEmailService = async (id, role) => {
   logger.info(id);
   logger.info(role);
   try {
@@ -85,9 +84,9 @@ export const commentsEmailService = async (id, role ) => {
     }
 
     const ticket = await Ticket.findById(id)
-        .select("agent user status")
-        .populate("agent")
-        .populate("user");
+      .select("agent user status")
+      .populate("agent")
+      .populate("user");
 
     if (!ticket) {
       logger.error("Ticket no encontrado");
@@ -106,12 +105,12 @@ export const commentsEmailService = async (id, role ) => {
     await sendMail(
       email,
       `Nuevo comentario en el ticket: ${id}`,
-      /*html*/`<p>Se a agegado un nuevo comentario en el ticket: ${id}</p>`,
+      /*html*/ `<p>Se a agegado un nuevo comentario en el ticket: ${id}</p>`,
     );
     logger.info("Correo electrónico enviado correctamente.");
-    return ;
+    return;
   } catch (error) {
     console.error(`Error al enviar el correo electrónico error: ${error.message}`, error);
-      throw error;
-  };
+    throw error;
+  }
 };

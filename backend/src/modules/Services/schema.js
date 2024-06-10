@@ -6,7 +6,7 @@ const serviceSchema = new Schema(
     name: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true, default: 0 },
-    agent: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    agent: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
   },
   { timestamps: true },
 );

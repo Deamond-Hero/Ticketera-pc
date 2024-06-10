@@ -1,11 +1,11 @@
-import { resSuccess, resFail } from "../../config/utils/response.js";
 import { logger } from "../../config/logger.js";
+import { resFail, resSuccess } from "../../config/utils/response.js";
 import {
-  getUsersService,
-  getUserByIdService,
   createUserService,
-  updateUserByIdService,
   deleteUserService,
+  getUserByIdService,
+  getUsersService,
+  updateUserByIdService,
   uploadAvatarService,
 } from "./services.js";
 

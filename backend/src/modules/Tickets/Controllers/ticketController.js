@@ -1,12 +1,14 @@
-import { resSuccess, resFail } from "../../../config/utils/response.js";
+
+import { resFail, resSuccess } from "../../../config/utils/response.js";
+import { statusEmail } from "../../Mailer/controller.js";
 import {
-  getTicketById,
-  getTicketAll,
-  getTicketAllByUser,
-  getTicketAllByAgent,
   createTickets,
-  updateTickets,
   deleteTickets,
+  getTicketAll,
+  getTicketAllByAgent,
+  getTicketAllByUser,
+  getTicketById,
+  updateTickets,
 } from "../Services/ticketServices.js";
 
 export const getTicket = async (req, res) => {
@@ -73,8 +75,10 @@ export const createTicket = async (req, res) => {
 
 export const updateTicket = async (req, res) => {
   try {
-    const updateTicket = req.query;
+
+    const { updateTicket, role } = req.body;
     const result = await updateTickets(updateTicket);
+    await statusEmail(result.id, role);
     resSuccess(res, 200, "Ticket actualizado con éxito", result);
   } catch (error) {
     resFail(res, 400, error.message, error);

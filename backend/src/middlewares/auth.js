@@ -1,7 +1,7 @@
-import client from "../config/redisClient.js";
-import jwt from "jsonwebtoken";
-import { resFail } from "../config/utils/response.js";
 import { configDotenv } from "dotenv";
+import jwt from "jsonwebtoken";
+import client from "../config/redisClient.js";
+import { resFail } from "../config/utils/response.js";
 import { getUserByIdService } from "../modules/Users/services.js";
 
 configDotenv();
