@@ -12,7 +12,7 @@ const ServiceForm = () => {
         name: '',
         description: '',
         price: "",
-        agent: "6661c79417513136088f4575"
+        agent: ""
     })
 
     useEffect(()=>{
