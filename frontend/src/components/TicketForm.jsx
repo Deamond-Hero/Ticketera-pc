@@ -1,22 +1,35 @@
-import { useState } from "react";
-import services from "../utils/services.json"
+import { useEffect, useState } from "react";
+import { createTicket, getAllServices } from "../redux/ticket/actionsTicket";
+import { useDispatch, useSelector } from "react-redux";
+import  statusMachine  from "../utils/statusMachine.json"
 
-const techservices = services
 
-const TicketForm = (ticket) => {
 
+const TicketForm = () => {
+
+    const userData = JSON.parse(window.localStorage.getItem('user'))
+    const techservices = useSelector(state => state.ticket.serviceList)
+    const dispatch = useDispatch()
     const [formTicket, setFormTicket] = useState({
-        id: "",
+        subject: "",
+        description: "",
+        status: statusMachine.enRevision ,
+        user: userData._id,
         firstName: "",
         lastName: "",
         phone: "",
-        subject: "",
-        user: "",
-        description: "",
-        status: "",
-        agent: "",
-        service: "",
+        agent: "",  // Como va a definir un agente el cliente?
+        service: "", // De donde me traigo las lista de servicios?
     })
+
+
+    useEffect(() => {
+        dispatch(getAllServices())
+    }, [])
+
+    useEffect(() => {
+        console.log(formTicket)
+    }, [formTicket])
 
     const changeValue = (e) => {
         const { name, value } = e.target;
@@ -27,10 +40,11 @@ const TicketForm = (ticket) => {
 
     }
 
-    const ticketSubmit = () => {
-        // event.prevent.default()
-        console.log("TicketModificado")
-        updateTicket(formTicket)
+    const ticketSubmit = (event) => {
+        event.preventDefault()
+
+            dispatch(createTicket(formTicket))
+
     }
 
     const cancelSubmit = () => {
@@ -39,22 +53,18 @@ const TicketForm = (ticket) => {
         closeModal()
     }
 
-    const stateMachine = {
-        enCola: "En cola",
-        enRevisión: "En Revisión",
-        presupuestado: "Presupuestado",
-        enProceso: "En proceso",
-        finalizado: "Finalizado",
-        retirado: "Retirado",
-        cancelado: "Cancelado"
+    const changeService = (name, id) => {
+        setFormTicket(prevState => ({
+            ...prevState, agent: id, service: [name]
+        })
+        )
     }
-
 
     return (
         <div className="flex items-center justify-center w-full ">
             <div className="flex-col bg-white rounded-3xl p-8 max-w-lg w-[70rem] h-[fit-content]">
                 <h1 className="text-xl font-bold mb-4 text-center">Nuevo ticket</h1>
-                <form className="flex flex-col mb-4 justify-center ml-[1rem] " onSubmit={ticketSubmit}>
+                <form className="flex flex-col mb-4 justify-center ml-[1rem] ">
 
 
                     <div className="flex mt-[2rem]">
@@ -66,7 +76,7 @@ const TicketForm = (ticket) => {
                                 name="firstName"
                                 value={formTicket.firstName}
                                 onChange={changeValue}
-                                placeholder={ticket?.firstName}
+                                placeholder=""
                             />
                         </div>
                         <div className="flex flex-col ">
@@ -77,7 +87,7 @@ const TicketForm = (ticket) => {
                                 name="lastName"
                                 value={formTicket.lastName}
                                 onChange={changeValue}
-                                placeholder={ticket?.lastName}
+                                placeholder=""
                             />
                         </div>
                     </div>
@@ -90,11 +100,11 @@ const TicketForm = (ticket) => {
                             name="phone"
                             value={formTicket.phone}
                             onChange={changeValue}
-                            placeholder={ticket?.phone}
+                            placeholder=""
                         />
                     </div>
                     <div className="flex flex-col mt-[1rem]">
-                        <label>Título</label>
+                        <label>Asunto</label>
                         <input
                             className="appearance-none bg-white border border-gray-300 rounded mt-[.1rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[95%]"
 
@@ -102,7 +112,7 @@ const TicketForm = (ticket) => {
                             name="subject"
                             value={formTicket.subject}
                             onChange={changeValue}
-                            placeholder={ticket?.subject}
+                            placeholder=""
                         />
                     </div>
 
@@ -110,8 +120,10 @@ const TicketForm = (ticket) => {
                         <label>Tipo de servicio</label>
                         {techservices && techservices.map((serv) => (
                             <div className="flex">
-                                <input type="checkbox" name={serv.name}
+                                <input type="radio" name={serv.name}
                                     value={serv.name} className="rounded-full"
+                                    onChange={() => changeService(serv.name, serv.agent[0]._id)}
+                                    checked={formTicket.service === serv.name}
                                 />
                                 <p className="ml-[1rem]">{serv.name}</p>
                             </div>))
@@ -126,13 +138,13 @@ const TicketForm = (ticket) => {
                             onChange={changeValue}
                             name="description"
                             value={formTicket.description}
-                            placeholder={ticket?.description ? ticket.description : ""}
+                            placeholder=""
                         />
                     </div>
                 </form>
                 <div className="flex justify-center mt-[3rem]">
 
-                    <button className="h-10 w-96 rounded-lg text-[#FFFFFF] text-l tracking-wide bg-blue-ppal ml-[1rem] mr-[1rem]" type="submit">Crear ticket</button>
+                    <button className="h-10 w-96 rounded-lg text-[#FFFFFF] text-l tracking-wide bg-blue-ppal ml-[1rem] mr-[1rem]" onClick={ticketSubmit}>Crear ticket</button>
                 </div>
             </div>
         </div>
