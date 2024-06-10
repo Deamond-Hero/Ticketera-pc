@@ -11,7 +11,7 @@ export const Logout = () => {
 
     const handleLogout = async() => {
         dispatch(LogoutService(isLogged));
-        navigate("/");
+        navigate("/home");
     }
 
     return (
