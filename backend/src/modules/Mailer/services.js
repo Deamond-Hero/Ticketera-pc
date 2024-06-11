@@ -64,7 +64,7 @@ export const statusEmailService = async (id, role) => {
     await sendMail(
       email,
       `Cambio de estado del ticket: ${id}`,
-      /*html*/ `<p>El estado del ticket: ${id} fue actualizado a ${status}</p>`,
+      /*html*/ `<p>El estado del ticket: ${id} fue actualizado a ${status}</p>`
     );
     logger.info("Correo electrónico enviado correctamente.");
     return;
@@ -105,7 +105,7 @@ export const commentsEmailService = async (id, role) => {
     await sendMail(
       email,
       `Nuevo comentario en el ticket: ${id}`,
-      /*html*/ `<p>Se a agegado un nuevo comentario en el ticket: ${id}</p>`,
+      /*html*/ `<p>Se a agegado un nuevo comentario en el ticket: ${id}</p>`
     );
     logger.info("Correo electrónico enviado correctamente.");
     return;

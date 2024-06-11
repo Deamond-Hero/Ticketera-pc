@@ -19,7 +19,7 @@ const userSchema = new Schema(
     tickets: [{ type: Schema.Types.ObjectId, ref: "Ticket", default: [], required: true }],
     emailToken: { type: String },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const User = model("User", userSchema);

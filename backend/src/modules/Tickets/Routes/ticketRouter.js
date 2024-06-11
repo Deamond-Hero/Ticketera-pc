@@ -1,13 +1,13 @@
 import express from "express";
 import { ticketValidation, validate } from "../../../config/validations/ticketsValidations.js";
 import {
-  getTicket,
-  getTicketByUser,
-  getTicketByAgent,
   createTicket,
-  updateTicket,
   deleteTicket,
   getAllTickets,
+  getTicket,
+  getTicketByAgent,
+  getTicketByUser,
+  updateTicket,
 } from "../Controllers/ticketController.js";
 
 const ticketRouter = express.Router();

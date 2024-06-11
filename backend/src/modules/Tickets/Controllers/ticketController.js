@@ -1,4 +1,3 @@
-
 import { resFail, resSuccess } from "../../../config/utils/response.js";
 import { statusEmail } from "../../Mailer/controller.js";
 import {
@@ -16,7 +15,7 @@ export const getTicket = async (req, res) => {
     const { id } = req.params;
     let result;
 
-    if (id!="{id}") {
+    if (id != "{id}") {
       result = await getTicketById(id);
       resSuccess(res, 200, `Ticket con id: ${id}`, result);
     }
@@ -39,7 +38,7 @@ export const getTicketByUser = async (req, res) => {
     const { id } = req.params;
     let result;
 
-    if (id!="{id}") {
+    if (id != "{id}") {
       result = await getTicketAllByUser(id);
       resSuccess(res, 200, `Tickets del usuario con id: ${id}`, result);
     }
@@ -53,7 +52,7 @@ export const getTicketByAgent = async (req, res) => {
     const { id } = req.params;
     let result;
 
-    if (id!="{id}") {
+    if (id != "{id}") {
       result = await getTicketAllByAgent(id);
       resSuccess(res, 200, `Tickets del agente con id: ${id}`, result);
     }
@@ -74,7 +73,6 @@ export const createTicket = async (req, res) => {
 
 export const updateTicket = async (req, res) => {
   try {
-
     const { updateTicket, role } = req.body;
     const result = await updateTickets(updateTicket);
     await statusEmail(result.id, role);
