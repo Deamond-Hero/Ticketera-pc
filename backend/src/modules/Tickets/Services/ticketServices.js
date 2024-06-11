@@ -52,7 +52,7 @@ export const createTickets = async (dataTicket) => {
     description: dataTicket.description,
     status: dataTicket.status || "En curso",
     user: dataTicket.user,
-    firsName: dataTicket.firsName || "",
+    firstName: dataTicket.firstName || "",
     lastName: dataTicket.lastName || "",
     phone: dataTicket.phone || "",
     agent: dataTicket.agent,
