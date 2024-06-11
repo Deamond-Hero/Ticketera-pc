@@ -78,7 +78,7 @@ const ticketRouter = express.Router();
  * @swagger
  * /api/tickets/{id}:
  *   get:
- *     summary: Obtener una lista de tickets.
+ *     summary: Obtener una lista de tickets por ID.
  *     description: Coloca solo un valor a la vez para probar el endpoint.
  *     tags: [Tickets]
  *     parameters:
