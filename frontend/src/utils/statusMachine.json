@@ -1,9 +1,21 @@
 {
-    "enRevision": "En Revisión",
-    "enCola": "En cola",
-    "presupuestado": "Presupuestado",
-    "enProceso": "En proceso",
-    "finalizado": "Finalizado",
-    "retirado": "Retirado",
-    "cancelado": "Cancelado"
+    "dashboard": {
+
+        "enCola": "En cola",
+
+        "enRevision": "En revisión",
+        "presupuestado": "Presupuestado",
+        "enProceso": "En proceso",
+
+        "finalizado": "Finalizado",
+        "cancelado": "Cancelado",
+
+        "retirado": "Retirado"
+    },
+    "client": {
+        "enEspera": "En espera",
+        "enReparacion": "En reparación",
+        "finalizado": "Finalizado",
+        "retirado": "Retirado"
+    }
 }
