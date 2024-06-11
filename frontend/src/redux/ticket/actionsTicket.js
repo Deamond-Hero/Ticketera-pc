@@ -1,5 +1,4 @@
 import axios from "axios"
-import api from "../../utils/Api";
 import { setAgentMessage, setServiceList, setServiceMessage, setTicketMessage, setUserTickets, setAgentList } from "./ticketSlice"
 const baseURL = import.meta.env.VITE_PUBLIC_BACKEND_URL
 
@@ -72,7 +71,6 @@ export const createTicket = (ticket) => {
         try {
             const url = `${baseURL}api/tickets/`
             console.log(url)
-            // const response = await api.post('/api/tickets', ticket)
             const response = await axios.post(url, ticket)
             const data = response.data
             console.log(data)
