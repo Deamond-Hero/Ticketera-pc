@@ -43,27 +43,6 @@ export const DataTable = () => {
     indexOfLastTicket
   );
 
-  const getStatusClasses = (status) => {
-    switch (status) {
-      case 'En Revisión':
-        return 'bg-yellow-500 text-violet-600 rounded-md';
-      case 'Presupuestado':
-        return 'bg-purple-500 text-purple-700 rounded-md';
-      case 'En Cola':
-        return 'bg-peachpuff text-Amber-700 rounded-md';
-      case 'En Proceso':
-        return 'bg-amber-200 text-amber-700 rounded-md';
-      case 'Finalizado':
-        return 'bg-green-200 text-green-700 rounded-md';
-      case 'Retirado':
-        return 'bg-blue-200 text-blue-700 rounded-md';
-      case 'Cancelado':
-        return 'bg-red-200 text-red-700 rounded-md';
-      default:
-        return '';
-    }
-  };
-
   const handleOpenModal = (ticket) => {
     setSelectedTicket(ticket);
     openModal();
@@ -93,27 +72,28 @@ export const DataTable = () => {
   }
 
   return (
-    <div className="flex items-end">
-      <div className="overflow-x-auto w-full mr-[2rem] ml-[2rem] border-[1px] border-black-250 shadow-md">
+    <div className="flex items-end mt-5">
+      <div className="mr-7 flex justify-between items-center bg-green-800"></div>
+      <div className="overflow-x-auto w-full mr-[4rem] border-[1px] border-black-250 shadow-md">
         <div className="py-2 inline-block min-w-full sm:px-4 lg:px-4">
           <div className="overflow-hidden">
-            <div>
-              <input
-                type="text"
-                placeholder="Buscar..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="border p-2 rounded"
-              />
-              <select
-                value={sortOrder}
-                onChange={handleSortChange}
-                className="border p-2 rounded ml-3"
-              >
-                <option value="asc">Ascendente</option>
-                <option value="desc">Descendente</option>
-              </select>
-            </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Buscar..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  className="border p-2 rounded"
+                />
+                <select
+                  value={sortOrder}
+                  onChange={handleSortChange}
+                  className="border p-2 rounded ml-3"
+                >
+                  <option value="asc">Ascendente</option>
+                  <option value="desc">Descendente</option>
+                </select>
+              </div>
             <table className="min-w-full">
               <thead className="bg-white border-b">
                 <tr>
@@ -170,14 +150,11 @@ export const DataTable = () => {
                     <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
                       {ticket.service}
                     </td>
-                    <td >
-                      <div className={`text-xs font-light text-center inline-flex items-center justify-center whitespace-nowrap p-[.1rem] rounded-md ${getStatusClasses(ticket.status)}`}>
-                        {ticket.status}
-                      </div>
-
+                    <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
+                      {ticket.status}
                     </td>
-                    <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">{ticket.date}
-
+                    <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
+                      {ticket.date}
                     </td>
                     <td className="text-center pr-4">
                       <button onClick={() => handleOpenModal(ticket)}>
@@ -213,10 +190,11 @@ export const DataTable = () => {
                 <button
                   key={number}
                   onClick={() => paginate(number)}
-                  className={`px-4 py-2 ${currentPage === number
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-700"
-                    } rounded`}
+                  className={`px-4 py-2 ${
+                    currentPage === number
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  } rounded`}
                 >
                   {number}
                 </button>
@@ -235,11 +213,9 @@ export const DataTable = () => {
           </div>
         </div>
       </div>
-      {
-        isOpen && (
-          <ModalTicket closeModal={closeModal} ticket={selectedTicket} />
-        )
-      }
-    </div >
+      {isOpen && (
+        <ModalTicket closeModal={closeModal} ticket={selectedTicket} />
+      )}
+    </div>
   );
 };
