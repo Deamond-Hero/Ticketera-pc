@@ -52,7 +52,7 @@ export const createCommentsTicket = async (data) => {
 };
 
 export const updateCommentsTicket = async (data) => {
-  const query = { _id: data._id };
+  const query = { _id: data.id };
   const update = {
     $set: {
       ticket: data.ticket,

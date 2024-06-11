@@ -50,9 +50,9 @@ export const createTickets = async (dataTicket) => {
   const newData = new Tickets({
     subject: dataTicket.subject,
     description: dataTicket.description,
-    status: dataTicket.status || "Pendiente",
+    status: dataTicket.status || "En curso",
     user: dataTicket.user,
-    firstName: dataTicket.firstName || "",
+    firsName: dataTicket.firsName || "",
     lastName: dataTicket.lastName || "",
     phone: dataTicket.phone || "",
     agent: dataTicket.agent,
@@ -68,14 +68,14 @@ export const createTickets = async (dataTicket) => {
 };
 
 export const updateTickets = async (dataTicket) => {
-  const query = { _id: dataTicket._id };
+  const query = { _id: dataTicket.id };
   const update = {
     $set: {
       subject: dataTicket.subject,
       description: dataTicket.description,
       status: dataTicket.status,
       user: dataTicket.user,
-      firstName: dataTicket.firstName,
+      firsName: dataTicket.firsName,
       lastName: dataTicket.lastName,
       phone: dataTicket.phone,
       agent: dataTicket.agent,

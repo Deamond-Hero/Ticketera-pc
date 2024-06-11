@@ -1,10 +1,12 @@
 import express from "express";
 import { ticketValidation, validate } from "../../../config/validations/ticketsValidations.js";
 import {
-  createTicket,
-  deleteTicket,
   getTicket,
+  getTicketByUser,
+  getTicketByAgent,
+  createTicket,
   updateTicket,
+  deleteTicket,
 } from "../Controllers/ticketController.js";
 
 const ticketRouter = express.Router();
@@ -20,31 +22,72 @@ const ticketRouter = express.Router();
 
 /**
  * @swagger
- * /api/tickets/:
+ * components:
+ *   schemas:
+ *     Tickets:
+ *       type: object
+ *       properties:
+ *         subject:
+ *           type: string
+ *           description: El asunto del ticket
+ *         description:
+ *           type: string
+ *           description: La descripción del ticket
+ *         status:
+ *           type: string
+ *           description: El estado del ticket
+ *         user:
+ *           type: string
+ *           description: El ID del cliente
+ *         firstName:
+ *           type: string
+ *           description: El nombre del cliente
+ *         lastName:
+ *           type: string
+ *           description: El apellido del cliente
+ *         phone:
+ *           type: string
+ *           description: El teléfono del cliente
+ *         agent:
+ *           type: string
+ *           description: El ID del agente
+ *         service:
+ *           type: string
+ *           description: El ID del servicio
+ *       required:
+ *         - subject
+ *         - description
+ *         - status
+ *         - user
+ *         - service
+ *       example:
+ *         id: 665dfaf446ec75f9c3587a12
+ *         subject: Pantalla con manchas negras
+ *         description: La pantalla tiene manchas en toda la pantalla.
+ *         status: En cola
+ *         user: 665cefc2d3baa44ede10a87f
+ *         firstName: Luis
+ *         lastName: Mora
+ *         phone: 78006524
+ *         agent: 665cf01bd3baa44ede10a88d
+ *         service: 665cf103d3baa44ede10a890
+ */
+
+/**
+ * @swagger
+ * /api/tickets/{id}:
  *   get:
- *     summary: Obtener una lista de tickets, ya sea todos, por usuario o por agente.
+ *     summary: Obtener una lista de tickets.
  *     description: Coloca solo un valor a la vez para probar el endpoint.
  *     tags: [Tickets]
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: id
  *         description: El ID del ticket.
  *         schema:
  *           type: string
  *         required: false
  *         example: 665cfdebb21b8fafa2382e2b
- *       - in: query
- *         name: idUser
- *         schema:
- *           type: string
- *         description: El ID del usuario para devolver la lista de tickets.
- *         example: 665cefc2d3baa44ede10a87f
- *       - in: query
- *         name: idAgent
- *         schema:
- *           type: string
- *         description: El ID del agente para devolver la lista de tickets.
- *         example: 665cf01bd3baa44ede10a88d
  *     responses:
  *       200:
  *         description: Lista de tickets.
@@ -54,8 +97,63 @@ const ticketRouter = express.Router();
  *         description: Error interno del servidor.
  */
 
-// Consulta de datos del ticket
+// consulta de datos de los tickets
+ticketRouter.get("/:id", getTicket);
 ticketRouter.get("/", getTicket);
+
+/**
+ * @swagger
+ * /api/tickets/agent/{id}:
+ *   get:
+ *     summary: Obtener una lista de tickets por usuario.
+ *     description: Coloca solo un valor a la vez para probar el endpoint.
+ *     tags: [Tickets]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: El ID del ticket.
+ *         schema:
+ *           type: string
+ *         required: false
+ *         example: 665cfdebb21b8fafa2382e2b
+ *     responses:
+ *       200:
+ *         description: Lista de tickets.
+ *       400:
+ *         description: Error con el ID.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+
+// consulta de datos de los tickets
+ticketRouter.get("/agent/:id", getTicketByAgent);
+
+/**
+ * @swagger
+ * /api/tickets/user/{id}:
+ *   get:
+ *     summary: Obtener una lista de tickets por usuario.
+ *     description: Coloca solo un valor a la vez para probar el endpoint.
+ *     tags: [Tickets]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: El ID del ticket.
+ *         schema:
+ *           type: string
+ *         required: false
+ *         example: 665cfdebb21b8fafa2382e2b
+ *     responses:
+ *       200:
+ *         description: Lista de tickets.
+ *       400:
+ *         description: Error con el ID.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+
+// consulta de datos de los tickets
+ticketRouter.get("/user/:id", getTicketByUser);
 
 /**
  * @swagger
@@ -141,12 +239,12 @@ ticketRouter.get("/", getTicket);
  *       200:
  *         description: Nuevo ticket creado
  *       400:
- *         description: El ticket no existe
+ *         description: Error al crear el ticket
  *       500:
  *         description: Error interno del servidor
  */
 
-// Creacion de ticket
+// creacion de tickets
 ticketRouter.post("/", ticketValidation, validate, createTicket);
 
 /**
@@ -245,18 +343,18 @@ ticketRouter.post("/", ticketValidation, validate, createTicket);
  *         description: Error interno del servidor
  */
 
-// Actualizacion de ticket
+// actualizacion de tickets
 ticketRouter.put("/", ticketValidation, validate, updateTicket);
 
 /**
  * @swagger
- * /api/tickets/:
+ * /api/tickets/{id}:
  *   delete:
  *     summary: Eliminar un ticket
  *     description: Por medio del Id del ticket se realiza su eliminacion.
  *     tags: [Tickets]
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: id
  *         description: id del ticket que se desea eliminar.
  *         schema:
@@ -272,7 +370,7 @@ ticketRouter.put("/", ticketValidation, validate, updateTicket);
  *         description: Error interno del servidor
  */
 
-// Eliminacion de ticket
-ticketRouter.delete("/", deleteTicket);
+// eliminacion de tickets
+ticketRouter.delete("/:id", deleteTicket);
 
 export default ticketRouter;

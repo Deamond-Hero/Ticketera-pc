@@ -14,17 +14,20 @@ import RegisterPage from './components/Register';
 import Landing from './pages/Landing';
 import CreateConsultTicket from './components/CreateConsultTicket';
 import TicketForm from './components/TicketForm';
+import ServiceForm from './components/ServiceForm';
+import ViewTicket from './components/ViewTicket';
 
 function App() {
-  const isLogged = useSelector((state) => state.auth.userData); // Usa el nombre correcto de la variable
+  const userData = useSelector((state) => state.auth.userData); 
+  const isLogged = JSON.parse(window.localStorage.getItem("user"))
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogged && (location.pathname === "/login" || location.pathname === "/register")) {
+    if (userData && (location.pathname === "/login" || location.pathname === "/register")) {
       navigate("/dashboard");
     }
-  }, [isLogged, location.pathname, navigate]);
+  }, [userData, location.pathname, navigate]);
 
   return (
     <main>
@@ -44,6 +47,8 @@ function App() {
         
         {/* Ruta para nuevo ticket */}
         <Route path='/newticket' element={<TicketForm />} />
+        <Route path='/newservice' element={<ServiceForm/>}/>
+        <Route path='/myTicketStatus' element={<ViewTicket/>}/>
       </Routes>
     </main>
   );

@@ -4,7 +4,6 @@ import {
   createCommentsTicket,
   deleteCommentsTicket,
   getCommentsAll,
-  getCommentsTicketAll,
   getCommentsTicketById,
   updateCommentsTicket,
 } from "../Services/commentServices.js";
@@ -12,15 +11,12 @@ import {
 export const getCommentTicket = async (req, res) => {
   try {
     let result;
-    const { idComment, idTicket } = req.query;
-    if (idComment) {
-      result = await getCommentsTicketById(idComment); // id del comentario
-      resSuccess(res, 200, `Comentario con id: ${idComment} :`, result);
-    } else if (idTicket) {
-      result = await getCommentsTicketAll(idTicket); // id del ticket
-      resSuccess(res, 200, `Lista total de Comentarios del ticket: ${idTicket}`, result);
+    const { id } = req.params;
+    if (id!="{id}") {
+      result = await getCommentsTicketById(id); // id del comentario
+      resSuccess(res, 200, `Comentario con id: ${id} :`, result);
     } else {
-      result = await getCommentsAll(); // id del ticket
+      result = await getCommentsAll(); // todos los comentarios existentes
       resSuccess(res, 200, "Lista total de Comentarios:", result);
     }
   } catch (error) {
@@ -51,7 +47,7 @@ export const updateCommentTicket = async (req, res) => {
 
 export const deleteCommentTicket = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const result = await deleteCommentsTicket(id);
     resSuccess(res, 200, `Comentario con id: ${id} fue eliminado exitosamente.`, result);
   } catch (error) {
