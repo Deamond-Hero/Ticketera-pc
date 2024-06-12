@@ -25,12 +25,12 @@ const RegisterPage = () => {
         event.preventDefault();
 
         if (isFormValid()) {
-            console.log(isFormValid())
             try {
                 const response = await api.post('/api/auth/register', formState);
 
                 if (response.status !== 200) {
                     setApiErrors(response.data.errors || { general: response.data.message || "Error en el registro" });
+                    console.log('error')
                 }
             } catch (error) {
                 if (error.response) {
