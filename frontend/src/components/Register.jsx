@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import { useFormValidations } from "../hooks/useFormValidations";
@@ -10,6 +10,8 @@ const RegisterPage = () => {
         password: '',
         password2: '',
     });
+
+    const navigate = useNavigate();
 
     const { isFormValid, setApiErrors, clearErrors, errorsState } = useFormValidations(formState);
 
@@ -32,6 +34,11 @@ const RegisterPage = () => {
                     setApiErrors(response.data.errors || { general: response.data.message || "Error en el registro" });
                     console.log('error')
                 }
+
+                if (response.status === 200) {
+                    navigate('/login');
+                }
+
             } catch (error) {
                 if (error.response) {
                     setApiErrors({ general: error.response.data.message || "Error en el registro" });
