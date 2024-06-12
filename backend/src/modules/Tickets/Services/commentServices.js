@@ -2,7 +2,7 @@ import Comments from "../Schemas/commentSchema.js";
 
 export const getCommentsTicketAll = async (id) => {
   const query = { ticket: id };
-  const Comment = await Comments.find(query);
+  const Comment = await Comments.find(query).populate("ticket").populate("user");
 
   if (!Comment) {
     throw new Error("Error al buscar el comentario.");
@@ -12,7 +12,7 @@ export const getCommentsTicketAll = async (id) => {
 };
 
 export const getCommentsAll = async () => {
-  const Comment = await Comments.find();
+  const Comment = await Comments.find().populate("ticket").populate("user");
 
   if (!Comment) {
     throw new Error("Error al buscar los comentarios.");
@@ -22,7 +22,7 @@ export const getCommentsAll = async () => {
 };
 
 export const getCommentsTicketById = async (id) => {
-  const Comment = await Comments.findById(id);
+  const Comment = await Comments.findById(id).populate("ticket").populate("user");
 
   if (!Comment) {
     throw new Error("Error al buscar el comentario.");
