@@ -33,7 +33,7 @@ export const getTicketAllByUser = async (id) => {
 };
 
 export const getTicketById = async (id) => {
-  const Ticket = await Tickets.findById(id).populate("user", "agent", "service", "comments");
+  const Ticket = await Tickets.findById(id).populate("agent", "service");
 
   if (!Ticket) {
     throw new Error("Error al buscar el ticket.");
