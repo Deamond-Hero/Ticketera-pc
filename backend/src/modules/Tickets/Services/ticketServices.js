@@ -1,7 +1,7 @@
 import Tickets from "../Schemas/ticketSchema.js";
 
 export const getTicketAll = async () => {
-  const Ticket = await Tickets.find().populate("agent", "service");
+  const Ticket = await Tickets.find().populate("user").populate("agent").populate("service");
 
   if (!Ticket) {
     throw new Error("Error al buscar el ticket.");
@@ -12,7 +12,7 @@ export const getTicketAll = async () => {
 
 export const getTicketAllByAgent = async (id) => {
   const query = { agent: id };
-  const Ticket = await Tickets.find(query).populate("agent", "service");
+  const Ticket = await Tickets.find(query).populate("user").populate("agent").populate("service");
 
   if (!Ticket) {
     throw new Error("Error al buscar los tickets.");
@@ -23,7 +23,7 @@ export const getTicketAllByAgent = async (id) => {
 
 export const getTicketAllByUser = async (id) => {
   const query = { user: id };
-  const Ticket = await Tickets.find(query).populate("agent", "service");
+  const Ticket = await Tickets.find(query).populate("agent").populate("service");
 
   if (!Ticket) {
     throw new Error("Error al buscar los tickets.");
@@ -33,7 +33,7 @@ export const getTicketAllByUser = async (id) => {
 };
 
 export const getTicketById = async (id) => {
-  const Ticket = await Tickets.findById(id).populate("agent", "service");
+  const Ticket = await Tickets.findById(id).populate("agent").populate("service").populate("comments");
 
   if (!Ticket) {
     throw new Error("Error al buscar el ticket.");
