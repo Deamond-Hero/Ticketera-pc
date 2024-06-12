@@ -30,10 +30,10 @@ logger.info("Configuring CORS");
 app.use(
   cors({
     origin: true,
-    credentials: true, // Credentials are true to allow sending cookies with requests
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  }),
+  })
 );
 
 app.set("trust proxy", 1);

@@ -8,7 +8,7 @@ const serviceSchema = new Schema(
     price: { type: Number, required: true, default: 0 },
     agent: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Service = model("Service", serviceSchema);

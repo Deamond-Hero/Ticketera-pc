@@ -6,12 +6,17 @@ import {ModalTicket} from '../utils/ModalTicket';
 import api from '../utils/Api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import ViewTicket from './ViewTicket';
+
 
 const CreateConsultTicket = () => {
     const navigate = useNavigate();
     const [ticketId, setTicketId] = useState('');
     const [ticket, setTicket] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const baseURL = import.meta.env.VITE_PUBLIC_BACKEND_URL
+
 
     const isAuthenticated = () => {
         return localStorage.getItem('token') !== null;
@@ -19,7 +24,11 @@ const CreateConsultTicket = () => {
 
     const handleCreateTicket = () => {
         if (isAuthenticated()) {
+<<<<<<< HEAD
             navigate('/');
+=======
+            navigate('/newticket');
+>>>>>>> 3cd05acd9a1c8714d133e74b75b136f5da17da0c
         } else {
             navigate('/login');
         }
@@ -28,12 +37,17 @@ const CreateConsultTicket = () => {
     const handleConsultTicket = async () => {
 
     try {
+<<<<<<< HEAD
         const response = await api.get(`/api/tickets/{id}${ticketId}`);
+=======
+        const response = await axios.get(`${baseURL}api/tickets/${ticketId}`);
+>>>>>>> 3cd05acd9a1c8714d133e74b75b136f5da17da0c
         if (ticketId === "") {
             toast.error('Ingresa el ID de tu ticket'); // Muestra una notificación toast de advertencia
         } else {
-            setTicket(response.data);
-            setIsModalOpen(true);
+            // setTicket(response.data);
+            // setIsModalOpen(true);
+            navigate('/myTicketStatus', {state: {ticket: response.data}})
         }
     } catch (error) {
         console.error("Error fetching ticket:", error);

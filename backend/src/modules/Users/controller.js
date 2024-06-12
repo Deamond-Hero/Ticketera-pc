@@ -21,7 +21,6 @@ export const createUser = async (req, res) => {
 
 export const getMyUser = async (req, res) => {
   try {
-    console.log(req.user);
     const { _id: id } = req.user;
     const result = await getUserByIdService(id);
     resSuccess(res, 200, "Usuario encontrado con exito", result);

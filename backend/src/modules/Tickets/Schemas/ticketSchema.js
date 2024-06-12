@@ -23,11 +23,11 @@ const ticketSchema = new Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     phone: { type: String, required: true },
-    agent: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
+    agent: { type: Schema.Types.ObjectId, ref: "User", required: true },
     service: [{ type: Schema.Types.ObjectId, ref: "Service", required: true }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment", default: [], required: true }],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Ticket = model("Ticket", ticketSchema);

@@ -93,7 +93,7 @@ export const editService = async (id, service) => {
     const serviceUpdate = await Service.findByIdAndUpdate(
       id,
       { $set: service },
-      { new: true },
+      { new: true }
     );
 
     logger.info("Servicio editado con éxito");

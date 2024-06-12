@@ -1,12 +1,13 @@
 import express from "express";
 import { ticketValidation, validate } from "../../../config/validations/ticketsValidations.js";
 import {
-  getTicket,
-  getTicketByUser,
-  getTicketByAgent,
   createTicket,
-  updateTicket,
   deleteTicket,
+  getAllTickets,
+  getTicket,
+  getTicketByAgent,
+  getTicketByUser,
+  updateTicket,
 } from "../Controllers/ticketController.js";
 
 const ticketRouter = express.Router();
@@ -77,7 +78,7 @@ const ticketRouter = express.Router();
  * @swagger
  * /api/tickets/{id}:
  *   get:
- *     summary: Obtener una lista de tickets.
+ *     summary: Obtener una lista de tickets por ID.
  *     description: Coloca solo un valor a la vez para probar el endpoint.
  *     tags: [Tickets]
  *     parameters:
@@ -99,7 +100,23 @@ const ticketRouter = express.Router();
 
 // consulta de datos de los tickets
 ticketRouter.get("/:id", getTicket);
-ticketRouter.get("/", getTicket);
+
+/**
+ * @swagger
+ * /api/tickets/:
+ *   get:
+ *     summary: Obtener una lista de tickets.
+ *     description: Coloca solo un valor a la vez para probar el endpoint.
+ *     tags: [Tickets]
+ *     responses:
+ *       200:
+ *         description: Lista de tickets.
+ *       400:
+ *         description: Error con el ID.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+ticketRouter.get("/", getAllTickets);
 
 /**
  * @swagger

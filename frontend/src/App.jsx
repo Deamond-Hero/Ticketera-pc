@@ -18,7 +18,7 @@ import ServiceForm from './components/ServiceForm';
 import ViewTicket from './components/ViewTicket';
 
 function App() {
-  const userData = useSelector((state) => state.auth.userData); 
+  const userData = useSelector((state) => state.auth.userData);
   const isLogged = JSON.parse(window.localStorage.getItem("user"))
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,23 +32,25 @@ function App() {
   return (
     <main>
       <Routes>
+        {/* Redirigir a landing si se accede a "/"  */}
+        <Route path='/' element={isLogged ? <Navigate to="/home" /> : <Navigate to="/home" />} />
         {/* Redirigir si está logueado */}
         <Route path='/login' element={isLogged ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path='/register' element={isLogged ? <Navigate to="/dashboard" /> : <RegisterPage />} />
-        
+
         {/* Rutas accesibles a todos */}
         <Route path='/home' element={<Landing />} />
-        
+
         {/* Ruta protegida */}
         <Route path='/dashboard' element={isLogged ? <Dashboard /> : <Navigate to="/login" />} />
 
         {/* Ruta para crear ticket */}
         <Route path='/create-ticket' element={<CreateConsultTicket />} />
-        
+
         {/* Ruta para nuevo ticket */}
         <Route path='/newticket' element={<TicketForm />} />
-        <Route path='/newservice' element={<ServiceForm/>}/>
-        <Route path='/myTicketStatus' element={<ViewTicket/>}/>
+        <Route path='/newservice' element={<ServiceForm />} />
+        <Route path='/myTicketStatus' element={<ViewTicket />} />
       </Routes>
     </main>
   );
