@@ -308,13 +308,12 @@ export const DataTable = () => {
     getData();
   }, []);
 
+  const [newTicket, setNewTicket] = useState([]);
 
-  const getServiceName = (id) => {
-    const service = services.find((servi) => servi._id === id);
-    return service;
+  const getServiceName = () => {
+    const servic = services.find((servi) => servi._id === "66629db4f2790274c5c55d96");
+    setNewTicket({...newTicket, ...tickets, servic})
   };
-
-  // console.log({"ticket" : getServiceName("66629db4f2790274c5c55d96")});
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -366,7 +365,7 @@ export const DataTable = () => {
     pageNumbers.push(i);
   }
 
-  if (service.length > 0) {
+  if (tickets.length > 0) {
     return (
       <div className="flex items-end pt-[8rem] font-poppins">
         <div className="overflow-x-auto w-full h-[70%] mr-[4rem] ml-[4rem] border-[1px] border-black-250 shadow-md">
@@ -442,7 +441,6 @@ export const DataTable = () => {
                       <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
                         {ticket.agent}
                       </td>
-
                       <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
                         {ticket.service}
                       </td>
