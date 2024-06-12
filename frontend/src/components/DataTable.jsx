@@ -294,7 +294,7 @@ export const DataTable = () => {
       setTickets(data.payload);
       console.log(data.payload);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
