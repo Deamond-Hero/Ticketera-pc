@@ -19,7 +19,7 @@ const CreateConsultTicket = () => {
 
     const handleCreateTicket = () => {
         if (isAuthenticated()) {
-            navigate('/dashboard');
+            navigate('/');
         } else {
             navigate('/login');
         }
@@ -28,7 +28,7 @@ const CreateConsultTicket = () => {
     const handleConsultTicket = async () => {
 
     try {
-        const response = await api.get(`/api/tickets/${ticketId}`);
+        const response = await api.get(`/api/tickets/{id}${ticketId}`);
         if (ticketId === "") {
             toast.error('Ingresa el ID de tu ticket'); // Muestra una notificación toast de advertencia
         } else {
