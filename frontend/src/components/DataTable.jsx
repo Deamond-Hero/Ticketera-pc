@@ -308,13 +308,6 @@ export const DataTable = () => {
     getData();
   }, []);
 
-  const [newTicket, setNewTicket] = useState([]);
-
-  const getServiceName = () => {
-    const servic = services.find((servi) => servi._id === "66629db4f2790274c5c55d96");
-    setNewTicket({...newTicket, ...tickets, servic})
-  };
-
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
     setCurrentPage(1);
@@ -439,10 +432,10 @@ export const DataTable = () => {
                         {ticket._id}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
-                        {ticket.agent}
+                        {ticket.agent._id}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
-                        {ticket.service}
+                        {ticket.service[0].name}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
                         {ticket.status}
