@@ -12,7 +12,7 @@ export const getCommentTicket = async (req, res) => {
   try {
     let result;
     const { id } = req.params;
-    if (id!="{id}") {
+    if (id != "{id}") {
       result = await getCommentsTicketById(id); // id del comentario
       resSuccess(res, 200, `Comentario con id: ${id} :`, result);
     } else {

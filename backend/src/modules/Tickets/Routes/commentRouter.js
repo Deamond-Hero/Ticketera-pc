@@ -1,5 +1,10 @@
 import express from "express";
-import { getCommentTicket, createCommentTicket, updateCommentTicket, deleteCommentTicket } from "../Controllers/commentController.js";
+import {
+  createCommentTicket,
+  deleteCommentTicket,
+  getCommentTicket,
+  updateCommentTicket,
+} from "../Controllers/commentController.js";
 
 const commentRouter = express.Router();
 
@@ -75,7 +80,7 @@ commentRouter.get("/:id", getCommentTicket);
  *     summary: Crear un nuevo comentario
  *     description: Todos los datos son obligatorios.
  *     tags: [Comments]
- *     requestBody:      
+ *     requestBody:
  *       content:
  *         application/json:
  *           schema:

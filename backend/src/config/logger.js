@@ -77,7 +77,7 @@ switch (process.env.ENVIRONMENT) {
     break;
   case "PRODUCTION":
     logger = createLogger({
-      levels: myCustomLevels.levels, // Niveles personalizados
+      levels: myCustomLevels.levels,
       transports: [
         new transports.Console({
           level: "info",
@@ -101,13 +101,13 @@ switch (process.env.ENVIRONMENT) {
 export const addLogger = (req, res, next) => {
   req.logger = logger;
   const ipClient = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  const start = Date.now(); // Record the start time
+  const start = Date.now();
 
   res.on("finish", () => {
-    const end = Date.now(); // Record the end time
-    const duration = end - start; // Calculate the duration
+    const end = Date.now();
+    const duration = end - start;
     req.logger.http(
-      `${req.method} Method hit on ${req.originalUrl} from [${ipClient}] - ${duration}ms`,
+      `${req.method} Method hit on ${req.originalUrl} from [${ipClient}] - ${duration}ms`
     );
   });
 

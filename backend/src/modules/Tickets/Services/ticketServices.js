@@ -50,7 +50,7 @@ export const createTickets = async (dataTicket) => {
   const newData = new Tickets({
     subject: dataTicket.subject,
     description: dataTicket.description,
-    status: dataTicket.status || "En curso",
+    status: dataTicket.status || "Pendiente",
     user: dataTicket.user,
     firstName: dataTicket.firstName || "",
     lastName: dataTicket.lastName || "",
@@ -75,7 +75,7 @@ export const updateTickets = async (dataTicket) => {
       description: dataTicket.description,
       status: dataTicket.status,
       user: dataTicket.user,
-      firsName: dataTicket.firsName,
+      firstName: dataTicket.firstName,
       lastName: dataTicket.lastName,
       phone: dataTicket.phone,
       agent: dataTicket.agent,

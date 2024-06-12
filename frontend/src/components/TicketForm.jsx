@@ -13,13 +13,13 @@ const TicketForm = () => {
     const [formTicket, setFormTicket] = useState({
         subject: "",
         description: "",
-        status: statusMachine.enRevision ,
+        status: statusMachine.enCola ,
         user: userData._id,
         firstName: "",
         lastName: "",
         phone: "",
-        agent: "",  // Como va a definir un agente el cliente?
-        service: "", // De donde me traigo las lista de servicios?
+        agent: "",
+        service: "",
     })
 
 
@@ -35,7 +35,7 @@ const TicketForm = () => {
         const { name, value } = e.target;
         setFormTicket(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: name === "phone" ? parseInt(value) : value
         }))
 
     }
@@ -55,7 +55,7 @@ const TicketForm = () => {
 
     const changeService = (name, id) => {
         setFormTicket(prevState => ({
-            ...prevState, agent: id, service: [name]
+            ...prevState, agent: id, service: name
         })
         )
     }
@@ -122,7 +122,7 @@ const TicketForm = () => {
                             <div className="flex">
                                 <input type="radio" name={serv.name}
                                     value={serv.name} className="rounded-full"
-                                    onChange={() => changeService(serv.name, serv.agent[0]._id)}
+                                    onChange={() => changeService(serv._id, serv.agent[0]._id)}
                                     checked={formTicket.service === serv.name}
                                 />
                                 <p className="ml-[1rem]">{serv.name}</p>
