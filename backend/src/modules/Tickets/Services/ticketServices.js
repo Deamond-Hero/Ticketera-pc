@@ -69,7 +69,7 @@ export const createTickets = async (dataTicket) => {
 };
 
 export const updateTickets = async (dataTicket) => {
-  const query = { _id: dataTicket.id };
+  const query = { _id: dataTicket._id };
   const update = {
     $set: {
       subject: dataTicket.subject,
