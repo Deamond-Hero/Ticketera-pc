@@ -361,7 +361,7 @@ ticketRouter.post("/", ticketValidation, validate, createTicket);
  */
 
 // actualizacion de tickets
-ticketRouter.put("/", ticketValidation, validate, updateTicket);
+ticketRouter.put("/:id", ticketValidation, validate, updateTicket);
 
 /**
  * @swagger

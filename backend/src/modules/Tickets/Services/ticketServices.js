@@ -68,8 +68,7 @@ export const createTickets = async (dataTicket) => {
   return newTicket;
 };
 
-export const updateTickets = async (dataTicket) => {
-  const query = { _id: dataTicket._id };
+export const updateTickets = async (id, dataTicket) => {
   const update = {
     $set: {
       subject: dataTicket.subject,
@@ -83,7 +82,7 @@ export const updateTickets = async (dataTicket) => {
       service: dataTicket.service,
     },
   };
-  const ticket = await Ticket.updateOne(query, update);
+  const ticket = await Ticket.findByIdAndUpdate(id, update, { new: true });
   if (!ticket) {
     throw new Error("Ticket no actualizado.");
   }
