@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 export const SideBar = () => {
   const navigate = useNavigate();
 
+  const goToProfile = () => {
+    navigate('/userProfile')
+  }
+
   const goToHome = () => {
     navigate('/home')
   }
@@ -12,7 +16,7 @@ export const SideBar = () => {
   return (
     <aside className="flex h-screen w-20 flex-col items-center border-r border-gray-200 bg-blue-ppal">
       <div className="flex h-[4.5rem] w-full items-center justify-center p-2">
-        <button className="mt-2 rounded-full bg-gray-100">
+        <button className="mt-2 rounded-full bg-gray-100" onClick={goToProfile} >
           <img className="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/men/41.jpg" />
         </button>
       </div>
@@ -21,7 +25,7 @@ export const SideBar = () => {
           <VscHome size={32} color="white" />
         </button>
         <button>
-          <BsChatLeftText size={32} color="white" />
+          <BsChatLeftText size={30} color="white" />
         </button>
       </nav>
     </aside>
