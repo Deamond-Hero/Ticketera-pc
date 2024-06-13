@@ -16,7 +16,6 @@ const RegisterPage = () => {
     const [isRegistering, setIsRegistering] = useState(false);
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
-    const navigate = useNavigate();
 
     const { isFormValid, setApiErrors, clearErrors, errorsState } = useFormValidations(formState);
 

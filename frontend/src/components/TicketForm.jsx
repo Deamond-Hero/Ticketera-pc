@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import statusMachine from "../utils/statusMachine.json";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
+
 
 const TicketForm = () => {
     const userData = JSON.parse(window.localStorage.getItem('user'));
     const techservices = useSelector(state => state.ticket.serviceList);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [formTicket, setFormTicket] = useState({
         subject: "",
         description: "",
@@ -46,7 +49,7 @@ const TicketForm = () => {
 
     const cancelSubmit = () => {
         console.log("TicketCancelado");
-        closeModal();
+        navigate("/dashboard")
     };
 
     const changeService = (id) => {
@@ -60,6 +63,7 @@ const TicketForm = () => {
     return (
 
         <div className="flex items-center justify-center w-full" style={{ background: 'linear-gradient(to right, #004562, #42B4C2)', minHeight: '100vh' }}>
+            <button onClick={cancelSubmit}>X</button>
             <div className="flex-col bg-white rounded-3xl p-8 max-w-lg w-[70rem] h-[fit-content]">
                 <h1 className="text-xl font-bold mb-4 text-center">Nuevo ticket</h1>
                 <form className="flex flex-col mb-4 justify-center ml-[1rem]">

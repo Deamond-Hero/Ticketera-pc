@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import api from "../utils/Api"
 import axios from "axios"
 import { getAllAgents, getAllServices } from "../redux/ticket/actionsTicket"
 import { useDispatch, useSelector } from "react-redux"
 
 const ServiceForm = () => {
 
+    const baseURL = import.meta.env.VITE_PUBLIC_BACKEND_URL
     const dispatch = useDispatch();
     const allAgents = useSelector(state => state.ticket.agentList)
     const [formNewService, setFormNewService] = useState({
@@ -29,7 +29,7 @@ const ServiceForm = () => {
         console.log(form)
         if (form) {
             try {
-                const respose = await axios.post("/api/services", form)
+                const respose = await axios.post(`${baseURL}/api/services`, form)
                 console.log(respose)
             } catch (error) {
                 console.log(error)
