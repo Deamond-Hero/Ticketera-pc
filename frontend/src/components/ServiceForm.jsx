@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import api from "../utils/Api"
 import axios from "axios"
 import { getAllAgents, getAllServices } from "../redux/ticket/actionsTicket"
 import { useDispatch, useSelector } from "react-redux"
 
 const ServiceForm = () => {
 
+    const baseURL = import.meta.env.VITE_PUBLIC_BACKEND_URL
     const dispatch = useDispatch();
     const allAgents = useSelector(state => state.ticket.agentList)
     const [formNewService, setFormNewService] = useState({
@@ -15,21 +15,21 @@ const ServiceForm = () => {
         agent: ""
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllAgents())
         console.log(allAgents)
-    },[])
+    }, [])
 
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         console.log(formNewService)
-    },[formNewService])
+    }, [formNewService])
 
     const createService = async (form) => {
         console.log(form)
         if (form) {
             try {
-                const respose = await axios.post("/api/services", form)
+                const respose = await axios.post(`${baseURL}/api/services`, form)
                 console.log(respose)
             } catch (error) {
                 console.log(error)
@@ -104,11 +104,12 @@ const ServiceForm = () => {
 
                     <div className="flex flex-col mt-[1rem]">
                         <label>Selecciona un Técnico</label>
-                        <select>
+                        <select onChange={changeValue} name="agent">
                             {allAgents?.map(agent => (
-                                <option key={agent._id} value={agent._id}>{agent.firstName} {agent.lastName}</option>
+                                <option key={agent._id} value={agent._id}>
+                                    {agent.firstName} {agent.lastName}
+                                </option>
                             ))}
-]
                         </select>
                     </div>
                 </form>

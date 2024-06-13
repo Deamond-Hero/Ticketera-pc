@@ -1,16 +1,16 @@
 import { DataTable } from "../components/DataTable"
 import { Logout } from "../components/Logout"
-import { useModal } from "../hooks/useModal"
-import { ModalTicket } from "../utils/ModalTicket"
+import { SideBar } from "../components/SideBar"
 
 const Dashboard = () => {
     return (
-        <div className="flex-col aling-center justify-center w-[100%]">
-            <h1>Dashboard</h1>
-            <Logout />
+        <div className="flex">
+          <SideBar />
+          <div className="flex-1">
             <DataTable />
+          </div>
         </div>
-    )
+      );
 }
 
 export default Dashboard

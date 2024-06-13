@@ -16,6 +16,7 @@ const RegisterPage = () => {
     const [isRegistering, setIsRegistering] = useState(false);
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
+
     const { isFormValid, setApiErrors, clearErrors, errorsState } = useFormValidations(formState);
 
     const onInputChange = (event) => {
@@ -42,7 +43,13 @@ const RegisterPage = () => {
                     }, 3000); // Este wey Redirige a la página de login después de 3 segundos
                 } else {
                     setApiErrors(response.data.errors || { general: response.data.message || "Error en el registro" });
+                    console.log('error')
                 }
+
+                if (response.status === 200) {
+                    navigate('/login');
+                }
+
             } catch (error) {
                 if (error.response) {
                     setApiErrors({ general: error.response.data.message || "Error en el registro" });
