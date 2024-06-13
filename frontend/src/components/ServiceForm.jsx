@@ -29,7 +29,7 @@ const ServiceForm = () => {
         console.log(form)
         if (form) {
             try {
-                const respose = await axios.post("http://localhost:8000/api/services", form)
+                const respose = await axios.post("/api/services", form)
                 console.log(respose)
             } catch (error) {
                 console.log(error)

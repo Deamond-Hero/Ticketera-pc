@@ -24,11 +24,7 @@ const CreateConsultTicket = () => {
 
     const handleCreateTicket = () => {
         if (isAuthenticated()) {
-<<<<<<< HEAD
-            navigate('/');
-=======
             navigate('/newticket');
->>>>>>> 3cd05acd9a1c8714d133e74b75b136f5da17da0c
         } else {
             navigate('/login');
         }
@@ -37,11 +33,7 @@ const CreateConsultTicket = () => {
     const handleConsultTicket = async () => {
 
     try {
-<<<<<<< HEAD
         const response = await api.get(`/api/tickets/{id}${ticketId}`);
-=======
-        const response = await axios.get(`${baseURL}api/tickets/${ticketId}`);
->>>>>>> 3cd05acd9a1c8714d133e74b75b136f5da17da0c
         if (ticketId === "") {
             toast.error('Ingresa el ID de tu ticket'); // Muestra una notificación toast de advertencia
         } else {

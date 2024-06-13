@@ -45,7 +45,7 @@ const Hero = () => {
                 fontSize: '14.36px',
                 lineHeight: '23.93px',
                 textAlign: 'center'
-            }}>¡Te damos la bienvenida a S15! Estamos aquí para solucionar tus problemas con la <br /> computadora de manera rápida y eficiente 
+            }}>¡Te damos la bienvenida a ServiciosYa! Estamos aquí para solucionar tus problemas con la <br /> computadora de manera rápida y eficiente 
             </p>
 
             <CreateConsultTicket/>
