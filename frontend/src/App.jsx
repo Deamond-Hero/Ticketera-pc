@@ -16,6 +16,7 @@ import CreateConsultTicket from './components/CreateConsultTicket';
 import TicketForm from './components/TicketForm';
 import ServiceForm from './components/ServiceForm';
 import ViewTicket from './components/ViewTicket';
+import UserProfile from './components/UserProfile';
 
 function App() {
   const userData = useSelector((state) => state.auth.userData);
@@ -25,7 +26,7 @@ function App() {
 
   useEffect(() => {
     if (userData && (location.pathname === "/login" || location.pathname === "/register")) {
-      navigate("/dashboard");
+      navigate("/home");
     }
   }, [userData, location.pathname, navigate]);
 
@@ -51,6 +52,7 @@ function App() {
         <Route path='/newticket' element={<TicketForm />} />
         <Route path='/newservice' element={<ServiceForm />} />
         <Route path='/myTicketStatus' element={<ViewTicket />} />
+        <Route path='/userProfile' element={<UserProfile />} />
       </Routes>
     </main>
   );

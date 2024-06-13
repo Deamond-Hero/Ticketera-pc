@@ -1,45 +1,46 @@
-import Tickets from "../Schemas/ticketSchema.js";
+import Ticket from "../Schemas/ticketSchema.js";
 
 export const getTicketAll = async () => {
-  const Ticket = await Tickets.find().populate("user").populate("agent").populate("service");
+  const ticket = await Ticket.find().populate("user").populate("agent").populate("service");
 
-  if (!Ticket) {
+  if (!ticket) {
     throw new Error("Error al buscar el ticket.");
   }
 
-  return Ticket;
+  return ticket;
 };
 
 export const getTicketAllByAgent = async (id) => {
   const query = { agent: id };
-  const Ticket = await Tickets.find(query).populate("user").populate("agent").populate("service");
+  const ticket = await Ticket.find(query).populate("user").populate("agent").populate("service");
 
-  if (!Ticket) {
+  if (!ticket) {
     throw new Error("Error al buscar los tickets.");
   }
 
-  return Ticket;
+  return ticket;
 };
 
 export const getTicketAllByUser = async (id) => {
   const query = { user: id };
-  const Ticket = await Tickets.find(query).populate("agent").populate("service");
+  const ticket = await Ticket.find(query).populate("agent").populate("service");
 
-  if (!Ticket) {
+  if (!ticket) {
     throw new Error("Error al buscar los tickets.");
   }
 
-  return Ticket;
+  return ticket;
 };
 
 export const getTicketById = async (id) => {
-  const Ticket = await Tickets.findById(id).populate("agent").populate("service").populate("comments");
+  const query = { _id: id };
+  const ticket = await Ticket.findOne(query).populate("user").populate("agent").populate("service");
 
-  if (!Ticket) {
+  if (!ticket) {
     throw new Error("Error al buscar el ticket.");
   }
 
-  return Ticket;
+  return ticket;
 };
 
 export const createTickets = async (dataTicket) => {

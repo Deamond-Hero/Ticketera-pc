@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { createTicket, getAllServices } from "../redux/ticket/actionsTicket";
 import { useDispatch, useSelector } from "react-redux";
 import statusMachine from "../utils/statusMachine.json";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TicketForm = () => {
     const userData = JSON.parse(window.localStorage.getItem('user'));
@@ -36,7 +38,7 @@ const TicketForm = () => {
         event.preventDefault();
         // Validar campos antes de enviar
         if (!formTicket.subject || !formTicket.phone || !formTicket.service) {
-            alert("Por favor completa todos los campos obligatorios.");
+            toast.error("Por favor completa todos los campos obligatorios.");
             return;
         }
         dispatch(createTicket(formTicket));
@@ -56,7 +58,8 @@ const TicketForm = () => {
     };
 
     return (
-        <div className="flex items-center justify-center w-full">
+
+        <div className="flex items-center justify-center w-full" style={{ background: 'linear-gradient(to right, #004562, #42B4C2)', minHeight: '100vh' }}>
             <div className="flex-col bg-white rounded-3xl p-8 max-w-lg w-[70rem] h-[fit-content]">
                 <h1 className="text-xl font-bold mb-4 text-center">Nuevo ticket</h1>
                 <form className="flex flex-col mb-4 justify-center ml-[1rem]">
@@ -143,7 +146,9 @@ const TicketForm = () => {
                     </button>
                 </div>
             </div>
+              <ToastContainer />
         </div>
+      
     );
 };
 

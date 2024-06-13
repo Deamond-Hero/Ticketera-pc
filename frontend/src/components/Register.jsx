@@ -2,14 +2,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../utils/Api";
 import { useFormValidations } from "../hooks/useFormValidations";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage = () => {
+    const navigate = useNavigate();
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [formState, setFormState] = useState({
         email: '',
         password: '',
         password2: '',
     });
+    const [isRegistering, setIsRegistering] = useState(false);
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
     const navigate = useNavigate();
 
@@ -28,9 +33,16 @@ const RegisterPage = () => {
 
         if (isFormValid()) {
             try {
+                setIsRegistering(true);
                 const response = await api.post('/api/auth/register', formState);
 
-                if (response.status !== 200) {
+                if (response.status === 200) {
+                    setRegistrationSuccess(true);
+                    toast.success("Registro exitoso, Seras Redirigido");
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 3000); // Este wey Redirige a la página de login después de 3 segundos
+                } else {
                     setApiErrors(response.data.errors || { general: response.data.message || "Error en el registro" });
                     console.log('error')
                 }
@@ -43,18 +55,16 @@ const RegisterPage = () => {
                 if (error.response) {
                     setApiErrors({ general: error.response.data.message || "Error en el registro" });
                 }
+            } finally {
+                setIsRegistering(false);
             }
-
-              setTimeout(() => {
-                clearErrors();
-            }, 5000);
         }
     };
 
-    useEffect(() => {    
+    useEffect(() => {
         const isFormFull = formState.email !== '' && formState.password !== '' && formState.password2 !== '';
         setIsButtonDisabled(!isFormFull);
-      }, [formState]);
+    }, [formState]);
 
     return (
         <div className="bg-[#FFFFFF] text-text-dark w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-12">
@@ -104,10 +114,15 @@ const RegisterPage = () => {
                     type="submit"
                     className={`h-12 w-96 rounded-lg text-[#FFFFFF] text-xl tracking-wide 
                     ${isButtonDisabled ? 'bg-default-btn cursor-not-allowed' : 'bg-blue-ppal shadow-xl'}`}
-                    disabled={isButtonDisabled}
-                >Registrarse</button>
+                    disabled={isButtonDisabled || isRegistering}
+                >
+                    {isRegistering ? 'Registrando...' : 'Registrarse'}
+                </button>
             </form>
             <Link to={'/login'}><span className="text-xl underline tracking-wide">¿Ya tienes una cuenta?</span></Link>
+
+            {/* ToastContainer para mostrar mensajes de éxito */}
+            <ToastContainer />
         </div>
     );
 };

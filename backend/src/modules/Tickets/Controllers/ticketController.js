@@ -13,12 +13,8 @@ import {
 export const getTicket = async (req, res) => {
   try {
     const { id } = req.params;
-    let result;
-
-    if (id != "{id}") {
-      result = await getTicketById(id);
-      resSuccess(res, 200, `Ticket con id: ${id}`, result);
-    }
+    const result = await getTicketById(id);
+    resSuccess(res, 200, `Ticket con id: ${id}`, result);
   } catch (error) {
     resFail(res, 400, "El ticket no existe. Verifique el id.", error);
   }
