@@ -31,11 +31,20 @@ export const DataTable = () => {
   const user = JSON.parse(window.localStorage.getItem("user"));
 
   const getData = async () => {
-    try {
-      const { data } = await axios.get(`${baseURL}/api/tickets/user/${user._id}`);
-      setTickets(data.payload);
-    } catch (error) {
-      console.log(error);
+    if(user.role === 'Cliente') {
+      try {
+        const { data } = await axios.get(`${baseURL}/api/tickets/user/${user._id}`);
+        setTickets(data.payload);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data } = await axios.get(`${baseURL}/api/tickets/agent/${user._id}`);
+        setTickets(data.payload);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -150,12 +159,12 @@ export const DataTable = () => {
                     >
                       Fecha
                     </th>
-                    <th
-                      scope="col"
-                      className="text-xs font-medium text-gray-900 px-4 py-2 text-center"
-                    >
-                      Editar
-                    </th>
+                      <th
+                        scope="col"
+                        className="text-xs font-medium text-gray-900 px-4 py-2 text-center"
+                      >
+                        Editar
+                      </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -168,7 +177,7 @@ export const DataTable = () => {
                         {ticket._id}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
-                        { ticket.agent?.email || "No hay un email asignado" }
+                        {ticket.agent?.firstName + " " + ticket.agent?.lastName || "No hay un email asignado"}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-4 py-2 whitespace-nowrap">
                         {ticket.service[0].name}
