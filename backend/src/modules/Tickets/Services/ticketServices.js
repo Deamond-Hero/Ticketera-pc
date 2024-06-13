@@ -48,7 +48,7 @@ export const createTickets = async (dataTicket) => {
     throw new Error("Falta informacion.");
   }
 
-  const newData = new Tickets({
+  const newData = new Ticket({
     subject: dataTicket.subject,
     description: dataTicket.description,
     status: dataTicket.status || "Pendiente",
@@ -59,7 +59,7 @@ export const createTickets = async (dataTicket) => {
     agent: dataTicket.agent,
     service: dataTicket.service,
   });
-  const newTicket = await Tickets.create(newData);
+  const newTicket = await Ticket.create(newData);
 
   if (!newTicket) {
     throw new Error("Error al crear el tiecket.");
@@ -83,7 +83,7 @@ export const updateTickets = async (dataTicket) => {
       service: dataTicket.service,
     },
   };
-  const ticket = await Tickets.updateOne(query, update);
+  const ticket = await Ticket.updateOne(query, update);
   if (!ticket) {
     throw new Error("Ticket no actualizado.");
   }
@@ -93,7 +93,7 @@ export const updateTickets = async (dataTicket) => {
 
 export const deleteTickets = async (id) => {
   const query = { _id: id };
-  const deletedTicket = await Tickets.deleteOne(query);
+  const deletedTicket = await Ticket.deleteOne(query);
   if (!deletedTicket) {
     throw new Error("Ticket no se pudo eliminar.");
   }
