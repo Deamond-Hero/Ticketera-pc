@@ -69,9 +69,10 @@ export const createTicket = async (req, res) => {
 
 export const updateTicket = async (req, res) => {
   try {
-    const { updateTicket, role } = req.body;
-    const result = await updateTickets(updateTicket);
-    await statusEmail(result.id, role);
+    const { id } = req.params;
+    const { role } = req.body;
+    const result = await updateTickets(id, req.body);
+    // await statusEmail(id, role);
     resSuccess(res, 200, "Ticket actualizado con éxito", result);
   } catch (error) {
     resFail(res, 400, error.message, error);
