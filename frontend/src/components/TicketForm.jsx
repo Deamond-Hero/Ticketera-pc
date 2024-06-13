@@ -12,6 +12,7 @@ const TicketForm = () => {
     const techservices = useSelector(state => state.ticket.serviceList);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const phoneNumber = parseInt(userData.phone);
     const [formTicket, setFormTicket] = useState({
         subject: "",
         description: "",
@@ -19,7 +20,7 @@ const TicketForm = () => {
         user: userData._id,
         firstName: userData.firstName,
         lastName: userData.lastName,
-        phone: "",
+        phone: userData.phone,
         agent: "",
         service: "",
     });
@@ -28,12 +29,17 @@ const TicketForm = () => {
         dispatch(getAllServices());
     }, []);
 
+    useEffect(() => {
+        console.log(formTicket)
+    }, [formTicket]);
+
+
 
     const changeValue = (e) => {
         const { name, value } = e.target;
         setFormTicket(prevState => ({
             ...prevState,
-            [name]: name === "phone" ? parseInt(value) : value
+            [name] : value
         }));
     };
 
@@ -52,11 +58,11 @@ const TicketForm = () => {
         navigate("/dashboard")
     };
 
-    const changeService = (id) => {
+    const changeService = (idService,idAgent) => {
         setFormTicket(prevState => ({
             ...prevState, 
-            agent: id, 
-            service: id
+            service: idService,
+            agent: idAgent 
         }));
     };
 
@@ -122,7 +128,7 @@ const TicketForm = () => {
                                     name="service"
                                     value={serv._id} 
                                     className="rounded-full" 
-                                    onChange={() => changeService(serv._id)} 
+                                    onChange={() => changeService(serv._id, serv.agent[0]._id)} 
                                     checked={formTicket.service === serv._id} 
                                 />
                                 <p className="ml-[1rem]">{serv.name}</p>

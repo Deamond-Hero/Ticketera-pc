@@ -1,45 +1,50 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { getAllAgents, updateTicket } from "../redux/ticket/actionsTicket";
+import { useDispatch, useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
 export const ModalTicket = ({ ticket, closeModal }) => {
 
-    const updateTicket = async(formTicket) =>{
-        return async() =>{
-            try {
-                const response = await api.get(`/api/tickets`, formTicket);
-                console.log(response)
-            }catch{
-                console.log("Error");
-            }
-        }
-    }
+    console.log(ticket)
+    const tecnics = useSelector(state => state.ticket.agentList)
+    const user = JSON.parse(window.localStorage.getItem("user"))
 
     const [formTicket, setFormTicket] = useState({
-        id: ticket?.id,
+        subject: ticket?.subject,
+        description: ticket?.description,
+        status: ticket?.status,
+        user: ticket?.user,
         firstName: ticket?.firstName,
         lastName: ticket?.lastName,
         phone: ticket?.phone,
-        subject : ticket?.subject,
-        user: ticket?.user,
-        description: ticket?.description,
-        status: ticket?.status,
-        agent: ticket?.agent,
-        service: ticket?.service,
+        agent: ticket?.agent._id,
+        service: ticket?.service[0]._id,
     })
+    const dispatch = useDispatch()
+
+    console.log(tecnics)
+
+    useEffect(() => {
+        dispatch(getAllAgents)
+    }, [])
+
+    useEffect(() => {
+        console.log(ticket._id, formTicket)
+    }, [formTicket])
 
     const changeValue = (e) => {
         const { name, value } = e.target;
         setFormTicket(prevState => ({
             ...prevState,
-            [name]: value
-        }))
-
-    }
+            [name] : value
+        }));
+    };
 
     const ticketSubmit = () => {
         // event.prevent.default()
         console.log("TicketModificado")
-        updateTicket(formTicket)
+        dispatch(updateTicket(ticket?._id, formTicket))
     }
 
     const cancelSubmit = () => {
@@ -63,14 +68,15 @@ export const ModalTicket = ({ ticket, closeModal }) => {
         <div className="flex fixed top-0 left-0 w-full h-full items-center justify-center bg-gray-800 bg-opacity-50 ">
             <div className="flex-col bg-white rounded-3xl p-8 max-w-lg w-[70rem] h-[fit-content]">
                 <h1 className="text-xl font-bold mb-4 text-center">Detalles del ticket</h1>
-                <form className="flex flex-col mb-4 justify-center ml-[1rem] " onSubmit={ticketSubmit}>
+                <form className="flex flex-col mb-4 justify-center ml-[1rem] ">
 
                     <div className="flex-col aling-left mt-[1rem]">
-                        <p>Técnico: {ticket?.tecnico}</p>
-                        <p>Fecha de ingreso: {ticket?.date}</p>
-                        <p>Ultima modificación: {ticket?.updateDate}</p>
+                        <p>Técnico: {ticket?.agent.firstName} {ticket?.agent.lastName}</p>
+
+                        <p>Fecha de ingreso: {ticket?.createdAt}</p>
+                        <p>Ultima modificación: {ticket?.updatedAt}</p>
                     </div>
-                    
+
                     <div className="flex mt-[2rem]">
                         <div className="flex flex-col">
                             <label>Nombre</label>
@@ -130,16 +136,21 @@ export const ModalTicket = ({ ticket, closeModal }) => {
                             placeholder={ticket?.description ? ticket.description : ""}
                         />
                     </div>
-
+                    <div>
+                        <label>Comentarios técnicos</label>
+                        {ticket.comments?.map((coment, index) => (
+                            <p key={index}>{coment.comments}</p>
+                        ))}
+                    </div>
                     <div className="flex flex-col mt-[1rem]">
                         <label>Observaciones del técnico</label>
                         <textarea
                             className="appearance-none bg-white border border-gray-300 rounded mt-[.1rem] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 w-[95%]"
                             maxLength={250}
                             onChange={changeValue}
-                            name="description"
-                            value={formTicket.description}
-                            placeholder={ticket?.description ? ticket.description : ""}
+                            name="comments"
+                            value={formTicket.comments}
+
                         />
                     </div>
                     <div className="flex flex-col mt-[1rem]">
@@ -157,7 +168,7 @@ export const ModalTicket = ({ ticket, closeModal }) => {
                 </form>
                 <div className="flex justify-end mt-[3rem]">
                     <button className="h-10 w-96 rounded-lg text-[#FFFFFF] text-l tracking-wide bg-default-btn ml-[1rem] mr-[1rem]" onClick={cancelSubmit}>Cancelar</button>
-                    <button className="h-10 w-96 rounded-lg text-[#FFFFFF] text-l tracking-wide bg-blue-ppal ml-[1rem] mr-[1rem]" type="submit">Editar ticket</button>
+                    <button className="h-10 w-96 rounded-lg text-[#FFFFFF] text-l tracking-wide bg-blue-ppal ml-[1rem] mr-[1rem]" onClick={ticketSubmit}>Editar ticket</button>
                 </div>
             </div>
         </div>

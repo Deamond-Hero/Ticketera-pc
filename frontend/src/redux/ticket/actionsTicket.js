@@ -69,9 +69,7 @@ export const getAllTickets = () => {
 export const createTicket = (ticket) => {
     return async (dispatch) => {
         try {
-            const url = `${baseURL}/api/tickets/`
-            console.log(url)
-            const response = await axios.post(url, ticket)
+            const response = await axios.post(`${baseURL}/api/tickets/`, ticket)
             const data = response.data
             console.log(data)
             await dispatch(setTicketMessage(data.message))
@@ -85,4 +83,28 @@ export const createTicket = (ticket) => {
         }
     }
 }
+
+export const updateTicket = (id, formTicket) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.put(`${baseURL}/api/tickets/${id}`, formTicket);
+            const data = response.data;
+            console.log('Respuesta de actualización:', data);
+
+            // Actualiza el estado con el mensaje de éxito
+            await dispatch(setTicketMessage(data.message));
+
+            // Mensaje de éxito
+            alert(data.message);
+        } catch (error) {
+            console.error('Error al actualizar el ticket:', error);
+
+            // Actualiza el estado con el mensaje de error
+            await dispatch(setTicketMessage(error.message));
+
+            // Mensaje de error
+            alert(`Error al actualizar el ticket: ${error.message}`);
+        }
+    };
+};
 

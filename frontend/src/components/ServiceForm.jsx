@@ -15,15 +15,15 @@ const ServiceForm = () => {
         agent: ""
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllAgents())
         console.log(allAgents)
-    },[])
+    }, [])
 
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         console.log(formNewService)
-    },[formNewService])
+    }, [formNewService])
 
     const createService = async (form) => {
         console.log(form)
@@ -104,11 +104,12 @@ const ServiceForm = () => {
 
                     <div className="flex flex-col mt-[1rem]">
                         <label>Selecciona un Técnico</label>
-                        <select>
+                        <select onChange={changeValue} name="agent">
                             {allAgents?.map(agent => (
-                                <option key={agent._id} value={agent._id}>{agent.firstName} {agent.lastName}</option>
+                                <option key={agent._id} value={agent._id}>
+                                    {agent.firstName} {agent.lastName}
+                                </option>
                             ))}
-]
                         </select>
                     </div>
                 </form>
