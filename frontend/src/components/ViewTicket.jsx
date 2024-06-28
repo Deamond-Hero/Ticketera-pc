@@ -21,7 +21,7 @@ const ViewTicket = ({ }) => {
                         {ticket.payload.status && ticket.payload.status === "Retirado" ? <li class="mb-10 ms-4">
                             <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-900"></div>
                             <h3 class="text-lg font-semibold text-gray-900 ">{statusMachine.client.retirado}</h3>
-                            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">3/3/24 Revisaremos tu artículo</time>
+                            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">15/3/24 Tu equipo ha sido retirado</time>
                         </li> :
                             <li class="mb-10 ms-4">
                                 <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-300 dark:bg-gray-300"></div>
